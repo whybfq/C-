@@ -1,0 +1,16 @@
+#include <thread>
+#include <iostream>
+
+int main()
+{
+    int n1 = 500;
+    int n2 = 600;
+    int n = 700;
+    std::thread t([&](int addNum){
+        n1 += addNum;
+        n2 += addNum;
+        n += addNum;
+    },500);
+    t.join();
+    std::cout << n1 << ' ' << n2 << " "<<n<<std::endl;
+}
