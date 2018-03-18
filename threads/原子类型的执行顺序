@@ -1,0 +1,70 @@
+通常情况，如果编译器认定a,b的赋值语句的执行先后顺序对输出结果有任何影响的话，则可以依据情况将指令recorder以提高性能。而如果执行顺序必须是a先b后，
+则编译器不会执行这样的。
+////////////////////////////////////////////////////////////////////////////////////////////////////
+#include<thread>
+#include "atomic"
+#include <iostream>
+using  namespace std;
+
+atomic<int> a{0};
+atomic<int> b{0};
+int ValueSet(int){
+    int t=1;
+    a=t;
+    b=2;
+}
+
+int Observer(int){
+    cout<<"a:"<<a<<" "<<b<<endl;
+}
+
+int main(){
+    thread t1(ValueSet,0);
+    thread t2(Observer,0);
+    t1.join();
+    t2.join();
+    cout<<"End :"<<a<<" "<<b<<endl;
+}
+
+Output:
+a:1 2
+End :1 2
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+如果假定，所有的原子类型的执行顺序都无关紧要，那么在多线程的情况下就可能发生严重的错误。
+
+#include<thread>
+#include "atomic"
+#include <iostream>
+using  namespace std;
+
+atomic<int> a{0};
+atomic<int> b{0};
+int Thread1(int){
+    int t=1;
+    a=t;
+    b=2;
+}
+
+int Thread2(int){
+    while(b!=2){
+        cout<<a<<endl;
+    }
+}
+
+int main(){
+    thread t1(Thread1,0);
+    thread t2(Thread2,0);
+    t1.join();
+    t2.join();
+    cout<<"End :"<<a<<" "<<b<<endl;
+}
+
+Output:
+
+0
+End :1 2
+
+Process finished with exit code 0
