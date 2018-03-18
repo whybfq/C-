@@ -49,8 +49,8 @@ int Thread1(int){
 }
 
 int Thread2(int){
-    while(b!=2){
-        cout<<a<<endl;
+    while(b!=2){    ///自旋等待
+        cout<<a<<endl;   ///总是期待a的值为1
     }
 }
 
