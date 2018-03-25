@@ -3,28 +3,31 @@ int main(int argc, char *argv[]){
     while(1) {
         cin >> a;
         int len = strlen(a);
-        int mid=len/2-1,next;
+        int mid=len/2-1;
         int top =0;   ///Initialize the stack
+        int next;
+        if (len % 2 == 0) {
+            next = mid + 1;
+        } 
+        else {
+            next = mid + 2;
+        }
 
-
-        top = 0;
         for (int j = 0; j <= mid; ++j) {
             s[++top] = a[j];    ///the same as "++top ; s[top]=a[j];"    Into the stack
         }
-        if (len % 2 == 0) {
-            next = mid + 1;
-        } else next = mid + 2;
+       
         for (int i = next; i <= len - 1; ++i) {
-            if (a[i] != s[top]){
+            if (a[i] != s[top]){          ///     -- s[top] <-----  mid   ----->a[i] ++
               break;
             }
             --top;    ///Out of the stack
         }
 
         if (top == 0) {
-            cout << "OK,It is a palindrome string." << endl;
+            cout << "OK, It is a palindrome string." << endl;
         } else {
-            cout << "No" << endl;
+            cout << "No, It's not a palindrome string." << endl;
         }
     }
 }
