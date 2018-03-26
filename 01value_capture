@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+void learn_lambada_func1(){
+    int value_1 = 1;
+    auto copy_value_1 = [value_1]{
+        return value_1;
+    };
+    value_1 = 100;
+    auto stored_value_1 = copy_value_1();  
+    ///Similar to the parameter value, the value of the early capture of the variable can be copied, 
+    ///the difference is that the captured variable is copied when the lambda expression is created, but not copied when called
+
+    cout<<stored_value_1<<endl;     ///Output 1
+
+}
+int main(int agrc ,char* agrv[]){
+    learn_lambada_func1();            /// 这时, stored_value_1 == 1, 而 value_1 == 100.
+                                      /// 因为 copy_value_1 在创建时就保存了一份 value_1 的拷贝
+}
