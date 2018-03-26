@@ -1,0 +1,61 @@
+
+Reference https://changkun.gitbooks.io/cpp1x-tutorial/content/4-containers.html
+
+#include <tuple>
+#include <iostream>
+using namespace std;
+
+template <size_t n, typename... T>
+boost::variant<T...> _tuple_index(size_t i, const std::tuple<T...>& tpl){
+    if( i == n)return std::get<n>(tpl);
+    else if ( n == sizeof...(T) - 1) throw  std::out_of_range("out of range. ");
+    else{
+        return _tuple_index<n < sizeof...(T)-1 ? n+1 : 0>(i,tpl);
+    }
+};
+
+template <typename... T>
+boost::variant<T...> tuple_index(size_t i , const std::tuple<T...>& tpl){
+    return _tuple_index<0>(i, tpl);
+}
+
+auto get_student(int id){
+    if(id == 0)
+        return std::make_tuple(3.8,'A',"ZhangSan");
+    if(id == 1)
+        return std::make_tuple(2.9, 'C', "LiSi");
+    if(id == 2)
+        return std::make_tuple(1.7,'D',"WangWu");
+
+    return std::make_tuple(0.0,'D',"null");  ///if you only write zero, it will compile error
+}
+
+int main(){
+    auto  student = get_student(0);
+    cout<<"Id: 0,"
+        <<"GPA: "<<std::get<0>(student) << ", "
+        <<"Grades: "<<get<1>(student)<<","
+        <<"Name"<<get<2>(student)<<endl;
+
+    double gpa;
+    char grade;
+    string name;
+
+    tie(gpa, grade, name) = get_student(1);
+    cout<<"ID : 1 ,"<<"GPa: "<<gpa<<", "<<"grade: "<<grade<<", "<<"Name : "<<name<<endl;
+
+    tuple<string , double, double ,int> t("123",4.5, 6.7, 8);
+
+    int i =1;
+    cout<< tuple_index(i,t)<<endl;
+
+    auto new_tuple = tuple_cat(get_student(2), std::move(t));
+
+}
+
+
+Output:
+
+Id: 0,GPA: 3.8, Grades: A,NameZhangSan
+ID : 1 ,GPa: 2.9, grade: C, Name : LiSi
+4.5
