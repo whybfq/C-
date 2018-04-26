@@ -1,0 +1,39 @@
+/**
+ * @date 2018-04-26
+ * @brief Determines whether a string is a palindrome.
+ */
+
+#include <cstdio>
+#include <iostream>
+#include <cstring>
+using namespace std;
+int main(){
+    char a[101], s[101];
+    int i, len , mid, next, top;
+
+    cin>>a;              ///cin a string
+    len = strlen(a);     ///the length of the string
+    mid = len/2 - 1;     ///the midpoint of the string
+
+    top = 0;             ///Stack initialization
+    for (int j = 0; j <= mid ; ++j) {       ///All characters before midpoint are in the stack.
+        s[++top] = a[j];
+    }
+
+    if(len % 2 == 0){             ///Determine whether the length of the string is odd or even, and find the inspiration index that requires character matching.
+        next = mid + 1;
+    }
+    else {
+        next = mid + 2;
+    }
+
+    for( i = next; i <= len - 1; i++){     ///Begin to match
+        if(a[i] != s[top]) break;
+        top--;
+    }
+
+    if(top == 0) cout<<"YEs"<<endl;    ///if top == 0 , then  it's all matched.
+    else cout<<"No"<<endl;
+    getchar();
+    return 0;
+}
