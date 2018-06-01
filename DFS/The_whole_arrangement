@@ -1,0 +1,45 @@
+#include <cstdio>
+#include <iostream>
+using namespace std;
+
+
+
+
+
+int a[100]={0};
+int book[100]={0};
+int n;   //The global variable
+
+void dfs(int step){  //step if shows where you are before the box  step表示现在站在第几个盒子面前
+    int i;
+    if(step == n+1)  //如果站在第n+1个盒子面前， 则表示前n个盒子已经放好扑克牌
+    {
+        //输出一种排列（1～n号盒子的扑克牌编号）
+        for(int i = 1; i <= n; ++i)
+            cout<<a[i];
+        cout<<endl;
+        return;  //返回之前的一步（最近一次调用dfs函数的地方）
+    }
+
+    //此时站在第step个盒子面前，应该放哪张牌呢？
+    //按照1，2，3...n的顺序一一尝试
+    for(int i=1; i <= n; ++i){
+        //判断扑克牌i是否还在手上
+        if(book[i] == 0)   //book[i]等于0表示i号扑克牌在手上
+        {
+            //开始尝试使用扑克牌i
+            a[step] = i;  //put number i card into step box 将i号扑克牌放入到第step个盒子中
+            book[i] = 1;  //It shows that nuber i card is not on hand   表示i号扑克牌已经不再手上
+    
+            //第step个盒子放好了扑克牌，往下走
+            dfs(step+1);  
+            book[i]=0;   //Take back the card that sends out 将刚才尝试的扑克牌收回，继续进行下一次尝试
+        }
+    }
+}
+
+int main(){
+    cin>>n;   //  n>=1 && n<=9
+    dfs(1);   //from the number 1 box 首先站在1号小盒子面前
+    getchar;
+}
