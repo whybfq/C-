@@ -1,82 +1,82 @@
-
-
 #include <iostream>
 #include <cstdio>
 
 using namespace std;
 
 /*********************************************************************************
-  *FileName:  The_whole_arrangement(全排列显示）
+  *FileName:  Maze (DFS走迷宫到达指定点)
   *Author:  W
   *Version:  **
   *Date:  2018-06-01
-  *Description:  编号1～9的扑克牌◻︎，放入9个盒子中，使得☐☐☐ + ☐☐☐ = ☐☐☐
-  *              主要使用dfs思想。
-                 假设有9个盒子，依次往其中放入编号1～9的扑克牌，则放到n+1时，
-                 输出盒子中的扑克牌编号就是一种可能排列。
-  *Others:  数组a表示小盒子
+  *Description:  Go through the maze to the designated point.Depth first search to
+  *              go through the maze to calculate the min steps.
+  *Others:
   *Function List:
-     1. void dfs(int step)
-        step          --表示当前所在的盒子，
-        a[ste[]=i     --将第i号扑克牌放入到第step个盒子中
-        book数组       --用来标记扑克牌是否还在手上。
-
+     1. void dfs(int x,int y, int step)  --the main function to go through the maze，
+                                         --x,y the start position coordinates, step means the steps
+        next[4][2]       -- the array of direction
+        (p,q)            -- the designed point
+        (x,y)            -- Your position coordinates
+        (startx,starty)  --  your beginning position coordinates
+        n                -- n lines
+        m                -- m columns
   *History:  //修改历史记录列表，每条修改记录应包含修改日期、修改者及修改内容简介
-     1.Date:
-       Author:
-       Modification:
+     1.Date: 2018/06/01
+       Author: W
+       Modification: Original
      2.…………
 **********************************************************************************/
 
-int n,m,p,q,min1=999999;
+int n,m,p,q,minimum=999999;
 int a[51][51],book[51][51];
 
 
 void dfs(int x,int y, int step){
-    int next[4][2]={
-            {0,1},   //right
-            {1,0},   //down
-            {0,-1},  //left
-            {-1,0}   //up
+    int next[4][2]={  //the array of direction 方向数组
+            {0,1},    //right
+            {1,0},    //down
+            {0,-1},   //left
+            {-1,0}    //up
     };
     int tx,ty,k;
-    if(x==p && y==q){
-        if(step < min1)
-            min1 = step;
-        return;
+
+    //Determine whether you have reached the end point
+    if(x==p && y==q){    //udate the minimum value
+        if(step < minimum)
+            minimum = step;
+        return;   //there need to be a return
     }
 
-    for(k=0; k <= 3; k++){
-        tx=x+next[k][0];
+    for(k=0; k <= 3; k++){   //Enumerate four ways 枚举四种走法
+        tx=x+next[k][0];    //计算下一个点坐标
         ty=y+next[k][1];
 
-        if(tx<1 || tx>n || ty<1 || ty>m)
+        if(tx<1 || tx>n || ty<1 || ty>m)   //判断是否越界，不能走出迷宫
             continue;
-        if(a[tx][ty] == 0 && book[tx][ty] == 0){
-            book[tx][ty] = 1;
-            dfs(tx,ty,step+1);
-            book[tx][ty]=0;
+        if(a[tx][ty] == 0 && book[tx][ty] == 0){   //判断该点是否为障碍物或者已经在路径中
+            book[tx][ty] = 1;   //标记这个点已经走过
+            dfs(tx,ty,step+1);  //开始尝试下一个点
+            book[tx][ty]=0;     //尝试结束，取消这个点的标记
         }
     }
 
     return ;
 }
 
-
 int main(){
    int i,j,startx,starty;
-   cin>>n>>m;
+   cin>>n>>m;   //n lines, m columns
    for(i = 1;i <= n; ++i)
        for(j = 1; j <= m;++j)
-           cin>>a[i][j];
+           cin>>a[i][j];   //Read in the maze
 
-    cin>>startx>>starty>>p>>q;
+    cin>>startx>>starty>>p>>q;   //input the starting and the end point
 
-    book[startx][startx] = 1;
-    dfs(startx,starty,0);
+    //search from the start point
+    book[startx][starty] = 1;   //mark the start point, it is alreadys in the way
+    dfs(startx,starty,0);  //x,y means the start point, 0 means zero step from the beginning
 
-    cout<<min1<<endl;
-//    getchar();
+    cout<<minimum<<endl;   //output the minimum steps
 }
 
 
