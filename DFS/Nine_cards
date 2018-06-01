@@ -33,34 +33,38 @@ using namespace boost;
 **********************************************************************************/
 
 int a[10]={0},book[10]={0},total=0;
-void dfs(int step){
+void dfs(int step){  //step表示站在第几个盒子面前
     int i;
-    if(step == 10){
+    if(step == 10){    //如果是第十个盒子（假设的），则表示前面9个盒子已经放好扑克牌
+        //判断是否满足等式 ☐☐☐ + ☐☐☐ = ☐☐☐
         if(a[1]*100 + a[2]*10 + a[3] + a[4]*100 + a[5]*10 + a[6] == a[7]*100 + a[8]*10 + a[9]){
-            total++;
-            int m=0;
+            total++;  //如果满足等式，可行解+1，并打印这个解
             //cout<<a[1]<<a[2]<<a[3]<<a[4]<<a[5]<<a[6]<<a[7]<<a[8]<<a[9]<<endl;
+            int m=0;
             while(m<9)
                 cout<<a[++m];
             cout<<endl;
         }
-        return;
+        return;   //返回最近一次调用
     }
 
+    //此时站在第step个盒子前，按照1，2，3，...n的顺序一一尝试
     for(i=1; i <= 9; ++i){
-        if(book[i] == 0){
-            a[step] = i;
-            book[i] = 1;
+        //判断扑克牌是否还在手上
+        if(book[i] == 0){   //扑克牌还在手上
+            //开始尝试使用扑克牌i
+            a[step] = i;  //将扑克牌i放到第step个盒子中
+            book[i] = 1;  //将book[i]的值设为1，扑克牌i已经不在手上
 
-            dfs(step + 1);
-            book[i] = 0;
+            dfs(step + 1);  //走到下一个盒子
+            book[i] = 0;  //key, 将刚才尝试的扑克牌收回，进行下一次尝试
         }
     }
     return;
 }
 
 int main(){
-    dfs(1);
-    cout<<"total="<<total/2<<endl;
+    dfs(1);   //首先站在盒子1面前
+    cout<<"total="<<total/2<<endl;   // A+B=C  is the same as B+A=C
     getchar();
 }
