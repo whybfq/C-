@@ -1,0 +1,96 @@
+
+
+#include <iostream>
+#include <cstdio>
+
+using namespace std;
+
+/*********************************************************************************
+  *FileName:  The_whole_arrangement(全排列显示）
+  *Author:  W
+  *Version:  **
+  *Date:  2018-06-01
+  *Description:  编号1～9的扑克牌◻︎，放入9个盒子中，使得☐☐☐ + ☐☐☐ = ☐☐☐
+  *              主要使用dfs思想。
+                 假设有9个盒子，依次往其中放入编号1～9的扑克牌，则放到n+1时，
+                 输出盒子中的扑克牌编号就是一种可能排列。
+  *Others:  数组a表示小盒子
+  *Function List:
+     1. void dfs(int step)
+        step          --表示当前所在的盒子，
+        a[ste[]=i     --将第i号扑克牌放入到第step个盒子中
+        book数组       --用来标记扑克牌是否还在手上。
+
+  *History:  //修改历史记录列表，每条修改记录应包含修改日期、修改者及修改内容简介
+     1.Date:
+       Author:
+       Modification:
+     2.…………
+**********************************************************************************/
+
+int n,m,p,q,min1=999999;
+int a[51][51],book[51][51];
+
+
+void dfs(int x,int y, int step){
+    int next[4][2]={
+            {0,1},   //right
+            {1,0},   //down
+            {0,-1},  //left
+            {-1,0}   //up
+    };
+    int tx,ty,k;
+    if(x==p && y==q){
+        if(step < min1)
+            min1 = step;
+        return;
+    }
+
+    for(k=0; k <= 3; k++){
+        tx=x+next[k][0];
+        ty=y+next[k][1];
+
+        if(tx<1 || tx>n || ty<1 || ty>m)
+            continue;
+        if(a[tx][ty] == 0 && book[tx][ty] == 0){
+            book[tx][ty] = 1;
+            dfs(tx,ty,step+1);
+            book[tx][ty]=0;
+        }
+    }
+
+    return ;
+}
+
+
+int main(){
+   int i,j,startx,starty;
+   cin>>n>>m;
+   for(i = 1;i <= n; ++i)
+       for(j = 1; j <= m;++j)
+           cin>>a[i][j];
+
+    cin>>startx>>starty>>p>>q;
+
+    book[startx][startx] = 1;
+    dfs(startx,starty,0);
+
+    cout<<min1<<endl;
+//    getchar();
+}
+
+
+
+
+
+Input:
+5 4
+0 0 1 0
+0 0 0 0
+0 0 1 0
+0 1 0 0
+0 0 0 1
+1 1 4 3
+
+Output:
+7
