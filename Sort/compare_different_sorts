@@ -1,0 +1,128 @@
+//Reference : https://mp.weixin.qq.com/s/Vq1dpZm2Mx_qeDofOuvObw
+
+#include <cstdlib>
+#include <iostream>
+#include <utility>
+using namespace std;
+
+void Swap(int A[] , int i, int j){
+    int temp = A[i];
+    A[i] = A[j];
+    A[j] = temp;
+}
+
+
+// 数据结构 ---------- 数组
+
+// 最差时间复杂度 ---- O(n^2)
+
+// 最优时间复杂度 ---- 如果能在内部循环第一次运行时,使用一个旗标来表示有无需要交换的可能,可以把最优时间复杂度降低到O(n)
+
+// 平均时间复杂度 ---- O(n^2)
+
+// 所需辅助空间 ------ O(1)
+
+// 稳定性 ------------ 稳定( A[i]>A[i+1] )
+void BubbleSort(int *A,int n){
+    for(int j = 0;j < n; ++j){  // 每次最大元素就像气泡一样"浮"到数组的最后
+        for(int i = 0; i < n-j-1; ++i){  // 依次比较相邻的两个元素,使较大的那个向后移
+            if(A[i] > A[i+1]){  // 如果条件改成A[i] >= A[i + 1],则变为不稳定的排序算法
+                Swap(A,i,i+1);
+            }
+        }
+    }
+}
+
+
+
+// 冒泡排序改进，鸡尾酒排序，（定向冒泡排序）
+// 数据结构 ---------- 数组
+// 最差时间复杂度 ---- O(n^2)
+// 最优时间复杂度 ---- 如果序列在一开始已经大部分排序过的话,会接近O(n)
+// 平均时间复杂度 ---- O(n^2)
+// 所需辅助空间 ------ O(1)
+// 稳定性 ------------ 稳定
+void CocktailSort(int A[],int n){
+    int left=0, right=n-1,i;
+    while(left <= right){
+        for(i = left; i < right; ++i){
+            if(A[i] > A[i+1])
+                Swap(A, i, i+1 );
+        }
+        --right;
+        for(i = right; i > left ; --i){
+            if(A[i-1] > A[i])
+                Swap(A,i-1,i);
+        }
+        ++left;
+    }
+}
+
+//Selecting Sort
+
+// 数据结构 ---------- 数组
+
+// 最差时间复杂度 ---- O(n^2)
+
+// 最优时间复杂度 ---- O(n^2)
+
+// 平均时间复杂度 ---- O(n^2)
+
+// 所需辅助空间 ------ O(1)
+
+// 稳定性 ------------ 不稳定
+void SelectionSort(int A[],int n){
+    for(int i = 0; i < n; ++i){
+        int min = i;
+        for(int j = i+1; j;++j){
+            if(A[j]){
+                min = j;
+            }
+        }
+        if(min != i){
+            Swap(A,min,i);
+        }
+    }
+}
+template <class Iter> //arrays and others containers (like list, vector, deque, ...)
+void selection_sort(Iter begin, Iter end) {  //range [)
+    for( int beg = begin ; beg != end ; ++i)
+        std::swap(
+                *begin,
+                *std::minimum_element(begin,end)
+                );
+}
+
+int main(){
+    int A[] = { 6, 5, 3, 1, 8, 7, 2, 4 };   // 从小到大定向冒泡排序
+    int n = sizeof(A)/sizeof(int);
+//    BubbleSort(A,n);
+//    CocktailSort(A,n);
+//    SelectionSort(A,n);
+    selection_sort(A,A+n);
+    cout<<"the resulr of Sort: "<<endl;
+    for(int i=0;i<n;++i){
+        cout<<A[i]<<" "<<endl;
+    }
+    cout<<endl;
+}
+
+class String{
+public:
+    String();
+    String(const char* const);
+    String(const String& );
+    ~String();
+
+    char&operator[] (unsigned short offset);
+    char operator[] (unsigned short offset)const;
+    String operator+(const String&);
+    void operator+=(const String& );
+    String & operator= (const String &);
+    unsigned short GetLen() const { return itsLen; }
+    const char * getString() const { return itsString; }
+private:
+    String (unsigned short);
+    char * itsString;
+    unsigned short itsLen;
+};
