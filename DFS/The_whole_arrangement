@@ -26,8 +26,8 @@ using namespace std;
 **********************************************************************************/
 
 
-int a[100]={0};
-int book[100]={0};
+int a[10]={0};
+int book[10]={0};
 int n;   //The global variable
 
 void dfs(int step){  //step if shows where you are before the box  step表示现在站在第几个盒子面前
