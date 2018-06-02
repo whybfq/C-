@@ -8,12 +8,13 @@
 #include <cstring>
 using namespace std;
 int main(){
-    char a[101], s[101];
-    int i, len , mid, next, top;
-
+    char a[101]={0}, s[101]={0};
     cin>>a;              ///cin a string
+    int i, len , mid , next, top;
+
     len = strlen(a);     ///the length of the string
     mid = len/2 - 1;     ///the midpoint of the string
+
 
     top = 0;             ///Stack initialization
     for (int j = 0; j <= mid ; ++j) {       ///All characters before midpoint are in the stack.
