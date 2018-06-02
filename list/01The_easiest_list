@@ -10,7 +10,11 @@
   * Date:  2018-06-02
   * Total lines of code： 13
   * Core lines of code:  5
-  * Description:  use array to achieve the easiest list
+  * Description: use the easiest list to play a game,delete the first number ,put the second in the end;
+  *              delete the third number than put the fourth in the end, continue like this...
+  *              until the last number, delete it as well
+  *              print the order you delete the number just now
+  * 
   * Others:
   * Function List:
      1. none
