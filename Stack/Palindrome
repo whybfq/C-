@@ -33,7 +33,6 @@ int main(){
         if(a[i] != s[top--]){
             break;
         }
-        //top--;
     }
 
     if(top == 0) cout<<"YES, It's a palindrome"<<endl;    ///if top == 0 , then  it's all matched.
