@@ -29,7 +29,7 @@
 using namespace std;
 
 int main(){
-    int q[100]={0,3,45,232,5,13,23,32},head=1,tail=10,i;   //初始化队列，假设队列中有9个数
+    int q[100]={0,6 ,3 ,1, 7, 5, 8, 9, 2, 4},head=1,tail=10,i;   //初始化队列，假设队列中有9个数
     while(head < tail){
         cout<<q[head]<<" "<<endl;   //队首出队，打印队首
         ++head;
@@ -39,3 +39,45 @@ int main(){
         ++head;    //再将队首出队
     }
 }
+
+Output:
+6 1 5 9 4 7 2 8 3
+
+
+/**********************************************************************************
+ * History:  //修改历史记录列表，每条修改记录应包含修改日期、修改者及修改内容简介
+     1.Date: 2018/06/02
+       Author: Sanner
+       Modification: Use struct to improve the original program
+     
+**********************************************************************************/
+struct queue{
+   int data[100];
+   int head;
+   int tail;
+}
+
+int main(){
+    struct queue q;
+    q.head=1,q.tail=1;
+    int i;
+    for(i=1;i<=9;++i){
+        cin>>q.data[q.tail];
+        q.tail++;
+    }
+
+    while(q.head < q.tail){
+        cout<<q.data[q.head]<<" ";
+        q.head++;
+        q.data[q.tail] = q.data[q.head];
+        q.tail++;
+        q.head++;
+    }
+    getchar();
+}
+
+Input:
+6 3 1 7 5 8 9 2 4
+
+Output:
+6 1 5 9 4 7 2 8 3 
