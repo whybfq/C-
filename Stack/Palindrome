@@ -1,6 +1,7 @@
 /**
  * @date 2018-04-26
  * @brief Determines whether a string is a palindrome.
+ * @note There is a little question:In line 22, you should use ++top, but can't use top++, why?
  */
 
 #include <cstdio>
