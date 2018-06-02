@@ -18,8 +18,8 @@ int main(){
 
     top = 0;             ///Stack initialization
     for (int j = 0; j <= mid ; ++j) {       ///All characters before midpoint are in the stack.
-        s[++top] = a[j];
-    }
+        s[++top] = a[j];          ///!!!you need to add top first for it will And then it is going to go down to 0 to judge
+    }                             
 
     if(len % 2 == 0){             ///Determine whether the length of the string is odd or even, and find the inspiration index that requires character matching.
         next = mid + 1;
