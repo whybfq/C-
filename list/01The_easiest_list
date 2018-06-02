@@ -62,13 +62,12 @@ int main(){
     q.head=1,q.tail=1;
     int i;
     for(i=1;i<=9;++i){
-        cin>>q.data[q.tail];
-        q.tail++;
+        cin>>q.data[q.tail++];   
     }
 
     while(q.head < q.tail){
-        cout<<q.data[q.head]<<" ";
-        q.head++;
+        cout<<q.data[q.head++]<<" ";      //if you use ++q.head will have different answers
+        
         q.data[q.tail] = q.data[q.head];
         q.tail++;
         q.head++;
