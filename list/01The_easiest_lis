@@ -1,0 +1,41 @@
+
+
+/*********************************************************************************
+  *FileName:  t01The_easiest_lis
+  * Author:  Sanner
+  * Using C++11
+  * OS: macOS High Sierra
+  * IDE: Clion 2018.1
+  * Version:  **
+  * Date:  2018-06-02
+  * Total lines of code： 13
+  * Core lines of code:  5
+  * Description:  use array to achieve the easiest list
+  * Others:
+  * Function List:
+     1. none
+  * variable:
+      head    --队列的第一个元素，跳过数组的第一个元素，因此q[0]==0
+      tail    --指向队尾的后一个位置
+  * History:  //修改历史记录列表，每条修改记录应包含修改日期、修改者及修改内容简介
+     1.Date: 2018/06/02
+       Author: W
+       Modification: Original
+     2.…………
+**********************************************************************************/
+
+#include <iostream>
+
+using namespace std;
+
+int main(){
+    int q[100]={0,3,45,232,5,13,23,32},head=1,tail=10,i;   //初始化队列，假设队列中有9个数
+    while(head < tail){
+        cout<<q[head]<<" "<<endl;   //队首出队，打印队首
+        ++head;
+
+        q[tail] = q[head];   //将新队首队数添加到队尾
+        ++tail;    //队尾加1，tail指向最后一个元素后一位
+        ++head;    //再将队首出队
+    }
+}
