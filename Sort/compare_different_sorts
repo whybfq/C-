@@ -31,7 +31,7 @@ void Swap(int A[] , int i, int j){
     A[j] = temp;
 }
 
-template <class T>
+template <typename T>
 void swap1(T& a, T& b){
     T c(a);
     a=b;
