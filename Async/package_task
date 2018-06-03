@@ -1,0 +1,50 @@
+/**
+ * @date 2018-06-03
+ * @brief 这
+ * @note  IDE: Clion 2018.3   OS: macOS High Sierra
+ * @author whybfq
+ * @cite   timed_mutex 超时的独占锁
+ * @bug   There is a problem in the program. It can't be run right.
+  * History:  //修改历史记录列表，每条修改记录应包含修改日期、修改者及修改内容简介
+     1.Date: 2018/06/03
+       Author: whybfq
+       Modification: Original
+     2.…………
+ */
+
+
+
+#include <atomic>
+#include <thread>
+#include <mutex>
+#include <iostream>
+#include <utility>
+#include <vector>
+#include <future>
+
+using namespace std;
+
+std::once_flag flag;
+void do_once(){
+    call_once(flag,[](){ cout<<"called once"<<endl; } );
+}
+
+int func(int x){ return x+2; }
+int main() {
+   packaged_task<int(int)> tsk(func);
+   future<int> fut  = tsk.get_future();     //get future
+           thread(move(tsk),2).detach();
+           int value = fut.get();
+           cout<<"The result is : "<<value<<endl;
+           vector<shared_future<int>> v;
+           auto f=std::async(launch::async,
+                   [](int a,int b){return a+b; } ,2,3);
+           v.emplace_back(f);
+           cout<<"The shared_futureresult is "<<v[0].get() << endl;
+
+}
+
+Output:
+The result is : 4
+The shared_futureresult is 5
+
