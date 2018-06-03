@@ -1,0 +1,52 @@
+
+#include <mutex>
+#include <chrono>
+#include <thread>
+
+#include <iostream>
+
+using namespace std;
+
+
+/**
+ * @date 2018-06-03
+ * @brief use a while loop to 不断获取超时锁，如果超时还没有获取到锁时就休眠100毫秒，再继续获取超时锁
+ * @note  IDE: Clion 2018.3   OS: macOS High Sierra
+ * @author Sanner
+ * @cite   timed_mutex 超时的独占锁
+ * @bug
+  * History:  //修改历史记录列表，每条修改记录应包含修改日期、修改者及修改内容简介
+     1.Date: 2018/06/03
+       Author: W
+       Modification: Original
+     2.…………
+ */
+
+
+std::timed_mutex mutex1;
+void work() {
+    chrono::milliseconds timeout(100);
+    while (true) {
+        if (mutex1.try_lock_for(timeout)) {    //超时等待的递归锁   //try_lovk_for is similar to try_lock_until to get the timeout 获取超时时间
+            cout << this_thread::get_id() << ": do work with the mutex" << endl;
+            chrono::milliseconds sleepDuration(230);
+            this_thread::sleep_for(sleepDuration);
+
+            mutex1.unlock();
+            this_thread::sleep_for(sleepDuration);
+
+        } else {
+            cout << this_thread::get_id() << ": do work without mutex" << endl;
+            chrono::milliseconds sleepDuration(100);
+            this_thread::sleep_for(sleepDuration);
+        }
+    }
+}
+
+int main(int argc, char const *argv[]) {
+    thread t1(work);
+    thread t2(work);
+    t1.join();
+    t2.join();
+    return 0;
+}
