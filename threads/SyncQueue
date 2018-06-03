@@ -1,0 +1,88 @@
+/**
+ * @date 2018-06-03
+ * @brief 这个同步队列在没有满的情况下可以插入数据，如果满量，调用m_notFull阻塞等待，待消费线程取出数据之后发出一个未满的通知，
+ *        然后前面阻塞的线程就会被唤醒继续往下执行，如果队列为空，就不能收取数据，会调用m_notEmpty条件变量阻塞，等待插入数据的
+ *        线程发出不为空的通知时，才能继续往下执行。   以上为同步队列的工作过程。
+ * @note  IDE: Clion 2018.3   OS: macOS High Sierra
+ * @author whybfq
+ * @cite   timed_mutex 超时的独占锁
+ * @bug
+  * History:  //修改历史记录列表，每条修改记录应包含修改日期、修改者及修改内容简介
+     1.Date: 2018/06/03
+       Author: whybfq
+       Modification: Original
+     2.…………
+ */
+
+#include <mutex>
+#include <thread>
+#include <condition_variable>
+#include <iostream>
+#include <list>
+
+using namespace std;
+
+//struct node{
+//    int data;
+//    struct node* next;
+//}list;
+
+template<typename T>
+
+class SyncQueue{
+private:
+    int m_maxSize;          //同步队列最大的size
+    mutex m_mutex1;         //互斥量和条件变量结合使用
+    list<T> m_queue;        //缓冲区
+    condition_variable_any m_notEmpty;  //不为空的条件变量
+    condition_variable_any m_notFull;   //没有满的条件变量
+
+    bool IsFull() const{
+        return m_queue.size() == m_maxSize;
+    }
+    bool IsEmpty() const{
+        return m_queue.empty();
+    }
+public:
+    SyncQueue(int maxSize):m_maxSize(maxSize){}
+    void Put(const T& x){
+        lock_guard<mutex> locker(m_mutex1);  //lock_guard利用RAII机制可以保证安全释放mutex， 需要等到变量生命周期结束时才能释放。 与unique_lock自由释放不同
+        while(IsFull()){               //m_notFull.wait(locker, [this](return !IsFull(); ));
+            cout<<" The buffer is full, need to wait for a while ... "<<endl;
+            m_notFull.wait(m_mutex1);
+        }
+        m_queue.emplace_back(x);
+        m_notEmpty.notify_one();
+    }
+    void Take(T& x){
+        lock_guard<mutex> locker(m_mutex1);
+        while(IsEmpty()){
+            cout<<" The buffer is empty! Need to wait..."<<endl;
+            m_notEmpty.wait(m_mutex1);
+        }
+        x = m_queue.front();
+        m_queue.pop_front();
+        m_notFull.notify_one();
+    }
+    bool Empty(){
+        lock_guard<mutex> locker(m_mutex1);
+        return m_queue.empty();
+    }
+    bool Full(){
+        lock_guard<mutex> lock(m_mutex1);
+        return m_queue.size() == m_maxSize;
+    }
+    size_t Size(){
+        lock_guard<mutex> locker(m_mutex1);
+        return m_queue.size();
+    }
+    int Count(){
+        return m_queue.size();
+    }
+};
+
+
+int main(int argc, char const *argv[]) {
+
+    return 0;
+}
