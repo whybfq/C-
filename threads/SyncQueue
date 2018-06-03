@@ -86,3 +86,65 @@ int main(int argc, char const *argv[]) {
 
     return 0;
 }
+
+
+/**
+History:  //修改历史记录列表，每条修改记录应包含修改日期、修改者及修改内容简介
+1.Date: 2018/06/03
+  Author: whybfq
+  Modification: 1. change class name to SimpleSyncQueue
+                2. use unique_lock and condition_variable to achieve program
+                3. not use loop while(IsFull())
+                4. delete function bool Full()
+                5. delete function int Count()
+  @bug 这里 需要 注意 的 是， wait 函数 中会 释放 mutex， 而 lock_ guard 这时 还 拥有 mutex， 它 只会 在 出了 作用域 之后 才会 释放 mutex，
+       所以， 这时 它 并不 会 释放， 但 执行 wait 时会 提前 释放 mutex。 从 语义 上看 这里 使用 lock_ guard 会 产生 矛盾， 但是 实际上 并不 会 出问题，
+       因为 wait 提前 释放 锁 之后 会 处于 等待 状态， 在被 notify_ one 或者 notify_ all 唤醒 之后 会 先 获取 mutex， 
+       这 相当于 lock_ guard 的 mutex 在 释放 之后 又 获取 到了， 因此， 在 出了 作用域 之后 lock_ guard 自动 释放 mutex 不会 有问题。 
+       这里 应该 用 unique_ lock， 因为 unique_ lock 不像 lock_ guard 一样 只 能在 析 构 时 才 释放 锁， 它可 以 随时 释放 锁， 
+       因此， 在 wait 时 让 unique_ lock 释放 锁 从 语义 上看 更加 准确。
+
+**/
+
+template<typename T>
+
+class SimpleSyncQueue{
+private:
+    int m_maxSize;          //同步队列最大的size
+    mutex m_mutex1;         //互斥量和条件变量结合使用
+    list<T> m_queue;        //缓冲区
+    condition_variable_any m_notEmpty;  //不为空的条件变量
+    condition_variable_any m_notFull;   //没有满的条件变量
+
+    bool IsFull() const{
+        return m_queue.size() == m_maxSize;
+    }
+    bool IsEmpty() const{
+        return m_queue.empty();
+    }
+public:
+    SimpleSyncQueue(){}
+    void Put(const T& x){                  //not use loop while(IsFull())
+        lock_guard<mutex> locker(m_mutex1);  //lock_guard利用RAII机制可以保证安全释放mutex， 需要等到变量生命周期结束时才能释放。 与unique_lock自由释放不同
+        m_queue.emplace_back(x);
+        m_notEmpty.notify_one();
+    }
+    void Take(T& x){
+        unique_lock<mutex> locker(m_mutex1);    ////use unique_lock  to replace lock_guard
+        m_notEmpty.wait(locker,[this]{ return; !m_queue.empty();  } ); //满足条件，重新获取mutex,结束wait,继续往下执行；不满足条件,释放mutex,将线程设置为waiting状态
+        x = m_queue.front();
+        m_queue.pop_front();
+
+    }
+    bool Empty(){
+        lock_guard<mutex> locker(m_mutex1);
+        return m_queue.empty();
+    }
+
+    size_t Size(){
+        lock_guard<mutex> locker(m_mutex1);
+        return m_queue.size();
+    }
+};
+
+
