@@ -303,7 +303,7 @@ void shell(int*data,unsigned int len)
 {
     if(len<=1||data==NULL)
         return;
-    for(int div=len/2;div>=1;div=div/2)//定增量div，并不断减小
+    for(int div=len/2;div>=1;div /= 2)//定增量div，并不断减小
     {
         for(int i=0;i<=div;++i)//分组成div组
         {
