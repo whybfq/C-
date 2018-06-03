@@ -356,8 +356,7 @@ void QuickSort1(int a[], int low, int high)
             ++first;
         }
 
-        a[last] = a[first];
-/*将比第一个大的移到高端*/
+        a[last] = a[first]; /*将比第一个大的移到高端*/
     }
     a[first] = key;/*枢轴记录到位*/
     QuickSort1(a, low, first-1);
