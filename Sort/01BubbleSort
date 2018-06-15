@@ -147,69 +147,6 @@ void SelectionSort2(T *A, int n){
     }
 }
 
-/*
-template <class Iter> //arrays and others containers (like list, vector, deque, ...)
-void selection_sort(Iter begin, Iter end) {  //range [)
-    for( int beg = begin ; beg != end ; ++i)
-        std::swap(
-                *begin,
-                *std::minimum_element(begin,end)
-                );
-}*/
-
-/******************************************************************************************************/
-
-/******************************************************************************************************/
-// 快速排序
-// 数据结构 --------- 数组
-
-// 最差时间复杂度 ---- 每次选取的基准都是最大（或最小）的元素，导致每次只划分出了一个分区，需要进行n-1次划分才能结束递归，时间复杂度为O(n^2)
-
-// 最优时间复杂度 ---- 每次选取的基准都是中位数，这样每次都均匀的划分出两个分区，只需要logn次划分就能结束递归，时间复杂度为O(nlogn)
-
-// 平均时间复杂度 ---- O(nlogn)
-
-// 所需辅助空间 ------ 主要是递归造成的栈空间的使用(用来保存left和right等局部变量)，取决于递归树的深度，一般为O(logn)，最差为O(n)
-
-// 稳定性 ---------- 不稳定
-
-
-
-//Reference: https://baike.baidu.com/item/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95?fromtitle=%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F&fromid=2084344#3_5
-void QuickSort1(int a[], int low, int high)
-{
-    if(low >= high)
-    {
-        return;
-    }
-    int first = low;
-    int last = high;
-    int key = a[first];/*用字表的第一个记录作为枢轴*/
-
-    while(first < last)
-    {
-        while(first < last && a[last] >= key)
-        {
-            --last;
-        }
-
-        a[first] = a[last];/*将比第一个小的移到低端*/
-
-        while(first < last && a[first] <= key)
-        {
-            ++first;
-        }
-
-        a[last] = a[first]; /*将比第一个大的移到高端*/
-    }
-    a[first] = key;/*枢轴记录到位*/
-    QuickSort1(a, low, first-1);
-    QuickSort1(a, first+1, high);
-}
-
-/******************************************************************************************************/
-
-
 
 /******************************************************************************************************/
 
@@ -218,13 +155,7 @@ int main(){
     int n = sizeof(A)/sizeof(int);
 //    BubbleSort(A,n);
 //    CocktailSort(A,n);
-//    SelectionSort2(A,n);
-//    selection_sort(A,A+n);
-//    InsertionSort1(A,n);
-//    InsertionSortDichotomy(A,n);
-//    ShellSort(A,n);
-//    shell(A,n);
-    QuickSort1(A,0,n-1);
+
     cout<<"the resulr of Sort: "<<endl;
     for(int i=0;i<n;++i){
         cout<<A[i]<<" "<<endl;
