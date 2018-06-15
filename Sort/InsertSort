@@ -1,0 +1,217 @@
+//Reference : https://mp.weixin.qq.com/s/Vq1dpZm2Mx_qeDofOuvObw
+
+/*********************************************************************************
+  *Author:  Sanner
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra
+  *Processor: 2.2 GHz Intel Core i7
+  *Date:  2018-06-02
+  *Description:  This file contains all kinds of insertSort methods(InsertionSortDichotomy && Shell Sort)
+  *Others:
+  *Function List:
+     1.  void Swap(int A[] , int i, int j   -- exchange A[i] and A[j],dtype=int
+     2.  void swap1(T&a,T&b)                -- exchange a and b
+
+  *History:  //修改历史记录列表，每条修改记录应包含修改日期、修改者及修改内容简介
+     1.Date: 2018/06/02
+       Author: sanner
+       Modification: Original
+     2.…………
+**********************************************************************************/
+
+#include <cstdlib>
+#include <iostream>
+#include <utility>
+using namespace std;
+
+void Swap(int A[] , int i, int j){
+    int temp = A[i];
+    A[i] = A[j];
+    A[j] = temp;
+}
+
+template <typename T>
+void swap1(T& a, T& b){
+    T c(a);
+    a=b;
+    b=c;
+}
+
+
+/******************************************************************************************************/
+
+//insertionSort
+// 数据结构 ---------- 数组
+
+// 最差时间复杂度 ---- 最坏情况为输入序列是降序排列的,此时时间复杂度O(n^2)
+
+// 最优时间复杂度 ---- 最好情况为输入序列是升序排列的,此时时间复杂度O(n)
+
+// 平均时间复杂度 ---- O(n^2)
+
+// 所需辅助空间 ------ O(1)
+
+// 稳定性 ------------ 稳定
+//插入排序不适合对于数据量比较大的排序应用。但是，如果需要排序的数据量很小，比如量级小于千，那么插入排序还是一个不错的选择。
+//插入排序在工业级库中也有着广泛的应用，在STL的sort算法和stdlib的qsort算法中，都将插入排序作为快速排序的补充，用于少量元素的排序（通常为8个或以下）
+void InsertionSort(int *A, int n)
+{
+
+    for (int i = 1; i < n ; ++i) {   // 类似抓扑克牌排序
+        int get = A[i];                 // 右手抓到一张扑克牌
+        int j = i - 1;                  // 拿在左手上的牌总是排序好的
+
+        while (j >= 0 && A[j] > get){    // 将抓到的牌与手牌从右向左进行比较
+            A[j + 1] = A[j];            // 如果该手牌比抓到的牌大，就将其右移
+            j--;
+        }
+            A[j + 1] = get; // 直到该手牌比抓到的牌小(或二者相等)，将抓到的牌插入到该手牌右边(相等元素的相对次序未变，所以插入排序是稳定的)
+    }
+
+}
+
+void InsertionSort1(int *A,unsigned int n){
+    int i,j,temp;
+    for(i=1;i<n;++i){
+        temp=*(A+i);
+        for(j=i; j>0 && *(A+j-1)>temp; --j){
+            *(A+j) = *(A+j-1);
+        }
+        *(A+j) = temp;
+    }
+}
+
+//插入排序的改进：二分插入排序
+// 数据结构 ---------- 数组
+
+// 最差时间复杂度 ---- O(n^2)
+
+// 最优时间复杂度 ---- O(nlogn)
+
+// 平均时间复杂度 ---- O(n^2)
+
+// 所需辅助空间 ------ O(1)
+
+// 稳定性 ------------ 稳定
+//当n较大时，二分插入排序的比较次数比直接插入排序的最差情况好得多，但比直接插入排序的最好情况要差，
+// 所当以元素初始序列已经接近升序时，直接插入排序比二分插入排序比较次数少。
+// 二分插入排序元素移动次数与直接插入排序相同，依赖于元素初始序列。
+
+void InsertionSortDichotomy(int A[], int n) {
+    for (int i = 1; i < n; ++i)
+    {
+        int get = A[i];                    // 右手抓到一张扑克牌
+
+        int left = 0;                    // 拿在左手上的牌总是排序好的，所以可以用二分法
+
+        int right = i - 1;                // 手牌左右边界进行初始化
+
+        while (left <= right){  // 采用二分法定位新牌的位置
+            int mid = (left + right) / 2;
+            if (A[mid] > get)
+                right = mid - 1;
+            else
+                left = mid + 1;
+            }
+            for (int j = i - 1; j >= left; j--)    // 将欲插入新牌位置右边的牌整体向右移动一个单位
+            {
+                A[j + 1] = A[j];
+            }
+        A[left] = get;                    // 将抓到的牌插入手牌
+    }
+}
+
+
+/******************************************************************************************************/
+//插入排序的更高效改进：希尔排序(Shell Sort)
+//插入排序在对几乎已经排好序的数据操作时，效率高，即可以达到线性排序的效率
+//
+//但插入排序一般来说是低效的，因为插入排序每次只能将数据移动一位
+//
+//希尔排序通过将比较的全部元素分为几个区域来提升插入排序的性能。这样可以让一个元素可以一次性地朝最终位置前进一大步。然后算法再取越来越小的步长进行排序，算法的最后一步就是普通的插入排序，但是到了这步，需排序的数据几乎是已排好的了（此时插入排序较快）。
+//假设有一个很小的数据在一个已按升序排好序的数组的末端。如果用复杂度为O(n^2)的排序（冒泡排序或直接插入排序），可能会进行n次的比较和交换才能将该数据移至正确位置。而希尔排序会用较大的步长移动数据，所以小数据只需进行少数比较和交换即可到正确位置。
+
+// 数据结构 ---------- 数组
+
+// 最差时间复杂度 ---- 根据步长序列的不同而不同。已知最好的为O(n(logn)^2)
+
+// 最优时间复杂度 ---- O(n)
+
+// 平均时间复杂度 ---- 根据步长序列的不同而不同。
+
+// 所需辅助空间 ------ O(1)
+
+// 稳定性 ------------ 不稳定
+
+
+
+void ShellSort(int A[], int n)
+{
+
+    int h = 0;
+
+    while (h < n) {// 生成初始增量
+        h = 3 * h + 1;
+    }
+
+    while (h >= 1)
+    {
+
+        for (int i = h; i < n; i += h)
+            {
+                int j = i - h;
+
+                int get = A[i];
+
+                while (j >= 0 && A[j] > get)
+                {
+
+                    A[j + h] = A[j];
+
+                    j = j - h;
+
+                }
+
+                A[j + h] = get;
+
+            }
+
+            h = (h - 1) / 3;                    // 递减增量
+
+        }
+
+}
+
+void shell(int*data,unsigned int len)
+{
+    if(len<=1||data==NULL)
+        return;
+    for(int div=len/2;div>=1;div /= 2)//定增量div，并不断减小
+    {
+        for(int i=0;i<=div;++i)//分组成div组
+        {
+            for(int j=i;j<len-div;j+=div)//对每组进行插入排序
+                for(int k=j;k<len;k+=div)
+                    if(data[j]>data[k])
+                        Swap(data,j,k);//交换两个数的值
+        }
+    }
+}
+
+
+int main(){
+    int A[] = { 6, 5, 3, 1, 8, 7, 2, 4 };   // 从小到大定向冒泡排序
+    int n = sizeof(A)/sizeof(int);
+//    SelectionSort2(A,n);
+//    selection_sort(A,A+n);
+//    InsertionSort1(A,n);
+//    InsertionSortDichotomy(A,n);
+//    ShellSort(A,n);
+//    shell(A,n);
+   
+    cout<<"the resulr of Sort: "<<endl;
+    for(int i=0;i<n;++i){
+        cout<<A[i]<<" "<<endl;
+    }
+    cout<<endl;
+}
