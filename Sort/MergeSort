@@ -1,0 +1,206 @@
+//Reference : https://mp.weixin.qq.com/s/Vq1dpZm2Mx_qeDofOuvObw
+
+/*********************************************************************************
+  *Author:  Sanner
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra
+  *Processor: 2.2 GHz Intel Core i7
+  *Date:  2018-06-18
+  *Description:  This file contains all kinds of sorting methods
+  *Others:
+  *Function List:
+     1.  void Swap(int A[] , int i, int j   -- exchange A[i] and A[j],dtype=int
+     2.  void swap1(T&a,T&b)                -- exchange a and b
+
+  *History:  //修改历史记录列表，每条修改记录应包含修改日期、修改者及修改内容简介
+     1.Date: 2018/06/18
+       Author: sanner
+       Modification: Original
+     2.Date:
+**********************************************************************************/
+
+#include <cstdlib>
+#include <iostream>
+#include <utility>
+using namespace std;
+
+void Swap(int A[] , int i, int j){
+    int temp = A[i];
+    A[i] = A[j];
+    A[j] = temp;
+}
+
+template <typename T>
+void swap1(T& a, T& b){
+    T c(a);
+    a=b;
+    b=c;
+}
+
+/******************************************************************************************************/
+
+/*归并排序(Merge Sort)
+归并排序是创建在归并操作上的一种有效的排序算法，效率为O(nlogn)，1945年由冯·诺伊曼首次提出。
+
+归并排序的实现分为递归实现与非递归(迭代)实现。递归实现的归并排序是算法设计中分治策略的典型应用，我们将一个大问题分割成小问题分别解决，
+
+然后用所有小问题的答案来解决整个大问题。非递归(迭代)实现的归并排序首先进行是两两归并，然后四四归并，然后是八八归并，一直下去直到归并了整个数组。
+
+归并排序算法主要依赖归并(Merge)操作。归并操作指的是将两个已经排序的序列合并成一个序列的操作，归并操作步骤如下：
+
+申请空间，使其大小为两个已经排序序列之和，该空间用来存放合并后的序列
+
+设定两个指针，最初位置分别为两个已经排序序列的起始位置
+
+比较两个指针所指向的元素，选择相对小的元素放入到合并空间，并移动指针到下一位置
+
+重复步骤3直到某一指针到达序列尾
+
+将另一序列剩下的所有元素直接复制到合并序列尾
+
+归并排序的代码如下：*/
+// 数据结构 ---------- 数组
+
+// 最差时间复杂度 ---- O(nlogn)
+
+// 最优时间复杂度 ---- O(nlogn)
+
+// 平均时间复杂度 ---- O(nlogn)
+
+// 所需辅助空间 ------ O(n)
+
+// 稳定性 ------------ 稳定
+
+
+void Merge(int A[],int left,int mid,int right){    //merge the arraies which are A[left,mid] and A[mid+1,right]
+    int len = right - left + 1;
+    int *temp = new int[len];   //Auxiliary space O(n)
+    int index = 0;
+    int i = left;    //the starting element of the previous array
+    int j = mid + 1;  //the starting element of the latter array
+    while(i <= right){      // 带等号保证归并排序的稳定性
+        temp[index++] = A[i]; //Equals ensures stability of merge sort
+    }
+    while(i <= mid){
+        temp[index++] = A[i++];
+    }
+    while(j <= right){
+        temp[index++] = A[j++];
+    }
+    for(int k = 0; k < index ;++k){
+        A[left++] = temp[k];
+    }
+}
+
+void MergeSortRecursion(int A[],int left,int right){  //Recursive merge sort(The top-down)
+    if(left == right || left > right) return; //当待排序的序列长度为1时，递归开始回溯，进行merge操作
+    int mid = (left + right) /2 ;
+    MergeSortRecursion(A,left,mid);
+    MergeSortRecursion(A,mid+1,right);
+    Merge(A,left,mid,right);
+}
+
+void MergeSortIteration(int A[],int len){ //// 非递归(迭代)实现的归并排序(自底向上)
+    int left,mid,right;// 子数组索引,前一个为A[left...mid]，后一个子数组为A[mid+1...right]
+    for(int i=1; i<right; i*=2 ){ // 子数组的大小i初始为1，每轮翻倍
+        left = 0;
+        while(left+i ){   // 后一个子数组存在(需要归并)
+            mid = left + i - 1;
+
+            right = mid + i - 1;// 后一个子数组大小可能不够
+
+            Merge(A, left, mid, right);
+
+            left = right + 1;               // 前一个子数组索引向后移动
+        }
+    }
+}
+
+
+/*
+void merge(int *data, int start, int mid, int end, int *result)
+{
+    int i, j, k;
+    i = start;
+    j = mid + 1;                        //避免重复比较data[mid]
+    k = 0;
+    while (i <= mid && j <= end)        //数组data[start,mid]与数组(mid,end]均没有全部归入数组result中去
+    {
+        if (data[i] <= data[j])         //如果data[i]小于等于data[j]
+            result[k++] = data[i++];    //则将data[i]的值赋给result[k]，之后i,k各加一，表示后移一位
+        else
+            result[k++] = data[j++];    //否则，将data[j]的值赋给result[k]，j,k各加一
+    }
+    while (i <= mid)                    //表示数组data(mid,end]已经全部归入result数组中去了，而数组data[start,mid]还有剩余
+        result[k++] = data[i++];        //将数组data[start,mid]剩下的值，逐一归入数组result
+    while (j <= end)                    //表示数组data[start,mid]已经全部归入到result数组中去了，而数组(mid,high]还有剩余
+        result[k++] = data[j++];        //将数组a[mid,high]剩下的值，逐一归入数组result
+
+    for (i = 0; i < k; i++)             //将归并后的数组的值逐一赋给数组data[start,end]
+        data[start + i] = result[i];    //注意，应从data[start+i]开始赋值
+}
+void merge_sort(int *data, int start, int end, int *result)
+{
+    if (start < end)
+    {
+        int mid = (start + end) / 2;
+        merge_sort(data, start, mid, result);                    //对左边进行排序
+        merge_sort(data, mid + 1, end, result);                  //对右边进行排序
+        merge(data, start, mid, end, result);                    //把排序好的数据合并
+    }
+}
+void amalgamation(int *data1, int *data2, int *result)
+{
+    for (int i = 0; i < 10; i++)
+        result[i] = data1[i];
+    for (int i = 0; i < 10; i++)
+        result[i + 10] = data2[i];
+}
+*/
+
+/******************************************************************************************************/
+
+
+
+/******************************************************************************************************/
+
+int main(){
+    int A1[] = { 6, 5, 3, 1, 8, 7, 2, 4 };      // 从小到大归并排序
+
+    int A2[] = { 6, 5, 3, 1, 8, 7, 2, 4 };
+
+    int n1 = sizeof(A1) / sizeof(int);
+
+    int n2 = sizeof(A2) / sizeof(int);
+
+    MergeSortRecursion(A1, 0, n1 - 1);          // 递归实现
+
+    MergeSortIteration(A2, n2);                 // 非递归实现
+
+    printf("递归实现的归并排序结果：");
+
+    for (int i = 0; i < n1 ; ++i)
+
+    {
+
+        printf("%d ", A1[i]);
+
+    }
+
+    printf("n");
+
+    printf("非递归实现的归并排序结果：");
+
+    for (int i = 0; i < n2; ++i)
+
+    {
+
+        printf("%d ", A2[i]);
+
+    }
+
+    printf("n");
+
+    return 0;
+}
+
