@@ -166,41 +166,23 @@ void amalgamation(int *data1, int *data2, int *result)
 
 int main(){
     int A1[] = { 6, 5, 3, 1, 8, 7, 2, 4 };      // 从小到大归并排序
-
     int A2[] = { 6, 5, 3, 1, 8, 7, 2, 4 };
-
     int n1 = sizeof(A1) / sizeof(int);
-
     int n2 = sizeof(A2) / sizeof(int);
-
     MergeSortRecursion(A1, 0, n1 - 1);          // 递归实现
-
     MergeSortIteration(A2, n2);                 // 非递归实现
-
     printf("递归实现的归并排序结果：");
-
     for (int i = 0; i < n1 ; ++i)
-
     {
-
-        printf("%d ", A1[i]);
-
+        cout<<A1[i]<<" ";
     }
-
-    printf("n");
-
+    cout<<endl;
     printf("非递归实现的归并排序结果：");
-
     for (int i = 0; i < n2; ++i)
-
     {
-
-        printf("%d ", A2[i]);
-
+        cout<< A2[i] <<" ";
     }
-
-    printf("n");
-
+    cout<<endl;
     return 0;
 }
 
