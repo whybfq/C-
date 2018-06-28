@@ -1,3 +1,29 @@
+/*********************************************************************************
+  *FileName:  Maze (DFS走迷宫到达指定点)
+  *Author:  W
+  *Version:  **
+  *Date:  2018-06-28
+  *Bug: There is an error in the program for the answer is 3 not 7(right answer).
+  *Description:  Go through the maze to the designated point.Breadth first search to
+  *              go through the maze to calculate the min steps.
+  *Others:
+  *Function List:
+     1. void dfs(int x,int y, int step)  --the main function to go through the maze，
+                                         --x,y the start position coordinates, step means the steps
+        next[4][2]       -- the array of direction
+        (p,q)            -- the designed point
+        (x,y)            -- Your position coordinates
+        (startx,starty)  --  your beginning position coordinates
+        n                -- n lines
+        m                -- m columns
+  *History:  //修改历史记录列表，每条修改记录应包含修改日期、修改者及修改内容简介
+     1.Date: 2018/06/28
+       Author: W
+       Modification: Original
+     2.…………
+**********************************************************************************/
+
+
 #include <cstdio>
 #include <iostream>
 using namespace std;
