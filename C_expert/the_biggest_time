@@ -1,0 +1,10 @@
+#include <cstdio>
+#include <ctime>
+
+int main(int argc, char const *argv[]) {
+    time_t biggest = 0x7FFFFFFF;
+//    printf("bigges=%s\n",ctime(&biggest));    //wrong, ctime)_ converts its argument into local time
+    printf("bigges=%s\n",asctime(gmtime(&biggest) ));  //gmtime() to obtain the largest UTC time value.,this function doesn't return a printable string, 
+                                                // so we call asctime() to get this.
+    return 0;
+}
