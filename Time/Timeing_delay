@@ -8,5 +8,5 @@ int main() {
 
 //    sleep_for(10ns);
     sleep_for(nanoseconds(10));
-    sleep_until(system_clock::now() + seconds(1));
+    sleep_until(system_clock::now() + seconds(1));  //睡眠的实际持续时间取决于实现：您可以要求睡眠10纳秒，但实现可能最终会在一毫秒内休眠，如果这是最短的时间。
 }
