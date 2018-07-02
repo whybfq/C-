@@ -8,3 +8,7 @@ int main(int argc, char const *argv[]) {
                                                 // so we call asctime() to get this.
     return 0;
 }
+
+
+Output:
+bigges=Tue Jan 19 03:14:07 2038
