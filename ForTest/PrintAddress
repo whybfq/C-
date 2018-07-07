@@ -1,0 +1,57 @@
+
+/*********************************************************************************
+  *Author:  Sanner
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra
+  *Processor: 2.2 GHz Intel Core i7
+  *Date:  July 7,2018
+  *Description:  This file used to print the address of some variable in memory
+  *Others: 若想知道一个复合对象的各个成员在内存中如何排列，先声明的成员在高地址还是低地址，或class的各个访问区段的成员之间是如何排序的。
+  *If you want to know how each member of a composite object is arranged in memory, the first declared member is sorted between the high address or the low address, or between the members of each access segment of the class.
+  *Function List:
+     1.
+
+  *History:  //修改历史记录列表，每条修改记录应包含修改日期、修改者及修改内容简介
+     1.Date: July 7,2018
+       Author: sanner
+       Modification: Original
+     2.Date:
+       Author: sanner
+       Modification:
+
+**********************************************************************************/
+
+#include <cstdio>
+#include <iostream>
+using namespace std;
+
+class TestArrange{
+private:
+    int m_int;
+    char m_ch2;
+public:
+    long m_Ing;
+    char m_ch1;
+    TestArrange(){
+        m_Ing=0;
+        m_ch1='a';
+        m_int=0;
+        m_ch2='a';
+    }
+    const int* GetIntAddr(){ return &m_int; }
+    const char* GetChar2Addr(){ return &m_ch2; }
+};
+
+int main(int argc, char const *argv[]) {
+    TestArrange test;
+    cout<<"Address of test object: "<<&test<<endl;
+    cout<<endl;
+    cout<<"Address of m_Ing:"<<&(test.m_Ing)<<endl;
+    printf("Address of m_ch1:%p\n",&test.m_ch1);   //use %p to print the address of in standard I/0 in C language
+    //在C++中，除了字符串的地址无法直接输出，其他都可以用"&"输出，此时，可以采用把任何类型的地址或指针强制转换成void*就可输出
+    //In C++, except that the address of a string cannot be directly output, others can be output with "&". In this case, any type of address or pointer can be cast to void* to output.
+    cout<<"Address of m_int: "<<test.GetIntAddr()<<endl;
+    cout<<"Address of m_ch2 :"<<(void*)test.GetChar2Addr()<<endl;
+
+    return 0;
+}
