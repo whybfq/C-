@@ -55,3 +55,11 @@ int main(int argc, char const *argv[]) {
 
     return 0;
 }
+
+Output:
+Address of test object: 0x7ffee8d14968
+
+Address of m_Ing:0x7ffee8d14970
+Address of m_ch1:0x7ffee8d14978
+Address of m_int: 0x7ffee8d14968
+Address of m_ch2 :0x7ffee8d1496c
