@@ -27,9 +27,18 @@ int main(int argc, char const *argv[]) {
     cout<<"Address of test object: "<<&test<<endl;
     cout<<endl;
     cout<<"Address of m_Ing:"<<&(test.m_Ing)<<endl;
-    printf("Address of m_ch1:%p\n",&test.m_ch1);    //use %p to print the address of 
+    printf("Address of m_ch1:%p\n",&test.m_ch1);    //use %p to print the address of in standard I/0 in C language
     cout<<"Address of m_int: "<<test.GetIntAddr()<<endl;
     cout<<"Address of m_ch2 :"<<(void*)test.GetChar2Addr()<<endl;
 
     return 0;
 }
+
+Output:
+
+Address of test object: 0x7ffee8d14968
+
+Address of m_Ing:0x7ffee8d14970
+Address of m_ch1:0x7ffee8d14978
+Address of m_int: 0x7ffee8d14968
+Address of m_ch2 :0x7ffee8d1496c
