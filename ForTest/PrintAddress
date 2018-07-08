@@ -47,6 +47,7 @@ int main(int argc, char const *argv[]) {
     cout<<"Address of test object: "<<&test<<endl;
     cout<<endl;
     cout<<"Address of m_Ing:"<<&(test.m_Ing)<<endl;
+    //the difference between "%x" and "%p" are shows the hexadecimal uppercase
     printf("Address of m_ch1:%p\n",&test.m_ch1);   //use %p to print the address of in standard I/0 in C language
     //在C++中，除了字符串的地址无法直接输出，其他都可以用"&"输出，此时，可以采用把任何类型的地址或指针强制转换成void*就可输出
     //In C++, except that the address of a string cannot be directly output, others can be output with "&". In this case, any type of address or pointer can be cast to void* to output.
