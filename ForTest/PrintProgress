@@ -1,0 +1,46 @@
+
+/*********************************************************************************
+  *Author:  Sanner
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra
+  *Processor: 2.2 GHz Intel Core i7
+  *Date:  July 9,2018
+  *Description:  This file used to print the address of a program
+  *Others: 
+  *
+  *Function List:
+     1.
+
+  *History:  //修改历史记录列表，每条修改记录应包含修改日期、修改者及修改内容简介
+     1.Date: July 9,2018
+       Author: sanner
+       Modification: Original
+     2.Date:
+       Author: sanner
+       Modification:
+
+**********************************************************************************/
+
+#include <cstdio>
+#include <iostream>
+#include <vector>
+#include <fstream>
+#include "boost/progress.hpp"
+using namespace boost;
+using namespace std;
+
+int main(int argc, char const *argv[]) {
+    vector<string> v(100);
+    ofstream fs("./text.txt");
+    progress_display pd(v.size());
+    for(auto& x:v){
+        fs<<x<<endl;
+        ++pd;
+    }
+    return 0;
+}
+
+Output:
+0%   10   20   30   40   50   60   70   80   90   100%
+|----|----|----|----|----|----|----|----|----|----|
+***************************************************
