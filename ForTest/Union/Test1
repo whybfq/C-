@@ -75,3 +75,10 @@ int main(int argCount, char const *argValue[]) {
         }
     }
 }
+
+
+Output:
+123456
+HYQ
+Now ,id is type of name. 
+0.00 s
