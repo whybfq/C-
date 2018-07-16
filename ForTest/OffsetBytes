@@ -53,3 +53,21 @@ int main(int argCount, char const *argValue[]) {
     }
 }
 
+
+Output:
+32
+1
+0x7ffeebdb58a0
+0x7ffeebdb58a0
+0x7ffeebdb58a4
+0x7ffeebdb58a8
+0x7ffeebdb58b0ssss
+
+offsetof(Sedan,m_hasSkylight=0
+offsetof(Sedan,m_isAutoShift=8
+Address of s=0x7ffeebdb58a0
+offset of m_hasSkylight = 0
+offset of m_color = 4
+offset of m_isAutoShift=8
+offset of m_searNum =24
+0.00 s
