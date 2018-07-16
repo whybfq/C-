@@ -1,0 +1,77 @@
+/*********************************************************************************
+  *Author:  Sanner
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra
+  *Processor: 2.2 GHz Intel Core i7
+  *Date:  July 7,2018
+  *Description:  This file used to show the use of Union
+  *Others:  
+  *Function List:
+     1.
+
+  *History:  //modify history list, every record should consist the date, Revision and modification content introduction
+     1.Date: July 16,2018
+       Author: sanner
+       Modification: Original
+     2.Date:
+       Author: sanner
+       Modification:
+
+**********************************************************************************/
+
+#include <cstdio>
+#include <boost/timer.hpp>
+#include <boost/progress.hpp>
+#include <cassert>
+#include <cmath>
+#include <iostream>
+#include <iomanip>
+using namespace std;
+using namespace boost;
+
+class Person{
+private:
+    union Choice{
+        unsigned long ID;
+        char name[20];
+    };
+    Choice id;
+    bool type;
+public:
+    Person(): type(true){ id.ID=0; }
+    void SetID(unsigned long newId){
+        id.ID = newId;
+        type = true;
+    }
+    unsigned long GetID()const {
+        assert(type!=false);
+        return id.ID;
+    }
+    void SetName(const char* name){
+        strcpy(id.name,name);
+        type = false;
+    }
+    const char*GetName() const{
+        assert(type == false);
+        return id.name;
+    }
+    bool IDIsSelected() const{ return type; }
+    bool NameIsSelected() const{ return(!type);}
+};
+
+int main(int argCount, char const *argValue[]) {
+    {
+        progress_timer t1;
+        Person p;
+        p.SetID(123456);
+        cout<<p.GetID()<<endl;
+        p.SetName("HYQ");
+        cout<<p.GetName()<<endl;
+        if(p.NameIsSelected()){
+            cout<<"Now ,id is type of name. "<<endl;
+        }
+        else {
+            cout<<"Now ,id is type ofo ID. "<<endl;
+        }
+    }
+}
