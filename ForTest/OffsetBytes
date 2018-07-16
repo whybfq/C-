@@ -74,6 +74,23 @@ int main(int argCount, char const *argValue[]) {
     }
 }
 
+//指定代码使用编译器支持的方法来为每个复合数据类型指定对齐方式，或为多个复合类型共同指定一个对齐方式
+#ifdef _MSC_VER
+#pragma pack(push,8) //按8byte 边界对齐   如果对齐字节数减小到4或2字节，大小和布局相同，减到1字节，末尾填充字节去掉，Sedan1的大小会变为15字节，所有成员的偏移不改变
+#endif
+struct Sedan1{  //16 byte
+    double m_price;  //8 byte
+    Color m_color;   //4 byte
+
+    //4 byte, fill one byte at the end
+    bool m_hasSkylight;
+    bool m_isAutoShift;
+    BYTE m_seatNum;
+};
+
+#ifdef _MSC_VER
+#pragma pack(pop)
+#endif
 
 
 Output:
