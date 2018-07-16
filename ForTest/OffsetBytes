@@ -85,7 +85,7 @@ struct Sedan1{  //16 byte
     //4 byte, fill one byte at the end
     bool m_hasSkylight;
     bool m_isAutoShift;
-    BYTE m_seatNum;
+    BYTE m_seatNum;      //为了吸收末尾的填充字节，可以考虑将BYTE换成short
 };
 
 #ifdef _MSC_VER
