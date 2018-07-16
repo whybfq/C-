@@ -1,0 +1,55 @@
+#include <cstdio>
+#include <boost/timer.hpp>
+#include <boost/progress.hpp>
+#include <cmath>
+#include <iostream>
+using namespace std;
+using namespace boost;
+
+typedef unsigned char BYTE;
+enum Color{
+    RED=0x01, BLUE , GREEN, YELLOW, BLACK
+};
+
+struct Sedan{
+    bool m_hasSkylight;  //4 byte
+    Color m_color;       //4 byte
+    bool m_isAutoShift;  //8 byte
+    double m_price;      //8 byte
+    BYTE m_seatNum;      //8 byte
+
+};   //The total is 32 byte and it causes a waste for the memory
+
+
+int main(int argCount, char const *argValue[]) {
+    {
+        progress_timer t1;
+        Sedan s;
+        cout<< sizeof(s)<<endl;
+        cout<< sizeof(BYTE) << endl ;
+        cout<< &s<<endl;
+        cout<< &s.m_hasSkylight <<endl;
+        cout<< &s.m_color<<endl;
+        cout<< &s.m_isAutoShift<<endl;
+        cout<< &s.m_price<< "ssss"<< endl;
+        cout<< &s.m_seatNum<<endl;
+
+        //计算任意复合类型中每个数据成员的偏移字节数，有两种方法：
+        ///（1） 使用offset()宏， 还会考虑隐含成员（如Vptr)vvvvvv
+        cout<<"offsetof(Sedan,m_hasSkylight="<<offsetof(Sedan,m_hasSkylight)<<endl;
+        cout<<"offsetof(Sedan,m_isAutoShift="<<offsetof(Sedan,m_isAutoShift)<<endl;
+
+        //（2）定义一个对象，依次打印出对象的起始地址及其每个成员的地址，据此计算出每个成员的偏移，或直接将两个地址相减
+        cout<<"Address of s="<<(void*)&s<<endl;
+        cout<<"offset of m_hasSkylight = "<<((char*)&s.m_hasSkylight-(char*)&s)<<endl;
+        cout<<"offset of m_color = "<<((char*)&s.m_color-(char*)&s)<<endl;
+        cout<<"offset of m_isAutoShift="<<((char*)&s.m_isAutoShift-(char*)&s)<<endl;
+        cout<<"offset of m_searNum ="<<((char*)&s.m_seatNum-(char*)&s)<<endl;
+
+        bool Sedan::*pmSkylight=0;
+        pmSkylight = &Sedan::m_hasSkylight;
+        Color Sedan::*pmColor=&Sedan::m_color;
+        return 0;
+    }
+}
+
