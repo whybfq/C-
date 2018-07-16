@@ -1,3 +1,24 @@
+/*********************************************************************************
+  *Author:  Sanner
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra
+  *Processor: 2.2 GHz Intel Core i7
+  *Date:  July 7,2018
+  *Description:  This file used to Calculate the number of offset bytes for each data member in any composite type
+  *Others:  计算任意复合类型中每个数据成员的偏移字节数
+  *Function List:
+     1.
+
+  *History:  //modify history list, every record should consist the date, Revision and modification content introduction
+     1.Date: July 16,2018
+       Author: sanner
+       Modification: Original
+     2.Date:
+       Author: sanner
+       Modification:
+
+**********************************************************************************/
+
 #include <cstdio>
 #include <boost/timer.hpp>
 #include <boost/progress.hpp>
@@ -52,6 +73,7 @@ int main(int argCount, char const *argValue[]) {
         return 0;
     }
 }
+
 
 
 Output:
