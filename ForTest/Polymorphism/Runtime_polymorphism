@@ -1,0 +1,121 @@
+/*********************************************************************************
+  *Author:  Sanner
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra
+  *Processor: 2.2 GHz Intel Core i7
+  *Date:  July 17,2018
+  *Description:  This file used to show one of the use of Polymorphism
+  *Others:
+  *Function List:
+     1.
+
+  *History:  //modify history list, every record should consist the date, Revision and modification content introduction
+     1.Date: July 17,2018
+       Author: sanner
+       Modification: Original
+     2.Date:
+       Author: sanner
+       Modification:
+
+**********************************************************************************/
+#include <boost/timer.hpp>
+#include <boost/progress.hpp>
+
+#include <cstdio>
+#include <cassert>
+#include <cmath>
+#include <iostream>
+#include <iomanip>
+
+
+using namespace std;
+using namespace boost;
+
+struct Point{
+    Point(int x, int y) : m_x(x), m_y(y){ }
+    int m_x;
+    int m_y;
+};
+
+ostream& operator<<(ostream& os, const Point& p)
+{
+    cerr<<"\n{\tHorizontalOrdinate = "<<p.m_x \
+        <<"\n\tVerticalOrdinate = "<<p.m_y<<"\n}\n";
+    return os;
+}
+
+class Shape{
+    Point m_origin;
+public:
+    Shape() : m_origin(0,0){ }
+    explicit Shape(const Point& origin) : m_origin(origin){ }
+    virtual ~Shape() { cerr<<"Shape::~shape()"<<endl; }
+    Point GetOrigin() const{ return m_origin; }
+    virtual void draw() const {
+        cerr<<"Shape::Draw()"<<endl;
+        cerr<<"Origin Point : "<<m_origin<<endl;
+    }
+};
+
+class Circle : public Shape
+{
+    int m_radius;
+public:
+    Circle() : m_radius(){ }
+    Circle(const Point& origin, int radius) : Shape(origin),m_radius(radius){ }
+    virtual ~Circle() { cerr<<"Circle::~Circle()"<<endl; }
+    int GetRadius()const{ return m_radius; }
+    virtual void Draw() const {
+        cerr<<"Circle::Draw()"<<endl;
+        cerr<<"Origin POint : "<<GetOrigin()<<"Radius = "<<m_radius<<endl<<endl;
+    }
+
+};
+
+class Rectangle : public Shape
+{
+    Point m_rightBottom;
+public:
+    Rectangle() : m_rightBottom(1,1){ }
+    Rectangle(const Point& leftTop, const Point& rightBottom)
+            : Shape(leftTop), m_rightBottom(rightBottom){ }
+    virtual ~Rectangle() { cerr<<"Rectangle::~Rectangle()"<<endl; }
+    Point GetLeftTop() const{ return m_rightBottom; }
+    Point GetRightBottom() const{ return m_rightBottom; }
+    virtual void Draw() const {
+        cerr<<"Rectangle::Draw()"<<endl;
+        cerr<<"Left-top Point : "<<GetLeftTop()
+            <<"Right-bottom Point : "<<m_rightBottom<<endl;
+    }
+};
+
+void DrawShapes(const Shape shapes[], int numOfShapes)
+{
+    for (int i = 0; i < numOfShapes; ++i) {
+        shapes[i].draw();
+    }
+}
+
+int main(int argCount, char const *argValue[])
+{
+    {
+        progress_timer t1;
+//        cout << __DATE__ << endl << __TIME__ << endl;
+        cout << __TIMESTAMP__ << endl;  //the same as __DATE__ add __TIME__
+//        cout << __FILE__ << endl;
+
+        Shape a(Point(1,1));
+        Circle b(Point(2,2), 5);
+        Rectangle c(Point(3,3), Point(4,4));
+        Shape myShape[3];
+        myShape[0] = a;
+        myShape[1] = b;
+        myShape[3] = c;
+        for (int i = 0; i < 3; ++i)
+        {
+            myShape[i].draw();
+        }
+    }
+}
+
+
