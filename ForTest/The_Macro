@@ -1,0 +1,71 @@
+/*********************************************************************************
+  *Author:  Sanner
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra
+  *Processor: 2.2 GHz Intel Core i7
+  *Date:  July 7,2018
+  *Description:  This file used to show the use of define when a program is the state of Precompilation processing.
+  *Others:
+  *Function List:
+     1.
+
+  *History:  //modify history list, every record should consist the date, Revision and modification content introduction
+     1.Date: July 17,2018
+       Author: sanner
+       Modification: Original
+     2.Date:
+       Author: sanner
+       Modification:
+
+**********************************************************************************/
+//#include "./test.h"
+#include <boost/timer.hpp>
+#include <boost/progress.hpp>
+
+#include <cstdio>
+#include <cassert>
+#include <cmath>
+#include <iostream>
+#include <iomanip>
+
+
+using namespace std;
+using namespace boost;
+
+const int FLAG_DOS=2;
+const int FLAG_UNIX=1;
+const int FLAG_WIN =0;
+const int OS = 1;
+
+
+#define TEXT(x)  ((x)*(x))
+#define STRING(a) #a #a "class" "info"
+#define MERGE(b,c) b##c##b
+#define meTome 3
+
+int g_howManyValue;   //global value;
+int main(int argCount, char const *argValue[]) {
+    {
+        progress_timer t1;
+        cout<<__DATE__<<endl<<__TIME__<<endl;
+        cout<<__TIMESTAMP__<<endl;  //the same as __DATE__ add __TIME__
+        cout<<__FILE__<<endl;
+//        int x=5;
+#if OS == FLAG_DOS
+        cout<<"Dos platform"<<endl;
+#elif OS == FLAG_UNIX
+        cout <<"UNIX platflam"<<endl;
+#elif OS == FLAG_WIN
+ cout<<"Winddows platfrom"<<endl;
+#else
+ cout<<"Unknow platform"<<endl;
+#endif
+        cout<<TEXT(8)<<endl;
+    }
+    cout<<STRING(100);
+    cout<<__LINE__<<endl;
+    static int s_initValue;
+    cout<<MERGE(me,To)<<endl;  //if you dont' define 'meTome' first, there is an error that use of undeclared identifier 'meTome'
+}
+
+#undef TEXT
