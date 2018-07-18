@@ -13,9 +13,9 @@
      1.Date: July 17,2018
        Author: sanner
        Modification: Original
-     2.Date:
+     2.Date: July 18,2018
        Author: sanner
-       Modification:
+       Modification: modify the function DrawShapes()
 
 **********************************************************************************/
 #include <boost/timer.hpp>
@@ -91,8 +91,31 @@ public:
 
 void DrawShapes(const Shape shapes[], int numOfShapes)
 {
-    for (int i = 0; i < numOfShapes; ++i) {
-        shapes[i].draw();
+//    for (int i = 0; i < numOfShapes; ++i) {
+//        shapes[i].draw();
+//    }
+
+      //modified on July 18
+      for (int i = 0; i < numOfShapes; ++i) {
+        Shape *p = (Shape*)shapes;
+         if(typeid(*p) == typeid(Circle))
+         {
+             p->draw();
+             ++p;
+         } else if (typeid(*p) == typeid(Circle))
+         {
+             Circle *q = (Circle*)p;
+             q->Draw();
+             p = ++q;
+         } else if(typeid(*p) == typeid(Rectangle))
+         {
+             Rectangle *r = (Rectangle*)p;
+             r->Draw();
+             p = ++r;
+         } else
+         {
+             ;
+         }
     }
 }
 
