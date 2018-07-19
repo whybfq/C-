@@ -7,7 +7,7 @@
   *Description:  This file used to show one of the use of one copy constructor made by myself. 它通过对象值传递，是非法的。
   *Others:
   *Function List:
-     1.
+     1. void StrangeFunction(Test x); 拷贝赋值函数，间接的递归调用自己
 
   *History:  //modify history list, every record should consist the date, Revision and modification content introduction
      1.Date: July 18,2018
