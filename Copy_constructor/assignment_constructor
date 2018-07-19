@@ -1,0 +1,98 @@
+/*********************************************************************************
+  *Author:  Sanner
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra
+  *Processor: 2.2 GHz Intel Core i7
+  *Date:  July 18,2018
+  *Description:  This file used to show the use of Copy constructor and assignment function
+  *Others:
+  *Function List:
+     1.
+
+  *History:  //modify history list, every record should consist the date, Revision and modification content introduction
+     1.Date: July 19,2018
+       Author: sanner
+       Modification: Original
+     2.Date:
+       Author: sanner
+       Modification:
+
+**********************************************************************************/
+
+#include <boost/timer.hpp>
+#include <boost/progress.hpp>
+
+#include <cstdio>
+#include <cassert>
+#include <cmath>
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <cstring>
+
+using namespace std;
+using namespace boost;
+
+class String
+{
+public:
+    String(const char *str = "");
+    String(const String& copy);
+    String& operator = (const String& assign);
+
+    ~String(){ delete []m_data; }
+private:
+    size_t m_size;        //to store the current lengthy
+    char *m_data;        //the point to the string
+};
+
+String::String(const char *str)
+{
+    if(str == NULL)
+    {
+        m_data = new char[1];
+        *m_data = '\0';
+        m_size = 0;
+    } else
+    {
+      int length = strlen(str);
+      m_data = new char[length+1];
+      strcpy(m_data,str);
+      m_size = length;
+    }
+}
+
+
+String::String(const String& copy)   //Copy constructor
+{
+    //Compared to the default constructor,
+    //The reference cannot be NULL, so there is no need to compare with NULL at the beginning
+    size_t len = strlen(copy.m_data);
+    m_data = new char[len + 1];
+    strcpy(m_data, copy.m_data);
+    m_size = len;
+}
+
+String& String::operator=(const String& assign)  //attention: member function operator
+{
+    //(1) check self-assignment
+    if(this != &assign)
+    {
+        char *temp = new char[strlen(assign.m_data) + 1];  //Allocate new memory resources and copy content
+        strcpy(temp,assign.m_data);   //copy '\0' together
+
+        delete []m_data;  //release the original memory resources
+        m_data = temp;
+        m_size = strlen(assign.m_data);
+    }
+    return *this;  //return the reference to this abject
+}
+
+int main(int argc, char const *argv[]) {
+    String a("hello");
+    String b("world");
+    String c(a);    //use copy constructor 对象c创建，用a初始化时使用
+    c = b;          //use assignment function 把已经存在的b赋值给c时调用
+
+    return 0;
+}
