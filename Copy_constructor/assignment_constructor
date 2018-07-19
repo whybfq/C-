@@ -39,8 +39,8 @@ public:
     String(const char *str = "");
     String(const String& copy);
     String& operator = (const String& assign);
-
-    ~String(){ delete []m_data; }
+    ~String();
+    
 private:
     size_t m_size;        //to store the current lengthy
     char *m_data;        //the point to the string
@@ -61,7 +61,6 @@ String::String(const char *str)
       m_size = length;
     }
 }
-
 
 String::String(const String& copy)   //Copy constructor
 {
@@ -87,6 +86,8 @@ String& String::operator=(const String& assign)  //attention: member function op
     }
     return *this;  //return the reference to this abject
 }
+
+String::~String() { delete []m_data; }
 
 int main(int argc, char const *argv[]) {
     String a("hello");
