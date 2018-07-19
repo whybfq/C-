@@ -13,7 +13,8 @@
      1.Date: July 18,2018
        Author: sanner
        Modification: Original
-     2.Date:
+     2.Date: July 19, 2018
+       change m_dArray[10] to m_Array[100000]
        Author: sanner
        Modification:
 
@@ -46,12 +47,25 @@ public:
     }
 
 private:
-    double m_dArray[10];
+    double m_dArray[10000];
 };
-inline void StrangeFunction(Test x){ }
+inline void StrangeFunction(Test x){ }    //间接的递归调用函数  Indirect recursive call function
 
 int main(int argc, char const *argv[]) {
     Test a;
     StrangeFunction(a);
     return 0;
 }
+
+Output:
+Indirect recursive call function
+Test(const Test* copy was called 1 times
+Test(const Test* copy was called 2 times
+Test(const Test* copy was called 3 times
+Test(const Test* copy was called 4 times
+Test(const Test* copy was called 5 times
+Test(const Test* copy was called 6 times
+Test(const Test* copy was called 7 times
+Test(const Test* copy was called 8 times
+
+Process finished with exit code 11
