@@ -83,12 +83,12 @@ String& String::operator=(const String& assign)  //attention: member function op
         //分配内存给临时指针保存，万一分配失败也不会改变this对象，这是为了实现异常安全
         strcpy(temp,assign.m_data);   //copy '\0' together
 
-        delete []m_data;  //release the original memory resources to achieve the style like a = b = c
+        delete []m_data;  //release the original memory resources 
 
         m_data = temp;
         m_size = strlen(assign.m_data);
     }
-    return *this;  //return the reference to this abject
+    return *this;  //return the reference to this abject to achieve the style like a = b = c
 }
 
 String::~String() { delete []m_data; }
