@@ -40,7 +40,7 @@ public:
     String(const String& copy);
     String& operator = (const String& assign);
     ~String();
-    
+
 private:
     size_t m_size;        //to store the current lengthy
     char *m_data;        //the point to the string
@@ -75,7 +75,7 @@ String::String(const String& copy)   //Copy constructor
 String& String::operator=(const String& assign)  //attention: member function operator
 {
     //(1) check self-assignment
-    if(this != &assign)
+    if(this != &assign)   //if(*this != other) is wrong, 值相等不能作为自赋值的判断一句，地址相等才认为是同一个对象
     {
         char *temp = new char[strlen(assign.m_data) + 1];  //Allocate new memory resources and copy content
         strcpy(temp,assign.m_data);   //copy '\0' together
