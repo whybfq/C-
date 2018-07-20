@@ -67,3 +67,13 @@ int main(int argc, char const *argv[]) {
     pd->h(3.14f);
     return 0;
 }
+
+
+Output:
+Jul 20 2018
+derived::f(float)3.14
+derived::f(float)3.14
+Base::g(float)3.14
+Derived::g(int)3
+Base::h(float)3.14
+Derived::h(float)3.14
