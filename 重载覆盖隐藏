@@ -4,7 +4,7 @@
   *OS:  macOS High Sierra
   *Processor: 2.2 GHz Intel Core i7
   *Date:  July 20,2018
-  *Description:  This file used to show some difference in Overload, overlay and hide
+  *Description:  This file used to show some difference in Overload（重载）, override(覆盖/改写) and hide（隐藏）
   *Others:
   *Function List:
      1.
@@ -37,7 +37,6 @@ using namespace boost;
 class Base {
 public:
     virtual void f(float x) { cout << "Base::f(float)" << x << endl; }
-
     void g(float x) { cout << "Base::g(float)" << x << endl; }
 
     void h(float x) { cout << "Base::h(float)" << x << endl; }
@@ -46,8 +45,11 @@ public:
 class Derived : public Base{
 public:
     virtual void f(float x){ cout<<"derived::f(float)"<<x<<endl; }  //override
-    void g(int x){ cout<<"Derived::g(int)"<<x<<endl; }  //hide
-    void h(float x){ cout<<"Derived::h(float)"<<x<<endl; }   //hide
+
+    //using Base::g; //显式使用Explicit use "using",可实现跨边界的重载(Overloading across borders)，then output  Base::g(float)3.14
+    void g(int x){ cout<<"Derived::g(int)"<<x<<endl; }  //hide not overload(重载）
+
+    void h(float x){ cout<<"Derived::h(float)"<<x<<endl; }   //hide not overlay（覆盖）
 };
 
 int main(int argc, char const *argv[]) {
