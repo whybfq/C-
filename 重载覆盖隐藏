@@ -1,0 +1,69 @@
+/*********************************************************************************
+  *Author:  Sanner
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra
+  *Processor: 2.2 GHz Intel Core i7
+  *Date:  July 20,2018
+  *Description:  This file used to show some difference in Overload, overlay and hide
+  *Others:
+  *Function List:
+     1.
+
+  *History:  //modify history list, every record should consist the date, Revision and modification content introduction
+     1.Date: July 20,2018
+       Author: sanner
+       Modification: Original
+     2.Date:
+       Author: sanner
+       Modification:
+
+**********************************************************************************/
+
+#include <boost/timer.hpp>
+#include <boost/progress.hpp>
+
+#include <cstdio>
+#include <cassert>
+#include <cmath>
+
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <cstring>
+
+using namespace std;
+using namespace boost;
+
+class Base {
+public:
+    virtual void f(float x) { cout << "Base::f(float)" << x << endl; }
+
+    void g(float x) { cout << "Base::g(float)" << x << endl; }
+
+    void h(float x) { cout << "Base::h(float)" << x << endl; }
+};
+
+class Derived : public Base{
+public:
+    virtual void f(float x){ cout<<"derived::f(float)"<<x<<endl; }  //override
+    void g(int x){ cout<<"Derived::g(int)"<<x<<endl; }  //hide
+    void h(float x){ cout<<"Derived::h(float)"<<x<<endl; }   //hide
+};
+
+int main(int argc, char const *argv[]) {
+    cout<<__DATE__<<endl;
+
+    Derived d;
+    Base *pb = &d;
+    Derived *pd = &d;
+
+    pb->f(3.14f);
+    pd->f(3.14f);
+
+    pb->g(3.14f);
+    pd->g(3.14f);
+
+    pb->h(3.14f);
+    pd->h(3.14f);
+    return 0;
+}
