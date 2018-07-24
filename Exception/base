@@ -1,1 +1,96 @@
-#
+/*********************************************************************************
+  *Author:  Sanner
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Processor: 2.2 GHz Intel Core i7
+  *Graphics: Intel Iris Pro 1536 MB
+  *Date:  July 24,2018
+  *Description:  This file used to show some basics of using the exception
+  *Others:
+  *Function List:
+     1.
+
+  *History:  //modify history list, every record should consist the date, Revision and modification content introduction
+     1.Date: 
+       Author: 
+       Modification: 
+     2.Date:
+       Author: 
+       Modification:
+
+**********************************************************************************/
+
+#include <boost/timer.hpp>
+#include <boost/progress.hpp>
+
+#include <cstdio>
+#include <cassert>
+#include <cmath>
+
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <cstring>
+
+//about basic exception handling
+//Standard exception type
+#include <typeinfo>   //bad_cast, bad typeid   //typeid()  dynamic_cast<>
+#include <new>        //bad_alloc
+#include <exception>  //exception, bad_exception
+#include <stdexcept>  //logic_error, runtime_error, domain_error, invalid_argument, length_error, out_of_range, range_error, overflow_error, underflow_error
+
+using namespace std;
+using namespace boost;
+
+//Complex Add(const Complex& a,const Complex& b);`
+//Complex operator+(const Complex& a,const Complex& b);
+
+//double Devide(double x,double y)throw(DevidedByZero);   //只可能抛出一种异常
+//bool func(const char*) throw(T1,T2,T3);                //可能抛出3种异常
+//void g()throw();                                       //（3） 不抛出任何异常
+//void k();                                              //(4) 可能抛出任何异常，也可能不抛出任何异常。
+
+void MemoryAllocate()   
+{
+    try{
+        double *pDouble = new double[10000000];
+    }
+    catch(const std::bad_alloc&){                 //派生异常类型
+        cout << "Memory allcation failed! " << endl;
+    }       
+    catch(const std::exception& ex){              //基类型异常
+        cout << ex.what() << endl;   
+    }
+//    catch(void *){
+//        cout << "some unkown error happened! " << endl;
+//    }
+    catch(...){                                    //catch-all   结尾处一网打尽所有可能抛出的异常
+        cout << "unknown exception occurred!" << endl;
+    }
+}
+
+class T1{ };
+class T2{ };
+class T3{ };
+class T4 : public T1 { };
+class T5 : public T2 { };
+
+class Base
+{
+public:
+    void f() throw(T1, T2);
+    void g() throw(T3);
+    void h() throw(T2);
+};
+
+class Derived : public Base{
+public :
+    void f() throw(T1, T2);   //OK!
+    void g() throw(T4);       //ERROR!
+    void h() throw(T5);       //OK!
+};
+
+int main(int argc, char const *argv[]) {
+
+    return 0;
+}
