@@ -11,11 +11,11 @@
      1.
 
   *History:  //modify history list, every record should consist the date, Revision and modification content introduction
-     1.Date: 
-       Author: 
-       Modification: 
+     1.Date:
+       Author:
+       Modification:
      2.Date:
-       Author: 
+       Author:
        Modification:
 
 **********************************************************************************/
@@ -50,16 +50,16 @@ using namespace boost;
 //void g()throw();                                       //（3） 不抛出任何异常
 //void k();                                              //(4) 可能抛出任何异常，也可能不抛出任何异常。
 
-void MemoryAllocate()   
+void MemoryAllocate()
 {
     try{
         double *pDouble = new double[10000000];
     }
     catch(const std::bad_alloc&){                 //派生异常类型
         cout << "Memory allcation failed! " << endl;
-    }       
+    }
     catch(const std::exception& ex){              //基类型异常
-        cout << ex.what() << endl;   
+        cout << ex.what() << endl;
     }
 //    catch(void *){
 //        cout << "some unkown error happened! " << endl;
@@ -69,6 +69,7 @@ void MemoryAllocate()
     }
 }
 
+//要确保派生类成员函数的异常说明和基类成员函数的异常说明一致，即派生类改写的虚函数的异常说明至少要和对应的基类虚函数的异常说明相同，甚至更加严格
 class T1{ };
 class T2{ };
 class T3{ };
