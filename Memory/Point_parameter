@@ -89,6 +89,7 @@ void Test3(void)           //用函数返回值来传递动态内存，since **p
 char * GetString(void)
 {
     char p[] = "hello world";   //字符常量初始化数组的内存空间
+            // ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
     return p;        // !! 不要用return()指向"栈内存"的指针或引用   因为该内存在函数结束后将自动释放
 }
 
@@ -102,7 +103,8 @@ void Test4(void)
 
 char *GetString2(void)
 {
-    char *p = "hello world2";   //不提倡这样做，因为常量字符位于静态存储区，在程序生命期内始终有效。 
+    char *p = "hello world2";   //不提倡这样做，因为常量字符位于静态存储区，在程序生命期内始终有效。
+            // ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
                                //因为返回只读内存快地址，可以把返回值改为const char* 以避免无意中的修改
     return p;
 }
@@ -114,11 +116,35 @@ void Test5(void)
     cout << str << endl;
 }
 
+class A{
+public:
+    void Func(void)
+    {
+        cout << "A::func() " << endl;
+    }
+};
+
+
+/*野指针：（1） 没有初始化指针变量 
+ *        （2） 指针被free()或delete之后，没有置为NULL,让人误以为p仍然是一个有效的指针
+ *          （3） 指针操作超越了变量的作用范围*/
+void Test6()    //指针操作超越了变量的作用范围，造成了野指针p
+{
+    A *p = NULL;
+    {
+        A a;
+        p = &a;   //a 在内存程序块结束被释放，p指向a,此时p为野指针
+    }
+    p->Func();   //The function is stil work in the end since a虽然退栈了，仅调用了下析构函数，并没有清除a的内存
+    // （a的内存空间仍然在函数堆栈上，只是无法在程序块外直接访问而已。
+}
+
 int main(int argc, char const *argv[]) {
 //    Test();      // no output
 //    Test2();     // hello2
 //    Test3();     // hello3
 //    Test4();       //error, Garbled
-    Test5();     //hello world2
+//    Test5();     //hello world2
+    Test6();        //A::func()
     return 0;
 }
