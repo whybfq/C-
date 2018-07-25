@@ -72,7 +72,9 @@ int main(int argc, char const *argv[]) {
             // 不必担心分配失败 主要用途：反复使用一块较大的动态分配成功的内存来构造不同类型的对象/数组
                     // 之后要显示调用它们的析构函数来
     int *q2 = new(p)int[100/ sizeof(int)];
-    delete []p;   //free memory
+//    delete q1;   //ERROR! placement new构造的对象大小并不一定等于原来分配的内存大小，使用delete会造成内存泄漏，或在之后释放内存时出现运行时错误
+    q->ADT::~ADT();        //需要显示调用析构函数
+     delete []p;   //then free memory
     return 0;
 }
 
