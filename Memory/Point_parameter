@@ -8,8 +8,10 @@
   *Description:  This file used to show How pointer parameters pass memory（指针参数如何传递内存）
   *Others:
   *Function List:
-     1.
-
+     1. Test1()   there are two errors: no free() function and din't change point p for it has applied the new memory
+     2. Test2()   update the Test1(), corrected the errors in Test1();
+     3. Test3()   make Test2() more clearly and easy to understand
+     
   *History:  //modify history list, every record should consist the date, Revision and modification content introduction
      1.Date:
        Author:
@@ -20,27 +22,74 @@
 
 **********************************************************************************/
 
-#include<iostream>
-#include<boost>
+#include <boost/timer.hpp>
+#include <boost/progress.hpp>
 
-using namespace std;
+#include <cstdio>
+#include <cassert>
+#include <cmath>
+
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <cstring>
+
+//about basic exception handling
+//Standard exception type
+#include <typeinfo>   //bad_cast, bad typeid   //typeid()  dynamic_cast<>
+#include <new>        //bad_alloc
+#include <exception>  //exception, bad_exception
+#include <stdexcept>  //logic_error, runtime_error, domain_error, invalid_argument, length_error, out_of_range, range_error, overflow_error, underflow_error
+
 using namespace boost;
+using namespace std;
 
-void GetMemory(char *p,int num)        //there is an errror in this function 
+void GetMemory(char *p,int num)
 {
-    p = (char*)malloc(sizeof(char)*num);  //malloc应该与free（）对应，未释放内存，内存泄露
+    p = (char*)malloc(sizeof(char)*num);  //malloc应该与free（）对应，未释放内存，每执行一次泄露一块内存
 }
 
 void Test(void)
 {
     char *str = NULL;
-    GetMemory(str,100);
+    GetMemory(str,100);       //str is still NULL, p副本为_p, compiler let _p = p; _p因申请来新内存，
+                              //指向了新的内存空间，p本身为改变（修改了_p而不是_p指向的对象
     strcpy(str,"hello");
-    cout << str << endl;
-    free(str);
+}
+
+void GetMemory2(char **p, int num)   //or char*& rp
+{
+    *p = (char*)malloc(sizeof(char)*num);  //rp = ...
+}
+
+void Test2(void)
+{
+    char *str2 = NULL;
+    GetMemory2(&str2,100);
+    strcpy(str2,"hello2");
+    cout << str2 << endl;
+    free(str2);            // one malloc(), one free()
+}
+
+char * GetMemory3(int num)
+{
+    char *p = (char*)malloc(sizeof(char)*num);
+    return p;
+}
+
+void Test3(void)           //用函数返回值来传递动态内存，since **p and *&p are not easy to understand
+{
+    char *str3 = NULL;
+    str3 = GetMemory3(100);
+    strcpy(str3,"hello3");
+    cout << str3 << endl;
+    free(str3);
 }
 
 int main(int argc, char const *argv[]) {
-    Test();
+//    Test();      // no output
+//    Test2();     // hello2
+    Test3();       // hello3
     return 0;
 }
+
