@@ -64,7 +64,7 @@ int main(int argc, char const *argv[]) {
     for(int c = 0; c < 10; ++c){
         vi1.push_back(c);
     }
-    vector<int>(vi1).swap(vi1);   //构造一个临时对象，然后
+    vector<int>(vi1).swap(vi1);   //构造一个临时对象，然后与之交换元素
     return 0;
 }
 
