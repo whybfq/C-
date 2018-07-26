@@ -1,0 +1,70 @@
+/*********************************************************************************
+  *Author:  Sanner
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Processor: 2.2 GHz Intel Core i7
+  *Graphics: Intel Iris Pro 1536 MB
+  *Date:  July 26,2018
+  *Description:  This file used to show basic use of "容器"
+  *Others:
+  *Function List:
+     1.
+
+  *History:  //modify history list, every record should consist the date, Revision and modification content introduction
+     1.Date:
+       Author:
+       Modification:
+     2.Date:
+       Author:
+       Modification:
+
+**********************************************************************************/
+
+#include <boost/timer.hpp>
+#include <boost/progress.hpp>
+
+#include <cstdio>
+#include <cassert>
+#include <cmath>
+
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <cstring>
+
+//about basic exception handling
+//Standard exception type
+#include <typeinfo>   //bad_cast, bad typeid   //typeid()  dynamic_cast<>
+#include <new>        //bad_alloc
+#include <exception>  //exception, bad_exception
+#include <stdexcept>  //logic_error, runtime_error, domain_error, invalid_argument, length_error, out_of_range, range_error, overflow_error, underflow_error
+#include <numeric>
+#include <limits>    //STL常用数值类型的极限值和精度等
+#include <vector>
+#include <list>
+
+using namespace boost;
+using namespace std;
+
+int main(int argc, char const *argv[]) {
+    list<int> li;
+    vector<int> vi;
+    for (int i = 0; i < 10; ++i) {
+        li.push_back(i);
+    }
+    vi.reserve(li.size());    //预留空间，但是并没有改变容器的大小，预留空间并不初始化
+//  or use
+//  vi.resize（li.size) ; // 调整容器大小
+//  copy(li.begin(),li.end(),vi.begin());     //之后再拷贝赋值 copy assignment
+    copy(li.begin(),li.end(),back_inserter(vi));
+    copy(vi.begin(),vi.end(),ostream_iterator<int>(cerr,"\t"));
+
+    //改变容器的容量
+    vector<int> vi1;
+    for(int c = 0; c < 10; ++c){
+        vi1.push_back(c);
+    }
+    vector<int>(vi1).swap(vi1);   //构造一个临时对象，然后
+    return 0;
+}
+
