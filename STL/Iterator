@@ -1,0 +1,63 @@
+/*********************************************************************************
+  *Author:  Sanner
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Processor: 2.2 GHz Intel Core i7
+  *Graphics: Intel Iris Pro 1536 MB
+  *Date:  July 26,2018
+  *Description:  This file used to show basic use of Inerator
+  *Others:
+  *Function List:
+     1.
+
+  *History:  //modify history list, every record should consist the date, Revision and modification content introduction
+     1.Date:
+       Author:
+       Modification:
+     2.Date:
+       Author:
+       Modification:
+
+**********************************************************************************/
+
+#include <boost/timer.hpp>
+#include <boost/progress.hpp>
+
+#include <cstdio>
+#include <cassert>
+#include <cmath>
+
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <cstring>
+
+//about basic exception handling
+//Standard exception type
+#include <typeinfo>   //bad_cast, bad typeid   //typeid()  dynamic_cast<>
+#include <new>        //bad_alloc
+#include <exception>  //exception, bad_exception
+#include <stdexcept>  //logic_error, runtime_error, domain_error, invalid_argument, length_error, out_of_range, range_error, overflow_error, underflow_error
+#include <numeric>
+#include <limits>    //STL常用数值类型的极限值和精度等
+#include <vector>
+#include <list>
+
+using namespace boost;
+using namespace std;
+
+int main(int argc, char const *argv[]) {
+    //输出流迭代器  绑定一个ostream对象，并将赋值操作（operator=)转换为对该对象operator<<对调用，关闭了反引用和前进功能，并禁止后退和取地址操作
+    list<int> li;
+    for (int i = 0; i < 10; ++i) {
+        li.push_back(i);
+    }
+    copy(li.begin(),li.end(),ostream_iterator<int>(cout,""));
+
+    //输入流迭代器
+    list<int> li2;
+    istream_iterator<int> eos,isiter(cin);
+    copy(isiter,eos,back_inserter(li2));
+    copy(li2.begin(),li2.end(),ostream_iterator<int>(cout,""));
+}
+
