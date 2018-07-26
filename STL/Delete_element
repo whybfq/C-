@@ -58,17 +58,20 @@ int main(int argc, char const *argv[]) {   //vector<bool> is like vector<unsigne
    li.erase(temp1.begin());   //runtime error! though there are 10 elements in li, the object that pointed by
     // temp1.begin() does not belong to li
    li.erase(li.begin());
-//   li.erase(*p);    //compiling error!
+//   li.erase(*p);    //compiling error! *p not belong to li. 不能以元素的值来判断是否属于一个顺序容器，因为顺序容器可以同时
+    //存储多个完全相同的对象；否则容器将不知道涮出哪一个元素
 
+    //联合容器
     set<int> temp2;
     temp2.insert(10);
-    set<int> si;
-    si.insert(10);
+    set<int> si;            //empty container
+    si.insert(10);          //si contains an element whose value is 10
     si.insert(si.end(),20);
+    si.insert(si.end(),20);  // it will be ignored 
     si.insert(si.end(),200);
-    si.erase(temp2.begin());
-    si.erase(*p);
-    si.erase(si.begin());
+    si.erase(temp2.begin()); // runtime error! temp2.begin()指向的对象不属于si   
+    si.erase(*p);           //OK！ 从si中可以删除值等于 *p 的元素
+    si.erase(si.begin());   //OK！ si.begin()指向的对象为si所有
     delete p;
 }
 
