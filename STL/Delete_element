@@ -1,0 +1,74 @@
+/*********************************************************************************
+  *Author:  Sanner
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Processor: 2.2 GHz Intel Core i7
+  *Graphics: Intel Iris Pro 1536 MB
+  *Date:  July 26,2018
+  *Description:  This file used to show basic use of "Delete elements in sequential and associative containers "在顺序容器和关联容器中删除元素
+  *Others:
+  *Function List:
+     1.
+
+  *History:  //modify history list, every record should consist the date, Revision and modification content introduction
+     1.Date:
+       Author:
+       Modification:
+     2.Date:
+       Author:
+       Modification:
+
+**********************************************************************************/
+
+#include <boost/timer.hpp>
+#include <boost/progress.hpp>
+
+#include <cstdio>
+#include <cassert>
+#include <cmath>
+
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <cstring>
+
+//about basic exception handling
+//Standard exception type
+#include <typeinfo>   //bad_cast, bad typeid   //typeid()  dynamic_cast<>
+#include <new>        //bad_alloc
+#include <exception>  //exception, bad_exception
+#include <stdexcept>  //logic_error, runtime_error, domain_error, invalid_argument, length_error, out_of_range, range_error, overflow_error, underflow_error
+#include <numeric>
+#include <limits>    //STL常用数值类型的极限值和精度等
+#include <vector>
+#include <list>      //顺序容器
+#include <set>       //联合容器
+
+using namespace boost;
+using namespace std;
+
+int main(int argc, char const *argv[]) {   //vector<bool> is like vector<unsigned long)
+
+   int *p = new int(100);
+   list<int> temp1;
+   temp1.insert(temp1.end(), 10);
+   list<int> li;            //empty container
+   li.insert(li.end(),10);   //create new object
+   li.insert(li.end(),10);   //create new object
+   li.erase(temp1.begin());   //runtime error! though there are 10 elements in li, the object that pointed by
+    // temp1.begin() does not belong to li
+   li.erase(li.begin());
+//   li.erase(*p);    //compiling error!
+
+    set<int> temp2;
+    temp2.insert(10);
+    set<int> si;
+    si.insert(10);
+    si.insert(si.end(),20);
+    si.insert(si.end(),200);
+    si.erase(temp2.begin());
+    si.erase(*p);
+    si.erase(si.begin());
+    delete p;
+}
+
