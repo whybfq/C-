@@ -1,0 +1,14 @@
+
+// Copy one file to another, a line at a time
+#include <string>
+#include <fstream>
+
+int main(){
+  ifstream in("in.cpp");   // Open for reading
+  ofstream out("out.cpp");  // Open for wriing
+  string s;
+  while(getline(in,s))    //Discards newline char 
+  {
+    cout << s << endl;    // ... must add it back
+  }
+}
