@@ -1,0 +1,25 @@
+
+#include <iostream>
+#include "Cpptime.h"
+using napespace std;
+
+int main(int argc, char const *argv[]) {
+    Time start ;
+    for (int i = 1; i < 1000000; ++i) {
+        cout << i << ' ';
+        if(i % 20 == 0) cout << endl;
+    }
+    Time end;
+    cout << endl;
+    cout << "start = " << start.ascii();     // start time
+    cout << "end = " << end.ascii();         // end time
+    cout << "delta = " << end.delta(&start);   // Time consuming
+    return 0;
+}
+
+
+Output:
+start = Fri Jul 27 09:58:55 2018
+end = Fri Jul 27 09:58:56 2018
+delta = 1
+Process finished with exit code 0
