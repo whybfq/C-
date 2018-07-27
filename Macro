@@ -1,0 +1,42 @@
+
+/*********************************************************************************
+  *Author:  Sanner
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra
+  *Processor: 2.2 GHz Intel Core i7
+  *Date:  July 27,2018
+  *Description:  现在几乎总是使用内联函数代替预处理宏，在标准C预处理器（通过继承也是C++预处理器）里
+  *              使用3个特征时例外：字符串定义，字符串拼接和标志黏贴
+  *Others:
+  *Function List:
+     1.
+
+  *History:  //modify history list, every record should consist the date, Revision and modification content introduction
+     1.Date: July 27,2018
+       Author: sanner
+       Modification: Original
+     2.Date:
+       Author: sanner
+       Modification:
+
+**********************************************************************************/
+
+#include <iostream>
+using namespace std;
+
+//字符串定义 （用#指示）   可以打印任何变量但值   也可以得到一个跟踪信息，在此信息里打印出它们执行但语句
+#define DEBUG(x) cout<< #x "=" << x << endl
+
+//字符串拼接，  #s 将输出语句字符   第二个s重申了该语句，所以这个语句被执行。当然，这可能会产生
+// 问题（尤其在一行for循环中）可考虑用逗号代替分号
+#define TRACE(s) cerr << #s << endl; s
+
+//标志黏贴  直接用"##"实现   它允许两个标示符并把它们黏贴在一起自动产生一个新标示符
+//每次调用FIFLD() 宏，将产生一个保存字符数组但标识符和另一个保存字符数组长度的标识符。
+//它不仅易读而且消除了编码出错
+#define FIELD(a) char* a##_string; int a##_size
+class Record {
+    FIELD(one)  ;
+    FIELD(two);
+    FIELD(three);
+};
