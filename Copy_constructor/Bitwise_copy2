@@ -1,0 +1,100 @@
+
+/*********************************************************************************
+  *Author:  Sanner
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Processor: 2.2 GHz Intel Core i7
+  *Graphics: Intel Iris Pro 1536 MB
+  *Date:  July 29,2018
+  *Description: 程序输出并不像期望的那样。C语言中默认的按位拷贝的方式没有达到预期的效果。
+  *             C++中对象比一组比特位复杂的多。因为对象具有含义，这个含义也许不能由它具有的位拷贝很好的反映。
+
+  *Others:      And this is the reason why we need copy-constructor
+  *Function List:
+     1.
+
+  *History:  //modify history list, every record should consist the date, Revision and modification content introduction
+     1.Date: 7/29/2018
+       Author: san
+       Modification:  modify the Bitwise_copy.cpp. Add the copy-constructor and the program can be output as expected
+     2.Date:
+       Author:
+       Modification:
+
+**********************************************************************************/
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include "./cmake-build-debug/Dependency2.h"
+namespace s = std;  //alias it
+using namespace s;
+ofstream out("test.out");
+
+class HowMany {
+public:
+    HowMany(const string& id = " ") : name(id) {
+        ++objectCount;
+        print("HowMany constructor. ");
+    }
+
+    HowMany(const HowMany& h) : name(h.name){
+        name += " copy";
+        ++objectCount;
+        print("HowMany(const HowMany&) ");
+    }
+
+    void print(const string& msg = " " )
+    {
+        if(msg.size() != 0) out << msg << ": ";
+        out << '\t' << name << ": "
+        << "objectCount = " << objectCount << endl;
+    }
+
+    ~HowMany(){
+        --objectCount;
+        print("~HowMany() ");
+    }
+private:
+    string name;   // Object identifier
+    static int objectCount;
+};
+
+int HowMany::objectCount = 0;
+
+HowMany f(HowMany a) {          //Pass and return by value:
+    a.print("a argument inside f() : ");
+    out << "Returning from f() " << endl;
+    return a;
+}     //局部对象出了其范围，析构函数就被调用，析构函数使objectCount 减小
+
+int main(int argc, char const *argv[]) {
+    HowMany h1("h1");
+    out << "Entering f() " << endl;
+    HowMany h2 = f(h1);
+    h2.print("h2 after call to f() ");
+    out << "Call f(), no return value" << endl;
+    f(h1);
+    out << "After call to f() " << endl;
+}
+
+Output in test.out:
+HowMany constructor. : 	h1: objectCount = 1
+Entering f() 
+HowMany(const HowMany&) : 	h1 copy: objectCount = 2
+a argument inside f() : : 	h1 copy: objectCount = 2
+Returning from f() 
+HowMany(const HowMany&) : 	h1 copy copy: objectCount = 3
+~HowMany() : 	h1 copy: objectCount = 2
+h2 after call to f() : 	h1 copy copy: objectCount = 2
+Call f(), no return value
+HowMany(const HowMany&) : 	h1 copy: objectCount = 3
+a argument inside f() : : 	h1 copy: objectCount = 3
+Returning from f() 
+HowMany(const HowMany&) : 	h1 copy copy: objectCount = 4
+~HowMany() : 	h1 copy copy: objectCount = 3
+~HowMany() : 	h1 copy: objectCount = 2
+After call to f() 
+~HowMany() : 	h1 copy copy: objectCount = 1
+~HowMany() : 	h1: objectCount = 0
+
