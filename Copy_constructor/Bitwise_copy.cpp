@@ -65,9 +65,8 @@ int main(int argc, char const *argv[]) {
 
 Output: (In test.out)
 after construcion of h : x = 1
-a argument inside f() : : x = 1
+a argument inside f() : : x = 1       // there x should be 2 and is not right from there now
 ~HowMany() : x = 0
 after call to f() : x = 0
 ~HowMany() : x = -1
 ~HowMany() : x = -2
-
