@@ -6,10 +6,8 @@
   *Processor: 2.2 GHz Intel Core i7
   *Graphics: Intel Iris Pro 1536 MB
   *Date:  July 29,2018
-  *Description: 程序输出并不像期望的那样。C语言中默认的按位拷贝的方式没有达到预期的效果。
-  *             C++中对象比一组比特位复杂的多。因为对象具有含义，这个含义也许不能由它具有的位拷贝很好的反映。
-
-  *Others:      And this is the reason why we need copy-constructor
+  *Description: add copy-constructor function to Bitwise_copy.cpp and now the program is right
+  *Others:      
   *Function List:
      1.
 
@@ -35,10 +33,11 @@ class HowMany {
 public:
     HowMany(const string& id = " ") : name(id) {
         ++objectCount;
-        print("HowMany constructor. ");
+        print("HowMany constructor ");
     }
 
-    HowMany(const HowMany& h) : name(h.name){
+    HowMany(const HowMany& h) : name(h.name){  //The invocation of name(h.name) on the initialization table
+        // of the constructor is in fact called string copy constructor
         name += " copy";
         ++objectCount;
         print("HowMany(const HowMany&) ");
@@ -46,9 +45,11 @@ public:
 
     void print(const string& msg = " " )
     {
-        if(msg.size() != 0) out << msg << ": ";
-        out << '\t' << name << ": "
-        << "objectCount = " << objectCount << endl;
+        if(msg.size() != 0) {
+            out << msg << ": " << endl;   // object message
+        }
+        out << '\t' << name << ": "               // object identifier
+        << "objectCount = " << objectCount << endl;   // number of the object
     }
 
     ~HowMany(){
@@ -71,7 +72,9 @@ HowMany f(HowMany a) {          //Pass and return by value:
 int main(int argc, char const *argv[]) {
     HowMany h1("h1");
     out << "Entering f() " << endl;
-    HowMany h2 = f(h1);
+    HowMany h2 = f(h1); // the code processes the return process and places
+                        // the result in the destination. The destination address is passed
+                        // as a hidden parameter in function body.
     h2.print("h2 after call to f() ");
     out << "Call f(), no return value" << endl;
     f(h1);
@@ -79,22 +82,34 @@ int main(int argc, char const *argv[]) {
 }
 
 Output in test.out:
-HowMany constructor. : 	h1: objectCount = 1
+HowMany constructor : 
+	h1: objectCount = 1
 Entering f() 
-HowMany(const HowMany&) : 	h1 copy: objectCount = 2
-a argument inside f() : : 	h1 copy: objectCount = 2
+HowMany(const HowMany&) : 
+	h1 copy: objectCount = 2
+a argument inside f() : : 
+	h1 copy: objectCount = 2
 Returning from f() 
-HowMany(const HowMany&) : 	h1 copy copy: objectCount = 3
-~HowMany() : 	h1 copy: objectCount = 2
-h2 after call to f() : 	h1 copy copy: objectCount = 2
+HowMany(const HowMany&) : 
+	h1 copy copy: objectCount = 3
+~HowMany() : 
+	h1 copy: objectCount = 2
+h2 after call to f() : 
+	h1 copy copy: objectCount = 2
 Call f(), no return value
-HowMany(const HowMany&) : 	h1 copy: objectCount = 3
-a argument inside f() : : 	h1 copy: objectCount = 3
+HowMany(const HowMany&) : 
+	h1 copy: objectCount = 3
+a argument inside f() : : 
+	h1 copy: objectCount = 3
 Returning from f() 
-HowMany(const HowMany&) : 	h1 copy copy: objectCount = 4
-~HowMany() : 	h1 copy copy: objectCount = 3
-~HowMany() : 	h1 copy: objectCount = 2
+HowMany(const HowMany&) : 
+	h1 copy copy: objectCount = 4
+~HowMany() : 
+	h1 copy copy: objectCount = 3
+~HowMany() : 
+	h1 copy: objectCount = 2
 After call to f() 
-~HowMany() : 	h1 copy copy: objectCount = 1
-~HowMany() : 	h1: objectCount = 0
-
+~HowMany() : 
+	h1 copy copy: objectCount = 1
+~HowMany() : 
+	h1: objectCount = 0
