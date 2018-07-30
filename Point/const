@@ -1,0 +1,18 @@
+#include <iostream>
+using namespace std;
+int main() {
+    //指向常量的指针  pci可以被指向不同的整数或非整数常量；  不能修改pci指向的数据
+    int num = 3;
+    const int *pci = &num;    // Amount to int const *pci; *pci = 200 is wrong
+
+    //指向非常量的常量指针   cpi不能被修改； 指向的数据可以被修改
+    int limit = 15;
+    int *const cpi = &limit;  //必须初始化为指向非常量变量
+    *cpi = limit;
+    *cpi = num;
+
+    //指向常量的常量指针
+    const int * const cpci = &limit;  // must Initialize
+    
+    return 0;
+}
