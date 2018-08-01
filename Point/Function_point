@@ -1,12 +1,14 @@
-/*********************************************************************************
+
+ /*********************************************************************************
   *Author:  San
   *IDE: Clion 2018.3
   *OS:  macOS High Sierra 10.13.6
   *Date:  August 1,2018
   *Description:   when you use function pointer, C does not check the correctness of the parameter pass
+  *               It makes the program more flexible
   *Function List:
      1.
-  *History: 
+  *History:
    1.Date:
      Author:
      Modification:
@@ -24,17 +26,58 @@ int square(int num) {
 
 typedef int (*funcptr)(int);  // Declaring a type definition for a function
 
+int add(int num1, int num2) {
+    return num1 + num2;
+}
+
+int subtract(int num1, int num2) {
+    return num1 - num2;
+}
+
+typedef int (*fptrOperation)(int,int);  // Declaring a type definition for a function
+
+int compute(fptrOperation operation, int num1, int num2) {
+    return operation(num1, num2);
+}
+
+fptrOperation  select(char opcode) {   // Rerutn function point
+    switch(opcode) {
+        case '+': return add;
+        case '-': return subtract;
+    }
+}
+
+// evaluate will pass the opcode to the select function above, which returns the function pointer to be executed.
+int evaluate(char opcode, int num1, int num2) {  //opcode represents the operation need to be done,
+    fptrOperation  operation = select(opcode);
+    return operation(num1, num2);
+}
+
 int main(int argc, char const *argv[]) {
      int n = 5;
      fptr1 = square;    //Call the square function with the function pointer(fptr), the same as " fptr1 = &square; "
                        // use the function name square to return the address of the square function
      cout << fptr1(n) << endl;
 
-     funcptr fptr2;
+     funcptr fptr2;    // It is more convenient to declaring a type definition for a function
      fptr2 = square;
      cout << fptr2(n) << endl;
+
+     cout << compute(add,5,6) << endl;     //The addresses of add and sub functions are passed to the compute function,
+                                  // which uses these addresses to invoke the corresponding operations.
+     cout << compute(subtract,5,6) << endl;
+
+     cout << evaluate('+',5,6) << endl;
+     cout << evaluate('-',5,6) << endl;
 }
 
 Output:
 25
 25
+11
+-1
+11
+-1
+
+Process finished with exit code 0
+
