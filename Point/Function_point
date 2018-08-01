@@ -1,17 +1,15 @@
-
- /*********************************************************************************
-  *Author:  Sann
+/*********************************************************************************
+  *Author:  San
   *IDE: Clion 2018.3
   *OS:  macOS High Sierra 10.13.6
   *Date:  August 1,2018
   *Description:   when you use function pointer, C does not check the correctness of the parameter pass
-  *Others:
   *Function List:
      1.
-  *History:  //every record should consist Revision and modification content introduction
-     1.Date:
-       Author:
-       Modification:
+  *History: 
+   1.Date:
+     Author:
+     Modification:
 **********************************************************************************/
 
 #include <iostream>
