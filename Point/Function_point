@@ -24,13 +24,19 @@ int square(int num) {
     return num * num;
 }
 
-int main(int argc, const *argv[]) {
+typedef int (*funcptr)(int);  // Declaring a type definition for a function
+
+int main(int argc, char const *argv[]) {
      int n = 5;
      fptr1 = square;    //Call the square function with the function pointer(fptr), the same as " fptr1 = &square; "
                        // use the function name square to return the address of the square function
-     cout << fptr1(n);
-     return 0;
+     cout << fptr1(n) << endl;
+
+     funcptr fptr2;
+     fptr2 = square;
+     cout << fptr2(n) << endl;
 }
 
 Output:
+25
 25
