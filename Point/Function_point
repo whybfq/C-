@@ -1,0 +1,36 @@
+
+ /*********************************************************************************
+  *Author:  Sann
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Date:  August 1,2018
+  *Description:   when you use function pointer, C does not check the correctness of the parameter pass
+  *Others:
+  *Function List:
+     1.
+  *History:  //every record should consist Revision and modification content introduction
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+
+#include <iostream>
+using namespace std;
+
+void (*foo) ();  //名为foo的函数指针  A function pointer named foo: receive void and return void pointer
+
+int (*fptr1) (int);
+int square(int num) {
+    return num * num;
+}
+
+int main(int argc, const *argv[]) {
+     int n = 5;
+     fptr1 = square;    //Call the square function with the function pointer(fptr), the same as " fptr1 = &square; "
+                       // use the function name square to return the address of the square function
+     cout << fptr1(n);
+     return 0;
+}
+
+Output:
+25
