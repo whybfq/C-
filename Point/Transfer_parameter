@@ -1,0 +1,49 @@
+#include <iostream>
+using namespace std;
+
+int allocateArray1(int *arr, int size, int value) {  //Transfer the null pointer, don't allocate memory
+    if(arr != NULL ){ //It is a good habit to pass pointer to function before judging whether it is empty or not.
+        for (int i = 0; i < size; ++i) {
+            arr[i] = value;
+        }
+    }
+}
+
+//When the pointer is passed to a function, the value is passed.
+void allocateArray2(int **arr, int size, int value) { //A copy of the original pointer instead of a pointer
+    *arr = (int*)malloc(size * sizeof(int));
+    if(*arr != NULL ) {
+        for (int i = 0; i < size; ++i) {
+            *(*arr + i) = value;
+        }
+    }
+}
+
+void allocateArray3(int *arr, int size, int value) {  //Passing only one pointer, causing a memory leak
+    arr = (int*)malloc(size * sizeof(int));  //arr has no effect on the value of the argument.
+    if(arr != NULL ) {
+        for (int i = 0; i < size; ++i) {
+            arr[i] = value;
+        }
+    }
+}
+
+int main() {
+    int *vector1 = (int*)malloc(5 * sizeof(int));
+    allocateArray1(vector1,5,4);    //if pointer is NULL, nothing will happen and the program will continue
+    cout << *vector1 << endl;      //4
+
+    int *vector2 = NULL;
+    allocateArray2(&vector2,5 ,42);
+    cout << *vector2 << endl;      //42
+
+
+    int *vector3 = NULL;
+    allocateArray3(vector3,3,23);
+    cout << *vector3 << endl;   //no answer
+    return 0;
+}
+
+Output:
+4
+42
