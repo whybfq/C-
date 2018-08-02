@@ -46,12 +46,6 @@ void initializeOperationArray() {
     operations['-'] = subtract;
 }
 
-int evaluateArray(char opcode, int num1, int num2) {
-    fptrOperation operation;
-    operation = operations[opcode];
-    return operation(num1, num2);
-}
-
 int compute(fptrOperation operation, int num1, int num2) {
     return operation(num1, num2);
 }
@@ -69,8 +63,12 @@ int evaluate(char opcode, int num1, int num2) {  //opcode represents the operati
     return operation(num1, num2);
 }
 
-
-
+ int evaluateArray(char opcode, int num1, int num2) {  // Rewriting of evaluate function
+     fptrOperation operation;
+     operation = operations[opcode];
+     return operation(num1, num2);
+ }
+ 
 int main(int argc, char const *argv[]) {
      int n = 5;
      fptr1 = square;    //Call the square function with the function pointer(fptr), the same as " fptr1 = &square; "
