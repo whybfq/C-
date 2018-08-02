@@ -17,12 +17,12 @@
 #include <iostream>
 using namespace std;
 
-void (*foo) ();  //名为foo的函数指针  A function pointer named foo: receive void and return void pointer
+int (*fptr1) (int); //名为fptr的函数指针  A function pointer named fptr: receive int and return int pointer
 
-int (*fptr1) (int);
 int square(int num) {
     return num * num;
 }
+
 
 typedef int (*funcptr)(int);  // Declaring a type definition for a function
 
