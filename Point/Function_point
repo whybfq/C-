@@ -73,29 +73,29 @@ int main(int argc, char const *argv[]) {
      int n = 5;
      fptr1 = square;    //Call the square function with the function pointer(fptr), the same as " fptr1 = &square; "
                        // use the function name square to return the address of the square function
-     cout << fptr1(n) << endl;   // the use of function pointer(fptr1)
+     cout << fptr1(n) << endl;   // the use of function pointer(fptr1)   25
 
      funcptr fptr2;    // It is more convenient to declaring a type definition for a function
      fptr2 = square;
-     cout << fptr2(n) << endl;
+     cout << fptr2(n) << endl;  // 25
 
      //Transfer function pointer    The addresses of add and sub functions are passed to the compute function,
-     cout << compute(add,5,6) << endl;  // which uses these addresses to invoke the corresponding operations.
-     cout << compute(subtract,5,6) << endl;
+     cout << compute(add,5,6) << endl;  // which uses these addresses to invoke the corresponding operations.   11
+     cout << compute(subtract,5,6) << endl;   // -1
 
      //Test function pointer     Test evaluate()
-     cout << evaluate('+',5,6) << endl;
-     cout << evaluate('-',5,6) << endl;
+     cout << evaluate('+',5,6) << endl;   //  11
+     cout << evaluate('-',5,6) << endl;   //  -1
 
      //Test function pointer array    Test evaluateArray()
      initializeOperationArray();
-     cout << evaluateArray('+',6,5) << endl;
-     cout << evaluateArray('-',5,6) << endl;
+     cout << evaluateArray('+',6,5) << endl;   // 11 
+     cout << evaluateArray('-',5,6) << endl;   // -1 
 
      // compare function pointer
      fptrOperation fptr3 = add;   // The add function is assigned to the fptr3 function pointer
      if(fptr3 = add) {   // then compare with the address of the add function
-         cout << "fptr3 points to add function \n" ;
+         cout << "fptr3 points to add function \n" ;       //  fptr3 points to add function 
      } else {
          cout << "fptr3 doen not points to add function \n" ;
      }
