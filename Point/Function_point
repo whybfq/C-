@@ -6,6 +6,7 @@
   *Date:  August 1,2018
   *Description:   when you use function pointer, C does not check the correctness of the parameter pass
   *               It makes the program more flexible
+  *Bug:          some errors when I use the base pointer(in the end of the program)
   *Function List:
      1.
   *History:
@@ -23,7 +24,6 @@ int square(int num) {
     return num * num;
 }
 
-
 typedef int (*funcptr)(int);  // Declaring a type definition for a function
 
 int add(int num1, int num2) {
@@ -34,7 +34,23 @@ int subtract(int num1, int num2) {
     return num1 - num2;
 }
 
+//函数指针数组   用一个字符索引选择对应的函数来执行。
+// For example, if there is a * character that represents a multiplication function,
+// we can use the character literal as an integer, 128 elements corresponding to the first 128 ASCII characters
 typedef int (*fptrOperation)(int,int);  // Declaring a type definition for a function
+fptrOperation operations[123] = {NULL};  //this two sentences amounts to
+                                        // int (*fptrOperation[123])(int, int) = {NULL};
+
+void initializeOperationArray() {
+    operations['+'] = add;
+    operations['-'] = subtract;
+}
+
+int evaluateArray(char opcode, int num1, int num2) {
+    fptrOperation operation;
+    operation = operations[opcode];
+    return operation(num1, num2);
+}
 
 int compute(fptrOperation operation, int num1, int num2) {
     return operation(num1, num2);
@@ -53,6 +69,8 @@ int evaluate(char opcode, int num1, int num2) {  //opcode represents the operati
     return operation(num1, num2);
 }
 
+
+
 int main(int argc, char const *argv[]) {
      int n = 5;
      fptr1 = square;    //Call the square function with the function pointer(fptr), the same as " fptr1 = &square; "
@@ -63,12 +81,45 @@ int main(int argc, char const *argv[]) {
      fptr2 = square;
      cout << fptr2(n) << endl;
 
-     cout << compute(add,5,6) << endl;     //The addresses of add and sub functions are passed to the compute function,
-                                  // which uses these addresses to invoke the corresponding operations.
+     //Transfer function pointer    The addresses of add and sub functions are passed to the compute function,
+     cout << compute(add,5,6) << endl;  // which uses these addresses to invoke the corresponding operations.
      cout << compute(subtract,5,6) << endl;
 
+     //Test function pointer
      cout << evaluate('+',5,6) << endl;
      cout << evaluate('-',5,6) << endl;
+
+     //Test function pointer array
+     initializeOperationArray();
+     cout << evaluate('+',6,5) << endl;
+     cout << evaluate('-',5,6) << endl;
+
+     // compare function pointer
+     fptrOperation fptr3 = add;   // The add function is assigned to the fptr3 function pointer
+     if(fptr3 = add) {   // then compare with the address of the add function
+         cout << "fptr3 points to add function \n" ;
+     } else {
+         cout << "fptr3 doen not points to add function \n" ;
+     }
+
+     // Conversion function pointer
+    typedef int (*fptrToSingleInt)(int);
+    typedef int (*fptrToTwoInts)(int,int);
+    int add(int, int);
+    fptrToTwoInts fptrFirst = add;     // Converting one function pointer to another and back,
+    fptrToSingleInt fptrSecond = (fptrToSingleInt)fptrFirst;   // the result is the same as the original pointer,
+    fptrFirst = (fptrToTwoInts)fptrSecond;  // but the length of the function pointer is not necessarily the same.
+    cout << fptrFirst(5,6) << endl;     //  11
+
+    //waring : There is no guarantee that the function pointer and data pointer will be converted to normal work.
+//    void* pv = add;  // wrong! You can't assign function pointers to void* pointers
+    typedef void (*fptrBase)(); // fptrBase is a function pointer that does not accept parameters nor return results.
+    fptrBase basePointer;   // the use of basepointer, It has the same effect as the above code
+    fptrFirst = add;
+//    basePointer = (fptrToSingleInt)fptrFirst; // Error error: assigning to 'fptrBase' (aka 'void (*)()') from incompatible
+                                              // type 'fptrToSingleInt' (aka 'int (*)(int)'): different number of parameters (0 vs 1)
+    fptrFirst = (fptrToTwoInts)basePointer;
+    cout << fptrFirst(6,5) << endl;
 }
 
 Output:
@@ -78,6 +129,9 @@ Output:
 -1
 11
 -1
+11
+-1
+fptr3 points to add function 
+11
 
-Process finished with exit code 0
-
+Process finished with exit code 11
