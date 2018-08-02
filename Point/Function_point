@@ -24,7 +24,7 @@ int square(int num) {
     return num * num;
 }
 
-typedef int (*funcptr)(int);  // Declaring a type definition for a function
+typedef int (*funcptr)(int);  // Declaring a type definition for a function 为函数指针声明类型定义
 
 int add(int num1, int num2) {
     return num1 + num2;
@@ -39,8 +39,7 @@ int subtract(int num1, int num2) {
 // we can use the character literal as an integer, 128 elements corresponding to the first 128 ASCII characters
 typedef int (*fptrOperation)(int,int);  // Declaring a type definition for a function
 fptrOperation operations[123] = {NULL};  //this two sentences amounts to
-                                        // int (*fptrOperation[123])(int, int) = {NULL};
-
+                                        // 等价于int (*fptrOperation[123])(int, int) = {NULL};
 void initializeOperationArray() {
     operations['+'] = add;
     operations['-'] = subtract;
@@ -50,10 +49,11 @@ int compute(fptrOperation operation, int num1, int num2) {
     return operation(num1, num2);
 }
 
-fptrOperation  select(char opcode) {   // Rerutn function point
-    switch(opcode) {
+fptrOperation  select(char opcode) {   // Rerutn function point 把函数的返回类型声明为函数指针
+    switch(opcode) {    //基于输入的字符返回指向对应操作的函数指针
         case '+': return add;
         case '-': return subtract;
+        default: return NULL;
     }
 }
 
@@ -68,12 +68,12 @@ int evaluate(char opcode, int num1, int num2) {  //opcode represents the operati
      operation = operations[opcode];
      return operation(num1, num2);
  }
- 
+
 int main(int argc, char const *argv[]) {
      int n = 5;
      fptr1 = square;    //Call the square function with the function pointer(fptr), the same as " fptr1 = &square; "
                        // use the function name square to return the address of the square function
-     cout << fptr1(n) << endl;
+     cout << fptr1(n) << endl;   // the use of function pointer(fptr1)
 
      funcptr fptr2;    // It is more convenient to declaring a type definition for a function
      fptr2 = square;
@@ -83,14 +83,14 @@ int main(int argc, char const *argv[]) {
      cout << compute(add,5,6) << endl;  // which uses these addresses to invoke the corresponding operations.
      cout << compute(subtract,5,6) << endl;
 
-     //Test function pointer
+     //Test function pointer     Test evaluate()
      cout << evaluate('+',5,6) << endl;
      cout << evaluate('-',5,6) << endl;
 
-     //Test function pointer array
+     //Test function pointer array    Test evaluateArray()
      initializeOperationArray();
-     cout << evaluate('+',6,5) << endl;
-     cout << evaluate('-',5,6) << endl;
+     cout << evaluateArray('+',6,5) << endl;
+     cout << evaluateArray('-',5,6) << endl;
 
      // compare function pointer
      fptrOperation fptr3 = add;   // The add function is assigned to the fptr3 function pointer
