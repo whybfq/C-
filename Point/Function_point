@@ -5,7 +5,7 @@
   *OS:  macOS High Sierra 10.13.6
   *Date:  August 1,2018
   *Description:   when you use function pointer, C does not check the correctness of the parameter pass
-  *               It makes the program more flexible
+  *               It makes the program more flexible. This program is about some basic use of function pointer.
   *Bug:          some errors when I use the base pointer(in the end of the program)
   *Function List:
      1.
