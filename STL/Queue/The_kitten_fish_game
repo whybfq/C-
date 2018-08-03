@@ -1,0 +1,176 @@
+/**
+ * @date 2018-05-15
+ * @brief Determines whether a string is a palindrome.
+ */
+
+/**
+ * A game, do A of the first CARDS on the table, B card on A playing card, two people play alternately, if someone hit the card the same as the one card on the table
+* you can take both CARDS and the CARDS in the middle and put them at the end of your hand. When the CARDS in the hands of any one person are finished, the game is over and the opponent wins.
+ * 小猫钓鱼游戏，A拿出手中的第一张扑克牌放到桌子上，B也出一张牌放到A打出的扑克牌上，两人交替出牌，若是某人打出的牌与桌子上的某张牌相同
+ * 可将两张牌及其中间的牌全部取走，并依次放到自己手中牌的末尾。当任意一人手中的牌全部出完时，游戏结束，对手获胜。
+ */
+
+
+#include <cstdio>
+#include <iostream>
+#include <cstring>
+using namespace std;
+struct queue{    ///A there are only two kinds of operations, playing CARDS and winning CARDS. A只有两种操作，出牌和赢牌，即出队和入队
+    int data[1000];
+    int head;
+    int tail;
+};
+
+struct stack{   ///桌子相当于一个栈 A desk is like a stack.
+    int data[10]; ///Because there are only nine different CARDS, there are nine CARDS on the table. 因为只有9种不同的牌面，桌上最多有9张牌
+    int top;
+};
+
+int main(){
+    struct queue q1,q2;
+    struct stack s;
+    int book[10];
+    int i, t;
+
+    ///Initialization queue q1 and q2, they have no cards at first
+    q1.head = 1; q1.tail=1;
+    q2.head=1; q2.tail=1;
+
+    ///Initialize the stack
+    s.top=0;   ///There were no CARDS on the table. 最开始桌子上没有牌
+
+    ///An array that is initialized to mark which CARDS are already on the table.
+    for (int j = 1 ; j < 9; ++j) {
+        book[j] = 0;
+    }
+
+    ///Insert six Numbers into the queue in turn.
+    ///Six CARDS on behalf of A.
+    for (int k = 1; k <= 6 ; ++k) {
+        cin>>q1.data[q1.tail];  ///read a number to the end of the q1(the first queue) 读一个数到队尾
+        ++q1.tail;    ///The back of the team moved backwards. 队尾往后挪一位
+    }
+
+    ///Six CARDS on behalf of B.
+    for (int l = 1; l <= 6; ++l) {
+        cin>>q2.data[q2.tail];
+        ++q2.tail;
+    }
+
+    ///Now the game is beginning(Ready, Game time)
+    while(q1.head<q1.tail && q2.head<q2.tail){   ///The queue is empty indicating that a person's card has been completed.
+        t=q1.data[q1.head];  ///A gives a card
+
+        /*
+              flag =0;    ///判断桌上的牌有没有与t相同的，枚举桌子上的每一张牌与t进行对比， flag=0表明A没有赢得桌面上的牌，将打出的牌留在桌子上
+              for(i=1; i<= top; ++i)
+              {
+                  if(t==s[i]){ flag =1; break;
+              }
+
+              if(flag==0){
+                   ++q1.head;  //打出一张牌
+                   ++s.top;
+                   s.data[s.top]=t;  //把打出的牌留在桌子上
+
+               }
+               else if(flag==1)
+               {
+                  ++q1.head;
+                  q1.data[q1.tail]=t;  ///赢牌，把刚打出的牌又放到手中的末尾
+                  ++q1.tail;
+                  while(s.data[s.top]!=t){   ///把桌子上可以赢的牌（从当前桌面最顶部开始取，直至与打出的牌相同为止）依次放到手中牌的末尾The_kitten_fish_game
+                      q1.data[q1.tail]=s.data[s.top];   ///依次放入队尾
+                      ++q1.tail;
+                      --s.top;    ///栈中少了一张牌，所以栈顶减1
+                  }
+               }
+         */
+        ///Judge A's card to see if A can win.
+        if(book[t] == 0){   ///It shows that there is no card on the table for t.
+            ///there's no win for A this round.
+            ++q1.head;     ///A has played a card(the first), so play the card out.
+            ++s.top;
+            s.data[s.top] = t;   ///Put the card on the table, in other words, into the stack.
+            book[t]=1;    ///Mark the top of the table with the card of t now.
+        }
+        else{
+            /// A Has win the game this round
+            ++q1.head;   ///A has played a card(the first), so play the card out.
+            q1.data[q1.tail]=t;   ///Then put the card at the end of the hand.紧接着把打出的牌放到手中牌的末尾
+            ++q1.tail;
+            while(s.data[s.top]!=t){   ///Put the CARDS you can win on the table at the end of your hand. 把桌上可以赢得的牌依次放到手中牌的末尾
+                book[s.data[s.top]] = 0;   ///unmark 取消标记
+                q1.data[q1.tail] = s.data[s.top];   ///put the end of the queue in turn 依次放入队尾
+                ++q1.tail;
+                --s.top;   ///One card is missing from the stack, so the top of the stack is reduced by 1. 栈中少了一张牌，所以栈顶要减1
+            }
+        }
+
+        t = q2.data[q2.head];   ///B gives a card
+
+        ///Judge B's card to see if B can win.
+        if(book[t]==0){   ///It shows that there is no card on the table for t.
+            ///there's no win for B this round.
+            ++q2.head;    ///B has played a card(the first), so play the card out. B已经打出一张牌，所以要把打出的牌出队
+            ++s.top;
+            s.data[s.top] = t;  ///Put the card on the table, in other words, into the stack.
+            book[t] = 1;     ///Mark the top of the table with the card of t now. 标记桌子上已经有牌面为t的牌
+        }
+        else{
+            ///B can win the game this round
+            ++q2.head;  ///B has played a card(the first), so play the card out.
+            q2.data[q2.tail] = t;    ///Then put the card at the end of the hand.紧接着把打出的牌放到手中牌的末尾
+            ++q2.tail;
+            while(s.data[s.top] != t){    ///Put the CARDS you can win on the table at the end of your hand.  把桌上可以赢得的牌依次放到手中牌的末尾
+                book[s.data[s.top]] = 0;   ///unmark
+                q2.data[q2.tail] = s.data[s.top];   ///put the end of the queue in turn 依次放入队尾
+                ++q2.tail;
+                --s.top;
+            }
+        }
+    }
+
+    if(q2.head==q2.tail){
+        cout<<("A win the game")<<endl;
+        cout<<"A's cards are: "<<endl;
+        for(i = q1.head; i<=q1.tail-1; ++i)
+            cout<<q1.data[i]<<" ";
+        if(s.top > 0){
+            cout<<"\nthe cards on the table are:"<<endl;
+            for(i=1; i <= s.top; ++i)
+                cout<<s.data[i]<<" ";
+        }
+        else
+            cout<<"\nthere is no card on the table."<<endl;
+    }
+    else{
+        cout<<"B win the game"<<endl;
+        cout<<"B's cards are: "<<endl;
+        for(i=q2.head; i<=q2.tail-1; ++i)
+            cout<<q2.data[i]<<" ";
+        if(s.top>0){
+            cout<<"\nthe cards on the table are: "<<endl;
+            for(i=1; i<=s.top; ++i)
+                cout<<s.data[i]<<" ";
+        }
+        else
+            cout<<"\nthere is no card on the table."<<endl;
+    }
+
+    getchar();
+    getchar();
+    return 0;
+}
+
+
+
+
+The result:
+2 4 1 2 5 6
+3 1 3 5 6 4
+A win the game
+A's cards are:
+5 6 2 3 1 4 6 5
+the cards on the table are:
+2 1 3 4
