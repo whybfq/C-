@@ -51,20 +51,22 @@ char* getLine(void) {
     return buffer;
 }
 
-char* trim(char* phrase) {
+
+char* trim(char* phrase) {   //去掉字符串中开头的空白字符
     char *old = phrase;
     char *new1 = phrase;
 
-    while(*old == ' ') {
+    while(*old == ' ') {  //跳过开头的空白字符 Skip the beginning of the blank character
         ++old;
     }
 
-    while(*old) {
+    while(*old) {       // Copy the remaining string
         *(++new1) = *(++old);
     }
-    *new1 = 0;
+    *new1 = 0;    // plus 0 at the end of the string
     return (char*) realloc(phrase, strlen(phrase) + 1);
 }
+
 int main(int argc, char const *argv[]) {
     char *buffer = (char*)malloc(strlen(" cat") + 1);
     strcpy(buffer, " cat");
