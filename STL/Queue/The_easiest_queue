@@ -1,0 +1,85 @@
+
+/*********************************************************************************
+  *FileName:  t01The_easiest_list
+  * Author:  Sanner
+  * Using C++11
+  * OS: macOS High Sierra
+  * IDE: Clion 2018.1
+  * Version:  **
+  * Date:  2018-06-02
+  * Total lines of code： 13
+  * Core lines of code:  5
+  * Description: use the easiest list to play a game,delete the first number ,put the second in the end;
+  *              delete the third number than put the fourth in the end, continue like this...
+  *              until the last number, delete it as well
+  *              print the order you delete the number just now
+  *
+  * Others:
+  * Function List:
+     1. none
+  * variable:
+      head    --队列的第一个元素，跳过数组的第一个元素，因此q[0]==0
+      tail    --指向队尾的后一个位置
+  * History:  //修改历史记录列表，每条修改记录应包含修改日期、修改者及修改内容简介
+     1.Date: 2018/06/02
+       Author: W
+       Modification: Original
+     2.…………
+**********************************************************************************/
+
+#include <iostream>
+
+using namespace std;
+
+int main(){
+    int q[100]={0,6 ,3 ,1, 7, 5, 8, 9, 2, 4},head=1,tail=10,i;   //初始化队列，假设队列中有9个数
+    while(head < tail){
+        cout<<q[head]<<" "<<endl;   //队首出队，打印队首
+        ++head;
+
+        q[tail] = q[head];   //将新队首队数添加到队尾
+        ++tail;    //队尾加1，tail指向最后一个元素后一位
+        ++head;    //再将队首出队
+    }
+}
+
+Output:
+6 1 5 9 4 7 2 8 3
+
+
+/**********************************************************************************
+ * History:  //修改历史记录列表，每条修改记录应包含修改日期、修改者及修改内容简介
+     1.Date: 2018/06/02
+       Author: Sanner
+       Modification: Use struct to improve the original program
+
+**********************************************************************************/
+struct queue{
+    int data[100];
+    int head;
+    int tail;
+}
+
+int main(){
+    struct queue q;
+    q.head=1,q.tail=1;
+    int i;
+    for(i=1;i<=9;++i){
+        cin>>q.data[q.tail++];
+    }
+
+    while(q.head < q.tail){
+        cout<<q.data[q.head++]<<" ";      //if you use ++q.head will have different answers
+
+        q.data[q.tail] = q.data[q.head];
+        q.tail++;
+        q.head++;
+    }
+    getchar();
+}
+
+Input:
+6 3 1 7 5 8 9 2 4
+
+Output:
+6 1 5 9 4 7 2 8 3
