@@ -40,3 +40,8 @@ int main(){
    
     return 0;
 }
+
+Input:
+2332
+Output:
+YES, It's a palindrome
