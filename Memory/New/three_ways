@@ -1,0 +1,81 @@
+/*********************************************************************************
+  *Author:  Sanner
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Processor: 2.2 GHz Intel Core i7
+  *Graphics: Intel Iris Pro 1536 MB
+  *Date:  July 25,2018
+  *Description:  This file used to show basic use of new operator
+  *Others:
+  *Function List:
+     1. 
+
+  *History:  //modify history list, every record should consist the date, Revision and modification content introduction
+     1.Date:
+       Author:
+       Modification:
+     2.Date:
+       Author:
+       Modification:
+
+**********************************************************************************/
+
+#include <boost/timer.hpp>
+#include <boost/progress.hpp>
+
+#include <cstdio>
+#include <cassert>
+#include <cmath>
+
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <cstring>
+
+//about basic exception handling
+//Standard exception type
+#include <typeinfo>   //bad_cast, bad typeid   //typeid()  dynamic_cast<>
+#include <new>        //bad_alloc
+#include <exception>  //exception, bad_exception
+#include <stdexcept>  //logic_error, runtime_error, domain_error, invalid_argument, length_error, out_of_range, range_error, overflow_error, underflow_error
+
+using namespace boost;
+using namespace std;
+
+//(plain new,nothrow new,placement new)
+void *malloc(size_t size);
+
+//plain new
+void *operator new(std::size_t)throw(bad_alloc);
+void operator delete(void*)throw();
+
+char *GetMemory(unsigned long size)
+{
+    char *p = new char[size];
+    return p;
+}
+
+//nothrow new
+void *operator new(size_t,nothrow_t&)throw();
+void operator delete(void*)throw();
+
+
+int main(int argc, char const *argv[]) {
+    char *p = new(nothrow)char[400];   //nothrow new
+    if(p ==  NULL)
+    {
+        cout << "allocate failed!" << endl;
+        exit(-1);
+    }
+    //type-name *q =new(p) type-name
+    long *q1 = new(p)long(100);     //placement new
+            // 不必担心分配失败 主要用途：反复使用一块较大的动态分配成功的内存来构造不同类型的对象/数组
+                    // 之后要显示调用它们的析构函数来
+    int *q2 = new(p)int[100/ sizeof(int)];
+//    delete q1;   //ERROR! placement new构造的对象大小并不一定等于原来分配的内存大小，使用delete会造成内存泄漏，或在之后释放内存时出现运行时错误
+    q->ADT::~ADT();        //需要显示调用析构函数
+     delete []p;   //then free memory
+    return 0;
+}
+
+//placement new
