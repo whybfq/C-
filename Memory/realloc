@@ -63,7 +63,7 @@ char* trim(char* phrase) {   //去掉字符串中开头的空白字符
     while(*old) {       // Copy the remaining string
         *(new1++) = *(old++);   //if you use *(++new1) = *(++old) then output at
     }
-    *new1 = 0;    // plus 0 at the end of the string
+    *new1 = '\0';    // plus 0 or '\0' at the end of the string
     return (char*) realloc(phrase, strlen(phrase) + 1);  // Adjust the size of the realloc function based on the string length
 }
 
