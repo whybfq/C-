@@ -1,0 +1,69 @@
+/**
+ * @date 2018-06-02
+ * @brief Insert a number to a list.
+ */
+
+
+#include<iostream>
+#include <cstdio>
+#include <cstdlib>
+using namespace std;
+
+struct node{   ////the struct of the list
+    int data;
+    struct node* next;
+};
+
+int main(){
+    struct node *head,*p,*q,*t;
+    int i , n ,a;
+    cin>>n;
+    head = NULL;   ////the head is NULL in the beginning
+    for (int j = 1; j <= n; ++j) {   ////input n numbers
+        cin>>a;
+        p = (struct node *)malloc(sizeof(struct node));  ////Dynamically apply for a space to hold a node and point to this with a tempory pointer p 动态申请一个空间，用来存放一个节点，并用临时指针p指向这个节点
+        p->data = a;  //// Store data in the current node's data field将数据存储到当前节点的data域中
+        p->next = NULL;
+        if(head == NULL)
+            head = p;   ////if this is the first node,point the head pointer to this node
+        else
+            q->next = p; ////Otherwise, point the successor of the previous node to the current node
+
+        q = p;  ///pointer q also points to the current node
+    }
+
+    cin>>a; ////read the number to insert
+
+    t=head;  ////Traverse from the head of the list 从链表头部开始循环
+    while(t != NULL){
+        if(t->next->data > a){
+            p = (struct node*)malloc(sizeof(struct node));  ////apply for a space dynamically
+            p->data = a;
+            p->next = t->next;//The follow-up pointer of the new node points to the node pointed to by the current node's successor pointer.
+            t->next = p;  ////the successor to the current node points to the newly added node
+            break;  //insert complete, exit cycle
+        }
+        t=t->next; //continue to the next node
+    }
+
+    ////output all the data in the list
+    t=head;
+    while(t!=NULL){
+        cout<<t->data<<" ";
+        t=t->next;
+
+    }
+
+    getchar(); getchar();
+    return 0;
+}
+
+
+
+Input:
+9
+2 3 5 8 9 10 18 26 32
+6
+
+Output:
+2 3 5 6 8 9 10 18 26 32
