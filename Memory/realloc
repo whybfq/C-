@@ -1,0 +1,40 @@
+#include <iostream>
+using namespace std;
+
+//从标准读取字符并放入缓冲区的函数，缓冲区会包含除最后的回车字符之外的所有字符。
+//It is impossible to know how many characters the user enters, so the buffer length cannot be confirmed.
+// The realloc function assigns additional space through a fixed increment.
+char* getLine(void) {
+    const size_t sizeIncrement = 10;  //缓冲区的初始大小以及需要增大时的增量
+    char* buffer = (char*)malloc(sizeIncrement); //buffer,指向读入字符的指针
+    char* currentPosition = buffer;  //指向缓冲区下一个空白位置的指针
+    size_t maximumLength = sizeIncrement;  //可以安全存入缓冲区的最大字符数
+    size_t length = 0;   //读入的字符数
+    int character;      // 上次读入的字符数
+
+    if(currentPosition == NULL) { return  NULL ; }  //如果malloc无法分配内存，geiline() will return NULL
+
+    while(1) {    // Processing one character at a time
+        character = fgetc(stdin);
+        if(character == '\n') { break; }  // If it's a return sign, quit
+
+        if(++length >= maximumLength) {    // If the size of the buffer exceeds the buffer size
+            char *newBuffer = (char*)realloc(buffer, maximumLength += sizeIncrement); //分配新内存，比旧内存打sizeIncrement字节
+            if(newBuffer == NULL) {  // cannot allocate memory
+                free(buffer);  // Release existing allocated memory
+                return NULL;  // Forced function return to NULL
+            }
+
+// newBuffer变量持有已分配内存的地址，我们需要别的变量而不是buffer，这样万一realloc无法分配内存，我们也可以检测到这种情况并进行处理
+            currentPosition = newBuffer + (currentPosition - buffer); //Otherwise, the CurrentPosition will adjust to the new allocated buffer.
+            buffer = newBuffer;
+        } //realloc分配成功，会把原来的缓冲区复制到新的缓冲区，再把旧的释放。所以我们不需要释放buffer
+        *currentPosition++ = character;
+    }
+    *currentPosition = '\0';  //循环退出，字符串末尾添加'\0' Loop out, add'\0'at the end of the string
+    return buffer;
+}
+
+int main(int argc, char const *argv[]) {
+
+}
