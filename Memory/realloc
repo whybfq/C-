@@ -1,3 +1,19 @@
+/*********************************************************************************
+ *Author:  Sann
+ *IDE: Clion 2018.3
+ *OS:  macOS High Sierra 10.13.6
+ *Date:  August 3,2018
+ *Description:  the use of realloc, the function that reads characters from the standard and puts them in the buffer.
+ *              The buffer will contain all characters except the last carriage return character.
+ *Others:
+ *Function List:
+    1.
+ *History:  //modify history list, every record should consist the date, Revision and modification content introduction
+    1.Date:
+      Author:
+      Modification:
+**********************************************************************************/
+
 #include <iostream>
 using namespace std;
 
