@@ -5,7 +5,7 @@
  *Date:  August 3,2018
  *Description:  the use of realloc, the function that reads characters from the standard and puts them in the buffer.
  *              The buffer will contain all characters except the last carriage return character.
- *Others:
+ *Others:       Realloc can also reduce the memory directed by the pointer
  *Function List:
     1.
  *History:  //modify history list, every record should consist the date, Revision and modification content introduction
@@ -51,6 +51,25 @@ char* getLine(void) {
     return buffer;
 }
 
-int main(int argc, char const *argv[]) {
+char* trim(char* phrase) {
+    char *old = phrase;
+    char *new1 = phrase;
 
+    while(*old == ' ') {
+        ++old;
+    }
+
+    while(*old) {
+        *(++new1) = *(++old);
+    }
+    *new1 = 0;
+    return (char*) realloc(phrase, strlen(phrase) + 1);
 }
+int main(int argc, char const *argv[]) {
+    char *buffer = (char*)malloc(strlen(" cat") + 1);
+    strcpy(buffer, " cat");
+    cout << trim(buffer) << endl;
+}
+
+Output:
+ at
