@@ -1,0 +1,42 @@
+![image](http://github.com/your_name/whybfq/Cplusplus/raw/master/list/analog_llist.png)
+
+#include <iostream>
+#include <cstdio>
+using namespace std;
+//Analog List
+int main(){
+    int data[101],right[101];
+    int n;
+    cin>>n;  //n numbers
+    int len = n;
+    for (int j = 1; j <= n; ++j)  //input the data
+        cin>>data[j];
+
+
+    for (int k = 1; k <= n ; ++k) {  //Initialize the array right
+        if(k != n) right[k] = k+1;
+        else right[k] = 0;
+    }
+    cin>>data[++len];  //now len==n+1    ////Add the number to be inserted directly at the end of the array data
+
+    ////Traverse fron the beginning head of the list
+    int t=1;
+    while(t!= 0){
+        if(data[right[t]] > data[len]){  //If the value of the next node at the current node is greater than the number to insert, insert the number into the middle
+            right[len] = right[t];  //The next node label of the newly inserted number is equal to the next node number of the current node
+            right[t] = len;  //The next node number of the current node is the number of newly inserted numbers
+            break;
+        }
+        t=right[t];
+    }
+
+    ////output all the data in the list
+    t=1;
+    while(t!=0){
+        cout<<data[t]<<" ";
+        t = right[t];
+    }
+    getchar();
+    getchar();
+    return 0;
+}
