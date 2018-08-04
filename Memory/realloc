@@ -6,8 +6,8 @@
  *Description:  the use of realloc, the function that reads characters from the standard and puts them in the buffer.
  *              The buffer will contain all characters except the last carriage return character.
  *Others:       Realloc can also reduce the memory directed by the pointer
- *Function List:
-    1.
+ *Function List:  1. char* getLine(void);       // 用realloc调整数组长度
+                  2. char* trim(char* phrase)   // 用realloc reduce the memory, 去掉字符串中开头的空白字符
  *History:  //modify history list, every record should consist the date, Revision and modification content introduction
     1.Date:
       Author:
@@ -20,7 +20,7 @@ using namespace std;
 //从标准读取字符并放入缓冲区的函数，缓冲区会包含除最后的回车字符之外的所有字符。
 //It is impossible to know how many characters the user enters, so the buffer length cannot be confirmed.
 // The realloc function assigns additional space through a fixed increment.
-char* getLine(void) {
+char* getLine(void) {       // 用realloc 调整数组长度
     const size_t sizeIncrement = 10;  //缓冲区的初始大小以及需要增大时的增量
     char* buffer = (char*)malloc(sizeIncrement); //buffer,指向读入字符的指针
     char* currentPosition = buffer;  //指向缓冲区下一个空白位置的指针
@@ -48,9 +48,9 @@ char* getLine(void) {
         *currentPosition++ = character;
     }
     *currentPosition = '\0';  //循环退出，字符串末尾添加'\0' Loop out, add'\0'at the end of the string
+    cout << buffer << endl;  // just for test, output what you input
     return buffer;
 }
-
 
 char* trim(char* phrase) {   //去掉字符串中开头的空白字符
     char *old = phrase;
@@ -68,10 +68,17 @@ char* trim(char* phrase) {   //去掉字符串中开头的空白字符
 }
 
 int main(int argc, char const *argv[]) {
-    char *buffer = (char*)malloc(strlen(" cat") + 1);
-    strcpy(buffer, " cat");
+    getLine();
+    char *buffer = (char*)malloc(strlen("  cat") + 1);
+    strcpy(buffer, "  cat");
     cout << trim(buffer) << endl;
 }
 
+
+Input:
+Once upon at a time
+
 Output:
+Once upon at a time
 cat
+Output:
