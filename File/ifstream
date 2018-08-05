@@ -1,0 +1,25 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    //文件的写指针
+    ofstream outFile("clients.txt",ios::app | ios::binary);
+    ofstream fout("a1.out", ios::app);  //以添加方式打开
+    long location = fout.tellp();  //取得写文件的位置
+    location = 10;  // location 可以为负值
+    fout.seekp(location);  //将写指针移动到第十个字节处
+    fout.seekp(location,ios::beg); //从头数location
+    fout.seekp(location,ios::cur); //从当前位置数location
+    fout.seekp(location,ios::end); //从尾部数location
+
+    //文件的读指针
+    ifstream fin("a1.in",ios::ate);
+    long location1 = fin.tellg();  //取得读指针的位置
+    location1 = 10L;  // location1 可以为负值
+    fin.seekg(location1);  //将读指针移动到第十个字节处
+    fin.seekg(location1,ios::beg); //从头数location
+    fin.seekg(location1,ios::cur); //从当前位置数location
+    fin.seekg(location1,ios::end); //从尾部数location
+    return 0;
+}
