@@ -1,7 +1,8 @@
-//关于文件读写
+// about read and write files
 
 #include <iostream>
 #include <fstream>
+#include <vector>
 using namespace std;
 
 int main() {
@@ -23,5 +24,19 @@ int main() {
     fin.seekg(location1,ios::beg); //从头数location
     fin.seekg(location1,ios::cur); //从当前位置数location
     fin.seekg(location1,ios::end); //从尾部数location
+
+    vector<int> v;
+    ifstream srcFile("in.txt",ios::in);
+    ofstream destFile("out.txt",ios::out);
+    int x;
+    while( srcFile >> x) {
+        v.push_back(x);
+    }
+    sort(v.begin(),v.end());
+    for (int i = 0; i < v.size(); ++i) {
+        destFile << v[i] << " ";
+    }
+    destFile.close();
+    srcFile.close();
     return 0;
 }
