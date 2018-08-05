@@ -26,8 +26,8 @@ int main() {
     fin.seekg(location1,ios::end); //从尾部数location
 
     vector<int> v;
-    ifstream srcFile("in.txt",ios::in);
-    ofstream destFile("out.txt",ios::out);
+    ifstream srcFile("in.txt",ios::in);   //从in.txt读入
+    ofstream destFile("out.txt",ios::out);   //在out.txt中输出
     int x;
     while( srcFile >> x) {
         v.push_back(x);
