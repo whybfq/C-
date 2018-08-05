@@ -1,0 +1,50 @@
+//  别名 && 强别名
+
+#include <iostream>
+#include <fstream>
+#include <vector>
+using namespace std;
+
+int main(int argc, char const *argv[]) {
+    int a=1,m=2;
+    int z;
+    z = a+++m;  //it will be parsed as z = a++ + x;
+
+//    int num = 9;
+//    int *pi = (int*)num;
+//    cout <<  *pi << endl;   //解引指针会出现问题，因为9这个地址很可能不再程序栈范围内
+
+    const int PORT = 0XB0000000;
+    unsigned int volatile * const port = (unsigned int * ) PORT;
+//    *port = 0x0BF4;  //  there is an error!  write the port
+//    int value = *port;  // read data from the port
+
+    // 判断机器的字节序
+    int num = 0x12345678;
+    char *pc = (char*)&num;
+    for (int j = 0; j < 4; ++j) {
+        cout << &pc << ":" << (unsigned char)*pc++  << endl;
+    }
+
+    // 强别名： 不允许一种类型的指针成为另一种类型的指针的别名
+    float number  = 3.25f;
+    unsigned int *ptrValue = (unsigned int *)&number;
+    unsigned int result = (*ptrValue & 0x80000000) == 0; //判断一个数是否为负数，将它的参数跟0比较来判断正负
+    // ，这种方法执行速度比别名更快
+
+    //强别名对符号或修饰符不起作用 ，下面都是合法的强别名
+    int number1 ;
+    const int *ptr1 = &number1;
+    int *ptr2 = &number1;
+    int volatile *ptr3 = &number1; //volatile表示可在程序以外改变变量，可以阻止运行时系统使用寄存器暂存端口只，每次访问端口都需要系统读写端口
+
+    return 0;
+}
+
+Output:
+0x7ffeea3eb988:x
+0x7ffeea3eb988:V
+0x7ffeea3eb988:4
+0x7ffeea3eb988:
+
+Process finished with exit code 0
