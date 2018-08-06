@@ -12,16 +12,8 @@
      Author:
      Modification:
 **********************************************************************************/
-
 #include <iostream>
-#include <thread>
-#include <vector>
 using namespace std;
-
-inline int Max(int a, int b){
-    if(a > b) return a;
-    return b;
-}
 
 void func(int a,int b = 2, int c = 3){  cout << a << b << c  << endl; }
 
