@@ -1,0 +1,66 @@
+/*********************************************************************************
+  *Author:  San
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Date:  August 6,2018
+  *Description:  Callback
+  *Bug:
+  *Function List:
+     1.
+  *History:
+   1.Date:
+     Author:
+     Modification:
+**********************************************************************************/
+
+#include <iostream>
+#include <fstream>
+#include <vector>
+using namespace std;
+
+typedef struct _factorialData {
+    int number;   //阶乘数
+    int result;   // 阶乘结果
+    void (*callBack)(struct _factorialData*);   //回调用的函数指针
+} FactorialData;
+
+void factorial(void *args) {
+    FactorialData *factorialData = (FactorialData*) args;
+    void (*callBack)(FactorialData*);  // Function prototype
+    int number = factorialData->number;
+    callBack = factorialData->callBack;
+
+    int num = 1;
+    for (int i = 0; i <= number; ++i) {
+        num *= i;
+    }
+
+    factorialData->result = num;
+    callBack(factorialData);
+
+    pthread_exit(NULL);
+}
+
+void startThread(FactorialData *data) {
+    pthread_t  thread_id;
+    int thread = pthread_create(&thread_id, NULL, factorial, (void*) data);  //ther is a bug no matching function for call to 'pthread_create'
+}
+
+void callBackFunction(FactorialData *factorialData) {
+    cout << "Factorial is " << factorialData->result  << endl;
+}
+
+int main(int argc, char const *argv[]) {
+    FactorialData *data = (FactorialData*)malloc(sizeof(FactorialData));
+
+    if(!data) {
+        cout << "Failed to allocate memory "  << endl;
+        return NULL;
+    }
+
+    data->number = 5;
+    data->callBack = callBackFunction;
+
+    startThread(data);
+    return 0;
+}
