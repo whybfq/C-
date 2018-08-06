@@ -1,0 +1,101 @@
+/*********************************************************************************
+  *Author:  San
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Date:  August 1,2018
+  *Description:  thread and pointer
+  *Bug:          
+  *Function List:
+     1.
+  *History:
+   1.Date:
+     Author:
+     Modification:
+**********************************************************************************/
+
+#include <iostream>
+#include <fstream>
+#include <vector>
+using namespace std;
+
+typedef struct {   //包含被操作向量的信息
+    double *vectorA;  // 2个向量指针
+    double *vectorB;
+    double sum;  //持有点积
+    int length;  //指定点函数要用的向量段的长度（表示线程处理的向量部分，不是整个向量的长度）
+} VectorInfo;
+
+typedef struct {
+    VectorInfo *info;
+    int beginningIndex;  //计算点积向量的起始索引
+} Product;
+
+pthread_mutex_t mutexSum; //多个线程可能同时访问sum,需要用互斥锁保护data  作为全局变量需要放在函数外
+
+void dotProduct(void *prod) {
+    Product *product = (Product*)prod;
+    VectorInfo *vectorInfo = product->info;
+    int beginningIndex1 = product->beginningIndex;  //起始索引
+    int endingIndex = beginningIndex1 + vectorInfo->length; //结束索引
+    double total = 0;
+
+    for (int i = beginningIndex1; i < endingIndex; ++i) {  //两个向量的点积，对应元素相乘后得到的积再相加
+        total += (vectorInfo->vectorA[i] * vectorInfo->vectorB[i]);  //total保存累积的和
+    }
+
+    pthread_mutex_lock(&mutexSum);   //锁住互斥锁 ，其他变量无法访问sum变量
+    vectorInfo->sum += total;   //把total加到sum上
+    pthread_mutex_unlock(&mutexSum);  //解开互斥锁
+
+    pthread_exit((void*) 0);
+
+}
+
+
+int main(int argc, char const *argv[]) {
+    const int NUM_THREADS = 4;
+    VectorInfo vectorInfo;
+    double vectorA[] = { 1.0,2.0,3,4,5,6,7,8,9,10,11,12,13,14,15,16};   //两个简单向量，每个向量16个元素
+    double vectorB[] = { 1.0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
+    double sum;
+
+    vectorInfo.vectorA = vectorA;
+    vectorInfo.vectorB = vectorB;
+    vectorInfo.length = 4;
+
+    pthread_t threads[NUM_THREADS];   // 4个元素的线程数组
+
+    void *status;
+    pthread_attr_t attr;
+
+    pthread_mutex_init(&mutexSum, NULL);  // 初始化互斥锁
+    pthread_attr_init(&attr);    // Initialize the property field of a thread
+    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+
+    int returnValue;
+    int threadNumber;
+
+    for (int threadNumber = 0; threadNumber < NUM_THREADS; ++threadNumber) {
+        Product *product = (Product*)malloc(sizeof(Product));
+        product->beginningIndex = threadNumber * 4;
+        product->info = &vectorInfo;
+        returnValue = pthread_create(&threads[threadNumber], &attr, dotProduct, (void *)(void *)(product) );
+
+        if(returnValue) {
+            cout << "Error! Unable to create thread: " << returnValue  << endl;
+            exit(-1);
+        }
+    }
+
+    // after loop, 销毁线程属性和互斥锁
+    pthread_attr_destroy(&attr);
+
+    for (int i = 0; i < NUM_THREADS; ++i) {
+        pthread_join(threads[i], &status);
+    }
+    pthread_mutex_destroy(&mutexSum);
+    cout << "Dot Product sum : " << vectorInfo.sum  << endl;
+    pthread_exit(NULL);
+    return 0;
+}
+
