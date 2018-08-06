@@ -4,7 +4,7 @@
   *OS:  macOS High Sierra 10.13.6
   *Date:  August 6,2018
   *Description:  thread and pointer
-  *Bug:  Line 84  The use of pthread_create is not successful and the ouput should be 1496 
+  *Bug:  Line 84  The use of pthread_create is not successful and the ouput should be 1496
   *Function List:
      1.
   *History:
@@ -31,6 +31,7 @@ typedef struct {
 } Product;
 
 pthread_mutex_t mutexSum; //多个线程可能同时访问sum,需要用互斥锁保护data  作为全局变量需要放在函数外
+const int NUM_THREADS = 4;
 
 void dotProduct(void *prod) {
     Product *product = (Product*)prod;
@@ -48,12 +49,12 @@ void dotProduct(void *prod) {
     pthread_mutex_unlock(&mutexSum);  //解开互斥锁
 
     pthread_exit((void*) 0);
-
 }
 
+void threadExample() {
 
+}
 int main(int argc, char const *argv[]) {
-    const int NUM_THREADS = 4;
     VectorInfo vectorInfo;
     double vectorA[] = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0 , 16.0};   //两个简单向量，每个向量16个元素
     double vectorB[] = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0 , 16.0};   //两个简单向量，每个向量16个元素
@@ -70,23 +71,20 @@ int main(int argc, char const *argv[]) {
 
     pthread_mutex_init(&mutexSum, NULL);  // 初始化互斥锁
     pthread_attr_init(&attr);    // Initialize the property field of a thread
-    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);  // #define PTHREAD_CREATE_JOINABLE      1
 
-    int returnValue;
-    int threadNumber;
-
-    for (int threadNumber = 0; threadNumber < NUM_THREADS; ++threadNumber) {
+    for (int threadNumber = 0; threadNumber < NUM_THREADS; threadNumber++) {
         Product *product = (Product*)malloc(sizeof(Product));  //每次迭代会创建一个新的product
         product->beginningIndex = threadNumber * 4;
         product->info = &vectorInfo;
-        // 把vectorInfor的地址和一个基于threadNumber得到的唯一索引赋给它，然后创建线程，
 
-//        returnValue = pthread_create( &threads[threadNumber], &attr, dotProduct, (void *)(void*)(product) ); //there is a bug
-//
-//        if(returnValue) {
+        // 把vectorInfor的地址和一个基于threadNumber得到的唯一索引赋给它，然后创建线程，
+//      int returnValue = pthread_create( &threads[threadNumber], &attr,
+//              dotProduct, (void *)(void*) (product) );  //there is a bug  error: no matching function for call to 'pthread_create'
+//      if(returnValue) {
 //            cout << "Error! Unable to create thread: " << returnValue  << endl;
 //            exit(-1);
-//        }
+//      }
     }
 
     // after loop, 销毁线程属性和互斥锁
@@ -98,10 +96,9 @@ int main(int argc, char const *argv[]) {
     pthread_mutex_destroy(&mutexSum);  //这样可以保护sum字段
     cout << "Dot Product sum : " << vectorInfo.sum  << endl;  // 1496
     pthread_exit(NULL);
-    return 0;
 }
 
 Output:
-Dot Product sum : 2.25562e-314
+Dot Product sum : 0
 
 Process finished with exit code 0
