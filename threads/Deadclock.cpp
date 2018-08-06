@@ -48,3 +48,34 @@ Output:
 
 1. Acquiring m2
 2. Acquiring m1
+
+
+/*History:
+   1.Date: Aug 6, 2018
+     Author: San
+     Modification: Easier
+*/
+#include <iostream>
+#include <thread>
+#include <vector>
+using namespace std;
+
+int main() {
+    std::mutex m1;
+    thread t1([&m1] {
+        cout << "1. Acquiring m1." << endl;
+        m1.lock();
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    });
+    thread t2([&m1] {
+        cout << "2. Acquiring m1" << endl;
+        m1.lock();
+    });
+
+    t1.join();
+    t2.join();
+}
+
+Output:
+1. Acquiring m1.2. Acquiring m1
+
