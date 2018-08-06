@@ -5,6 +5,7 @@
   *Date:  August 6,2018
   *Description:  thread and pointer
   *Bug:  Line 84  The use of pthread_create is not successful and the ouput should be 1496
+         It may be related to the transformation of C++ and C
   *Function List:
      1.
   *History:
