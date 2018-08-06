@@ -1,0 +1,32 @@
+/*********************************************************************************
+  *Author:  San
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Date:  August 6,2018
+  *Description:  函数的缺省参数
+  *Bug:
+  *Function List:
+     1.
+  *History:
+   1.Date:
+     Author:
+     Modification:
+**********************************************************************************/
+
+#include <iostream>
+#include <thread>
+#include <vector>
+using namespace std;
+
+inline int Max(int a, int b){
+    if(a > b) return a;
+    return b;
+}
+
+void func(int a,int b = 2, int c = 3){  cout << a << b << c  << endl; }
+
+int main() {
+    func(10);
+    func(10,8);
+//    func(10,,8);    // error: expected expression
+}                         
