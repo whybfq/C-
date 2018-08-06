@@ -3,8 +3,8 @@
   *IDE: Clion 2018.3
   *OS:  macOS High Sierra 10.13.6
   *Date:  August 6,2018
-  *Description:  Callback
-  *Bug:
+  *Description:  Callback .  Reference 深入理解C指针 P183  
+  *Bug:  It may be related to the transformation of C++ and C
   *Function List:
      1.
   *History:
