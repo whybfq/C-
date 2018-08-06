@@ -2,9 +2,9 @@
   *Author:  San
   *IDE: Clion 2018.3
   *OS:  macOS High Sierra 10.13.6
-  *Date:  August 1,2018
+  *Date:  August 6,2018
   *Description:  thread and pointer
-  *Bug:          
+  *Bug:  Line 84  The use of pthread_create is not successful and the ouput should be 1496 
   *Function List:
      1.
   *History:
@@ -55,8 +55,8 @@ void dotProduct(void *prod) {
 int main(int argc, char const *argv[]) {
     const int NUM_THREADS = 4;
     VectorInfo vectorInfo;
-    double vectorA[] = { 1.0,2.0,3,4,5,6,7,8,9,10,11,12,13,14,15,16};   //两个简单向量，每个向量16个元素
-    double vectorB[] = { 1.0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
+    double vectorA[] = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0 , 16.0};   //两个简单向量，每个向量16个元素
+    double vectorB[] = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0 , 16.0};   //两个简单向量，每个向量16个元素
     double sum;
 
     vectorInfo.vectorA = vectorA;
@@ -76,15 +76,17 @@ int main(int argc, char const *argv[]) {
     int threadNumber;
 
     for (int threadNumber = 0; threadNumber < NUM_THREADS; ++threadNumber) {
-        Product *product = (Product*)malloc(sizeof(Product));
+        Product *product = (Product*)malloc(sizeof(Product));  //每次迭代会创建一个新的product
         product->beginningIndex = threadNumber * 4;
         product->info = &vectorInfo;
-        returnValue = pthread_create(&threads[threadNumber], &attr, dotProduct, (void *)(void *)(product) );
+        // 把vectorInfor的地址和一个基于threadNumber得到的唯一索引赋给它，然后创建线程，
 
-        if(returnValue) {
-            cout << "Error! Unable to create thread: " << returnValue  << endl;
-            exit(-1);
-        }
+//        returnValue = pthread_create( &threads[threadNumber], &attr, dotProduct, (void *)(void*)(product) ); //there is a bug
+//
+//        if(returnValue) {
+//            cout << "Error! Unable to create thread: " << returnValue  << endl;
+//            exit(-1);
+//        }
     }
 
     // after loop, 销毁线程属性和互斥锁
@@ -93,9 +95,13 @@ int main(int argc, char const *argv[]) {
     for (int i = 0; i < NUM_THREADS; ++i) {
         pthread_join(threads[i], &status);
     }
-    pthread_mutex_destroy(&mutexSum);
-    cout << "Dot Product sum : " << vectorInfo.sum  << endl;
+    pthread_mutex_destroy(&mutexSum);  //这样可以保护sum字段
+    cout << "Dot Product sum : " << vectorInfo.sum  << endl;  // 1496
     pthread_exit(NULL);
     return 0;
 }
 
+Output:
+Dot Product sum : 2.25562e-314
+
+Process finished with exit code 0
