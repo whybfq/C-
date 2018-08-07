@@ -1,0 +1,69 @@
+/*********************************************************************************
+  *Author:  San
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Date:  August 7,2018
+  *Description:     some basic use of shared_ptr                      
+  *Bug:
+  *Function List:
+     1.
+  *History:
+   1.Date:
+     Author:
+     Modification:
+**********************************************************************************/
+
+#include <iostream>
+#include <memory>
+#include <vector>
+#include <map>
+using namespace std;
+
+struct A {
+    int n;
+    A(int v = 0):n(v){ }
+    ~A() { cout << n << " destructor"  << endl; }
+};
+
+int main() {
+     shared_ptr<A> sp1(new A(2));
+     shared_ptr<A> sp2(sp1);  // sp2也托管A(2)
+     cout << "1) " << sp1->n << " , " << sp2->n  << endl; // 1) 2 , 2
+     shared_ptr<A> sp3;
+     A *p = sp1.get();   // p points to A(2) 拿出托管的指针
+     cout << "2) " << p->n  << endl;       //    2) 2
+
+     sp3 = sp1;      //sp3也托管A(2)
+     cout << "3) " << (*sp3).n  << endl;  // 3) 2
+     sp1.reset();   // sp1放弃托管A(2)
+     if(!sp1) {
+         cout << "4) sp1 is null now " << endl;     // 4) sp1 is null now
+     }
+
+     A *q = new A(3);
+     sp1.reset(q);  // sp1托管q
+     cout << "5) " << sp1->n  << endl;  // 5) 3
+
+     shared_ptr<A> sp4(sp1);       // sp4 和 sp1 共同托管A(3)
+     shared_ptr<A> sp5;
+//     sp5.reset(q);  //  malloc: *** error for object 0x7fa085423380: pointer being freed was not allocated
+
+     sp1.reset() ;    //sp1放弃托管A(3)
+     cout << " before end main"  << endl;
+     sp4.reset();     //sp4放弃托管A(3)         //   3 destructor
+     cout << "end main"  << endl;  //程序结束，没人托管share_ptr对象， 会delete A[2]
+}
+
+
+Output:
+1) 2 , 2
+2) 2
+3) 2
+4) sp1 is null now 
+5) 3
+ before end main
+3 destructor
+end main
+2 destructor
+
+Process finished with exit code 0
