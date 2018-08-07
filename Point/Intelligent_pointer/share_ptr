@@ -51,8 +51,9 @@ int main() {
      sp1.reset() ;    //sp1放弃托管A(3)
      cout << " before end main"  << endl;
      sp4.reset();     //sp4放弃托管A(3)         //   3 destructor
-     cout << "end main"  << endl;
+     cout << "end main"  << endl;  //程序结束，没人托管share_ptr对象， 会delete A[2]
 }
+
 
 Output:
 1) 2 , 2
