@@ -1,0 +1,23 @@
+#include <iostream>
+#include <string>
+#include <unordered_map>  //无序容器 （哈希表） 效率比map高    但是哈希表需要更多的内存
+
+using namespace std;
+
+int main() {
+    unordered_map<string,int>Winner;  //插入和查询的时间复杂度几乎是常数
+    Winner.insert(make_pair("Dijkstra",1972));
+    Winner.insert(make_pair("BBB",1973));
+    Winner.insert(make_pair("C",1974));
+    Winner.insert(make_pair("A",1975));
+    Winner["Wan"] = 1999;
+    string name;
+    cin >> name;
+
+    unordered_map<string,int>::iterator p = Winner.find(name);
+    if(p != Winner.end() ) {
+        cout << p->second;
+    } else {
+        cout << "not found "  << endl;
+    }
+}
