@@ -1,0 +1,10 @@
+#include <iostream>
+#include <string>
+#include <regex>   //正则表达式   描述 字符串模式
+
+using namespace std;
+
+int main() {
+    int x = 100, y =200, z = 300;
+    cout << [](double a,double b) { return a + b; }(1.2,2.5) << endl;
+}
