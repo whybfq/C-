@@ -10,9 +10,10 @@ int main() {
     cout << regex_match("boopgggk",reg) << endl;  // 0 Match failure
     cout << regex_match("b pk",reg) << endl;  // 1  Match success
 
+// There is a bug libc++abi.dylib: terminating with uncaught exception of type std::__1::regex_error: The expression contained mismatched ( and ).
     regex reg2("\\d{3}(a-zA-Z]+).(\\d{2}|N/A)\\s\\1"); // \d代表0～9 ；{3} 3个数字； （）项；a-zA-Z 字母，至少为1 ；
       // 第二项 \d{2} 2个数字 ；  | 或  ； N/A "N/A"  ； \s 空格  ； \1  类同于第一项
-
+      
     string correct = "123Hello N/A Hello";
     string incorrect = "123Hello 12 hello";
     cout << regex_match(correct,reg2) << endl;   // 1 Match success
