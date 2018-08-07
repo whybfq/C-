@@ -78,18 +78,20 @@ void MoveSwap(T& a, T& b){  //一次深拷贝都没有进行（本来需要3次�
 int main(int argc, char const *argv[]) {
 //    String & r = String("this") ; // error: non-const lvalue reference to type 'String' cannot bind to a temporary of type 'String'
     String s;
-    s = String("ok"); // String("ok")是临时变量，为右值 调用move constructor
+    s = String("ok"); // String("ok")是临时变量，为右值 调用move constructor  输出 move operator = called
     cout << "******"  << endl;
+    String && r = String("this");
+    cout << r.str  << endl;
+
     String s1 = "hello", s2 = "world";
     MoveSwap(s1,s2);
     cout << s2.str  << endl;
-    
-    return 0;
 }
 
 Output:
 move operator = called 
 ******
+this
 move constructor called 
 move operator = called 
 move operator = called 
