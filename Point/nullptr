@@ -1,0 +1,21 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int *p1 = NULL;
+    int *p2 = nullptr;
+    shared_ptr<double> p3 = nullptr;    //没有托管任何东西
+    if(p1 == p2) cout << "equal 1 "  << endl;
+    if(p3 == nullptr) cout << "equal 2"  << endl;
+//    if(p3 == p2);   //error p3是shared_ptr  
+//
+    if(p3 == NULL) cout << "equal 4"  << endl;
+    bool b = nullptr;   // b = false
+//    int i = nullptr;     //error, nullptr不能自动转换为整型
+}
+
+Output:
+equal 1 
+equal 2
+equal 4
+
