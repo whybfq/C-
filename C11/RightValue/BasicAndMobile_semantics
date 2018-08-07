@@ -70,9 +70,9 @@ public:
 
 
 template <class T>
-void MoveSwap(T& a, T& b){
+void MoveSwap(T& a, T& b){  //一次深拷贝都没有进行（本来需要3次），提高了效率 。  其中a,b值会被修改
     T tmp(move(a));  // move(a)为右值，调用move consttuctor
-    a = move(b);  // move(b)为右值， 调用move assignment
+    a = move(b);  // move(b)为右值， 调用move assignment   
     b = move(tmp); // move(tmp)为右值，
 }
 int main(int argc, char const *argv[]) {
