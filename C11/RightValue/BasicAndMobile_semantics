@@ -1,0 +1,96 @@
+/*********************************************************************************
+  *Author:  San
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Date:  August 7,2018
+  *Description:     能取地址的就是左值，  The program is about Right value and mobile semantics
+  *Description:    不能取地址的就是右值，主要减少需要深拷贝的对象进行深拷贝的次数
+  *
+  *Bug:struct A{
+  *Function List:    int n;
+     1.    A(int i):n(i){ }
+  *History:};
+   1.Date:
+     Author:class B{};
+     Modification:B & r=B();
+**********************************************************************************/
+
+#include <iostream>
+#include <string>
+#include <cstring>
+using namespace std;
+
+class String {
+public:
+    char *str;
+
+    String() : str(new char[1]) { str[0] = 0; }
+
+    String(const char *s) {
+        str = new char[strlen(s) + 1];
+        strcpy(str, s);
+    }
+
+    String(const String &s) {
+        cout << "copy constructor called " << endl;
+        str = new char[strlen(s.str) + 1];   //深拷贝
+        strcpy(str, s.str);        // s.str肯定不为NULL
+    }
+
+    String &operator=(const String &s) {
+        cout << "copy operator = called " << endl;
+        if (str != s.str) {
+            delete[]str;
+            str = new char[strlen(s.str) + 1];
+            strcpy(str,s.str);
+        }
+        return * this;
+    }
+
+    String(String && s):str(s.str) {     //move constructor
+        cout << "move constructor called "  << endl;
+        s.str = new char[1];          //没有进行深拷贝
+        s.str[0] = 0;
+    }
+
+    String &operator = (String &&s) {  // 参数为右值引用    // move assignment
+        cout << "move operator = called " << endl;
+        if(str != s.str){  // 当不是同一个对象时
+           delete []str;
+           str = s.str;
+           s.str = new char[1];
+           s.str[0] = 0;
+        }
+        return *this;
+    }
+
+    ~String() { delete []str;}
+};
+
+
+
+template <class T>
+void MoveSwap(T& a, T& b){
+    T tmp(move(a));  // move(a)为右值，调用move consttuctor
+    a = move(b);  // move(b)为右值， 调用move assignment
+    b = move(tmp); // move(tmp)为右值，
+}
+int main(int argc, char const *argv[]) {
+//    String & r = String("this") ; // error: non-const lvalue reference to type 'String' cannot bind to a temporary of type 'String'
+    String s;
+    s = String("ok"); // String("ok")是临时变量，为右值 调用move constructor
+    cout << "******"  << endl;
+    String s1 = "hello", s2 = "world";
+    MoveSwap(s1,s2);
+    cout << s2.str  << endl;
+    
+    return 0;
+}
+
+Output:
+move operator = called 
+******
+move constructor called 
+move operator = called 
+move operator = called 
+hello
