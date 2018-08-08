@@ -1,0 +1,103 @@
+/*********************************************************************************
+  *Author:  San
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Date:  August 7,2018
+  *Description:    static_cast, interpret_cast,   const_cast and dynamic_cast
+  *           static_cast用来进行"自然"和低风险的转换， 整型和实数型，字符型之间互相转换
+  *Bug:
+  *Function List:
+     1.
+  *History:
+   1.Date:
+     Author:
+     Modification:
+**********************************************************************************/
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+class A {
+public:
+    operator int() { return 1; }  // 重载了int()类型转换符
+    operator char*() { return NULL ; }
+};
+
+class B{
+public:
+    int i;
+    int j;
+    B(int n):i(n),j(n) {  }
+};
+
+class Base {
+public:
+    virtual ~Base() { }
+};
+
+class Derived:public Base { };
+
+int main() {
+    // static_cast
+    A a;
+    int n;
+    char *p = "New Dragon Inn ";
+    n = static_cast<int>(3.15);
+    n = static_cast<int>(a);   // 调用a.operator int()    n = 1
+
+    p = static_cast<char*>(a);  //调用a.operator char *， p = NULL
+//    n = static_cast<int> (p); // error static_cast from 'char *' to 'int' is not allowed
+//    p = static_cast<char*>(n); // error cannot cast from type 'int' to pointer type 'char *'
+
+    // reinterpret_cast 不同类型的指针/引用之间转换，执行逐个比特拷贝的操作
+    B b(100);
+    int &r = reinterpret_cast<int&>(b);  // 强行让r引用a
+    r = 200;   // equal to a.i = 200
+    cout << b.i << "," << b.j  << endl;
+
+    int number = 300;
+    B *pa = reinterpret_cast<B*>(&number);  // 强行让pa指向number
+    pa->i = 400 ;    // number=400
+    pa->j = 500; // not safe, May cause the program to run out
+    cout << number  << endl;  // 400
+
+    long long la = 0x12345678abcdLL;
+    pa = reinterpret_cast<B*>(la); //la太长，只取低32位0x5678abc拷贝给pa
+//    int u = reinterpret_cast<int >(pa); // error ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+//    cout << hex << u  << endl;   // 5678abcd
+    typedef void(*PF1)(int);
+    typedef int (*PF2)(int,char*);
+    PF1 pf1;
+    PF2 pf2;
+    pf2 = reinterpret_cast<PF2>(pf1);  //两个不同类型低函数指针可以相互转换
+
+    // const_cast  去除const属性低转换。
+    const string s = "lnception";
+    string & pc = const_cast<string&>(s); // 赋值给非const引用
+    string * ps = const_cast<string*>(&s);  // &s的类型是const string*
+
+    // dynamic_cast用于将多态基类的指针或引用，强制转换为派生类的指针或引用，而且能够检查转换的安全性
+    // 对于不安全的指针转换，thr result return NULL
+    // 不能用于将非多态基类的指针或引用，强制转换为派生类的指针或引用
+    Base base;
+    Derived d;
+    Derived *pd;
+    pd = reinterpret_cast<Derived*>(&base); //基类指针强制转换为派生类指针，可能不安全
+    if(pd == NULL) {  //here pd != NULL   reinterpret_cast doesnt' check security, just change
+        cout << "unsage reinterpret_cast" << endl;
+    } // pd指向基类对象
+
+    pd = dynamic_cast<Derived*>(&base); // NULL,since &b 不是派生类对象
+    // （not a derived class object and this change is not safe
+    if(pd = NULL) {
+        cout << "unsafe dynamic_cast 1 " << endl;;
+    }
+    Base *pb = &d;
+    pd = dynamic_cast<Derived*>(pb); // security conversion
+    if(pd == NULL){  // here pd is not NULL
+        cout << "unsafe dynamic_cast 2 " << endl;  // Do not execute
+    }
+}
+
