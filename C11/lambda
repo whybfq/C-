@@ -17,6 +17,6 @@ int main() {
     
    // The advantange of lambda
     int a[4] = {4,2,100,11};
-    sort(a,a+4,[](int x, int y)->bool{return x % 10 < y % 10 ; } );
-    for_each(a,a + 4, [](int x){cout << x << " ";  });     // . 100 11 2 4 
+    sort(a,a+4,[](int x, int y)->bool{return x % 10 < y % 10 ; } );  // 按照个位数从小到大排序
+    for_each(a,a + 4, [](int x){cout << x << " ";  });  // Output each element   100 11 408 209
 }
