@@ -1,10 +1,16 @@
 #include <iostream>
 #include <string>
-#include <regex>   //正则表达式   描述 字符串模式
-
 using namespace std;
 
 int main() {
     int x = 100, y =200, z = 300;
-    cout << [](double a,double b) { return a + b; }(1.2,2.5) << endl;
+    cout << [](double a,double b) { return a + b; }(1.2,2.5) << endl;   // 3.7
+    auto ff = [=,&y,&z](int n) {  // x, y以引用方式使用，其他变量以传值方式使用 lambda表达式赋值给ff
+        cout << x  << endl;   // 100
+        ++z;
+        ++y;
+        return n*n;  // 225
+    };
+    cout << ff(15) << endl;  
+    cout << y << ", " << z  << endl;   // 201  301
 }
