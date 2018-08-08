@@ -4,7 +4,15 @@
   *OS:  macOS High Sierra 10.13.6
   *Date:  August 7,2018
   *Description:    static_cast, interpret_cast,   const_cast and dynamic_cast
-  *           static_cast用来进行"自然"和低风险的转换， 整型和实数型，字符型之间互相转换
+  *   static_cast用来进行"自然"和低风险的转换， 整型和实数型，字符型之间互相转换
+      
+      reinterpret_cast 不同类型的指针/引用之间转换，执行逐个比特拷贝的操作
+           
+      const_cast  去除const属性的转换
+           
+      dynamic_cast用于将多态基类的指针或引用，强制转换为派生类的指针或引用，而且能够检查转换的安全性
+      对于不安全的指针转换，if it is not safe conversion, thr result return NULL
+      不能用于将非多态基类的指针或引用，强制转换为派生类的指针或引用
   *Bug:
   *Function List:
      1.
@@ -73,7 +81,7 @@ int main() {
     PF2 pf2;
     pf2 = reinterpret_cast<PF2>(pf1);  //两个不同类型低函数指针可以相互转换
 
-    // const_cast  去除const属性低转换。
+    // const_cast  去除const属性的转换。
     const string s = "lnception";
     string & pc = const_cast<string&>(s); // 赋值给非const引用
     string * ps = const_cast<string*>(&s);  // &s的类型是const string*
@@ -100,6 +108,8 @@ int main() {
         cout << "unsafe dynamic_cast 2 " << endl;  // Do not execute
     }
 }
+
+
 
 Output:
 200,100
