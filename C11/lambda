@@ -3,6 +3,7 @@
 using namespace std;
 
 int main() {
+   //The basic use of lambda
     int x = 100, y =200, z = 300;
     cout << [](double a,double b) { return a + b; }(1.2,2.5) << endl;   // 3.7
     auto ff = [=,&y,&z](int n) {  // x, y以引用方式使用，其他变量以传值方式使用 lambda表达式赋值给ff
@@ -13,4 +14,9 @@ int main() {
     };
     cout << ff(15) << endl;  
     cout << y << ", " << z  << endl;   // 201  301
+    
+   // The advantange of lambda
+    int a[4] = {4,2,100,11};
+    sort(a,a+4,[](int x, int y)->bool{return x % 10 < y % 10 ; } );
+    for_each(a,a + 4, [](int x){cout << x << " ";  });     // . 100 11 2 4 
 }
