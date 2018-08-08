@@ -6,13 +6,13 @@
   *Description:     能取地址的就是左值，  The program is about Right value and mobile semantics
   *Description:    不能取地址的就是右值，主要减少需要深拷贝的对象进行深拷贝的次数
   *
-  *Bug:struct A{
-  *Function List:    int n;
-     1.    A(int i):n(i){ }
-  *History:};
+  *Bug:
+  *Function List:    
+     1.    
+  *History:
    1.Date:
-     Author:class B{};
-     Modification:B & r=B();
+     Author:
+     Modification:
 **********************************************************************************/
 
 #include <iostream>
