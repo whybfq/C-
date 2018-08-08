@@ -79,7 +79,7 @@ int main() {
     string * ps = const_cast<string*>(&s);  // &s的类型是const string*
 
     // dynamic_cast用于将多态基类的指针或引用，强制转换为派生类的指针或引用，而且能够检查转换的安全性
-    // 对于不安全的指针转换，thr result return NULL
+    // 对于不安全的指针转换，if it is not safe conversion, thr result return NULL
     // 不能用于将非多态基类的指针或引用，强制转换为派生类的指针或引用
     Base base;
     Derived d;
@@ -101,3 +101,8 @@ int main() {
     }
 }
 
+Output:
+200,100
+400
+
+Process finished with exit code 0
