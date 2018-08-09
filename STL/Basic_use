@@ -38,11 +38,30 @@ using namespace std;
 
 int main(int argc, char const *argv[]) {
      // vector  元素在内存中连续存放
+    vector<int> v;   // 一个存放int元素的数组，
+    v.push_back(1); v.push_back(2);
+//     vector<int>::const_iterator j;
+    for (auto j = v.begin() ; j != v.end() ; ++j) {
+        cout << *j  << ",";
+    } cout << endl;
 
-     // deque双向队列  元素在内存连续存放,但是随机存取元素在常数时间（次于vector)，在两端增删元素具有较佳性能（大部分情况下是常数时间）
+    vector<int>::reverse_iterator r;  // 反向迭代器
+    for (r = v.rbegin() ; r != v.rend() ; ++r) {   //从后往前走
+        cout << *r << ",";
+    } cout << endl;
+
+
+    for ( vector<int>::iterator i = v.begin(); i != v.end() ; ++i) {
+        *i = 100;    // non -const iterator i
+    }
+
+    for(auto i = v.begin(); i!= v.end(); ++i) { cout <<  *i << ","; }
+    // deque双向队列  元素在内存连续存放,但是随机存取元素在常数时间（次于vector)，在两端增删元素具有较佳性能（大部分情况下是常数时间）
 
      //list 双向列表  不支持随机存取
-
-
-
 }
+
+Output:
+1,2,
+2,1,
+100,100,
