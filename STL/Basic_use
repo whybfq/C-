@@ -1,0 +1,42 @@
+/*********************************************************************************
+  *Author:  San
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Date:  August 7,2018
+  *Description:  类模板 1） 顺序容器  vector, deque（双向队列）, list（双向列表）
+  *                    2)  关联容器  set(不允许相同元素） ,multiset（允许相同元素） , map,multimap   （排序）
+  *        元素是排序的，查找时具有良好性能，通常以平衡二叉树实现， 插入和检索 O(log(N))
+  *                    3)  容器适配器  stack（栈，后进先出） , queue（队列，先进先出）, priority_queue（优先级队列）
+
+  *Bug:
+  *Function List:
+     1.
+  *History:
+   1.Date:
+     Author:
+     Modification:
+**********************************************************************************/
+#include <iostream>
+#include <sstream>   // 内存输入输出  istringstream  ostringstream
+#include <stdexcept>
+#include <typeinfo>
+#include <vector>
+#include <queue>
+#include <list>
+#include <string>
+
+#include <stack>
+#include <queue>
+
+using namespace std;
+
+int main(int argc, char const *argv[]) {
+     // vector  元素在内存中连续存放
+
+     // deque双向队列  元素在内存连续存放,但是随机存取元素在常数时间（次于vector)，在两端增删元素具有较佳性能（大部分情况下是常数时间）
+
+     //list 双向列表  不支持随机存取
+
+
+
+}
