@@ -1,0 +1,33 @@
+#include <cstdio>
+#include <iostream>
+using namespace std;
+
+int main(int argCount, char const *argValue[]) {
+    FILE *srcFile=0,*destFile=0;
+    int ch=0;
+    if(argCount != 3){
+        cout<<"Usage: "<<argValue[0]<<" src-file-name dest-file-name\n";
+    }
+    else{
+        if((srcFile=fopen(argValue[1],"r"))==0){
+            cout<<"Can't open source file "<<argValue[1];
+        }
+        else{
+            if((destFile=fopen(argValue[2],"w"))==0){
+                cout<<"Cant' open destination file"<<argValue[2];
+                fclose(srcFile);
+            }
+            else{
+                while((ch=fgetc(srcFile))!=EOF)fputc(ch,destFile);
+                cout<<"Successful to copy a file\n";
+                fclose(srcFile);
+                fclose(destFile);
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
+
+usage:
+mycopy C:\file1.dat  C:\newfile.dat
