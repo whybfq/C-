@@ -3,7 +3,7 @@
   *IDE: Clion 2018.3
   *OS:  macOS High Sierra 10.13.6
   *Date:  August 7,2018
-  *Description:   STL 中 "相等"概念演示
+  *Description:    some basic use of vector
   *Bug:
   *Function List:
      1.
@@ -44,4 +44,28 @@ int main(int argc, char const *argv[]) {
     cout << "3) v2: ";  PrintVector(v2.begin(),v2.end());  //  3) v2: 2 3 100 100 100 100
     v.erase(v.begin() + 1, v.begin() + 3 );
     cout << "4) "; PrintVector(v.begin(), v.end());  //  4) 1 4 5
+
+    // 用vector实现二维数组  Realization of two dimensional array
+    vector<vector<int> > v1(3);  // v1中有3个元素，每个元素都是一个空的数组
+    for (int i = 0; i < v1.size(); ++i) {
+        for (int j = 0; j < 4; ++j) {
+            v1[i].push_back(j);   //v1中每个元素都是一纬数组
+        }
+    }
+
+    for (int i = 0; i < v1.size(); ++i) {
+        for (int j = 0; j < v1[i].size(); ++j) {
+            cout << v1[i][j] << " ";
+        }cout << endl;
+    }
 }
+
+Output:
+
+1) 5
+2）1 2 3 4 5 
+3) v2: 2 3 100 100 100 100 
+4) 1 4 5 
+0 1 2 3 
+0 1 2 3 
+0 1 2 3 
