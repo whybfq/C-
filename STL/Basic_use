@@ -7,7 +7,13 @@
   *                    2)  关联容器  set(不允许相同元素） ,multiset（允许相同元素） , map,multimap   （排序）
   *        元素是排序的，查找时具有良好性能，通常以平衡二叉树实现， 插入和检索 O(log(N))
   *                    3)  容器适配器  stack（栈，后进先出） , queue（队列，先进先出）, priority_queue（优先级队列）
-
+      Membership functions in sequential containers and associated containers
+         begin     return指向第一个元素的迭代器
+         end       return指向最后一个元素后面位置的迭代器
+        rbegin     return指向最后一个元素的迭代器
+        rend       return指向第一个元素前面位置的迭代器
+        erase      删除一个或多个元素
+        clear      Delete all elements
   *Bug:
   *Function List:
      1.
