@@ -38,7 +38,8 @@
 
 using namespace std;
 
-// pair 模板  map/multimap放着的都是pair模板类对象，且按first从小到大排序
+/*
+ * // pair 模板  map/multimap放着的都是pair模板类对象，且按first从小到大排序
 template<class _T1,class _T2>
 struct pair {
     typedef _T1 first_type;
@@ -51,12 +52,13 @@ struct pair {
     pair(const pair<_U1,_U2>& _p):first(_p.first),second(_p.second) { }
     // Example of usage: pair<int,int> p(pair<double,double>(5.5,4.6));   // p.first=5, p.second=4
 };
+ */
 
 // multiset
 
 //less模板的定义是： template<class T>    struct less : public binary_funcion<T, T, bool>{ bool operator()(const T & x,const T& y){ return x < y; } const;  };
 //template<class Key,class Pred = less<Key>, class A = allocator<Key> >  // Pred类型的变量决定了multiset中的元素  Pred中的缺省类型为less<Key>
-//class multiset { };
+//class multiset { };  class set { };
 
 // member function:
 //pair<iterator,iterator> queal_range(const T& val);   // 同时求lower
@@ -106,6 +108,7 @@ int main(int argc, char const *argv[]) {
     m2.insert(a,a + SIZE);
     cout << "6）"; Print(m2.begin(),m2.end());  // 6）20 22 4 5 8 19  按照个位数大小排序
 }
+
 
 Output:
 1) 2
