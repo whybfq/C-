@@ -32,7 +32,7 @@
 #include <queue>
 #include <list>
 #include <string>
-
+#include <set>
 #include <stack>
 #include <queue>
 
@@ -52,17 +52,66 @@ struct pair {
     // Example of usage: pair<int,int> p(pair<double,double>(5.5,4.6));   // p.first=5, p.second=4
 };
 
-
 // multiset
 
 //less模板的定义是： template<class T>    struct less : public binary_funcion<T, T, bool>{ bool operator()(const T & x,const T& y){ return x < y; } const;  };
-template<class Key,class Pred = less<Key>, class A = allocator<Key> >  // Pred类型的变量决定了multiset中的元素  Pred中的缺省类型为less<Key>
-class multiset { };
+//template<class Key,class Pred = less<Key>, class A = allocator<Key> >  // Pred类型的变量决定了multiset中的元素  Pred中的缺省类型为less<Key>
+//class multiset { };
 
 // member function:
-pair<iterator,iterator> queal_range(const T& val);   // 同时求lower
-iterator erase(iterator it);  //删除it指向的元素，返回其后面的元素的迭代器
+//pair<iterator,iterator> queal_range(const T& val);   // 同时求lower
+//iterator erase(iterator it);  //删除it指向的元素，返回其后面的元素的迭代器
+
+template <class T>
+void Print(T first, T last){
+    for(; first != last; ++ first) cout << *first << " ";
+    cout << endl;
+}
+
+class A {
+public:
+      A(int n_) : n(n_) { }
+      friend bool operator < (const A & a1,const A & a2) { return a1.n < a2.n; }
+      friend ostream & operator << (ostream & o, const A & a2){ o << a2.n; return o; }
+      friend class MyLess;
+private:
+      int n;
+};
+
+struct MyLess {
+    bool operator()(const A & a1,const A & a2) { return (a1.n % 10) < (a2.n % 10);  }  //按个位数比大小
+};
+
+typedef multiset<A> MSET1;   // MSET1用"<"比较大小
+typedef multiset<A,MyLess> MSET2;   // MSET2用MyLess::operator()比较大小
 
 int main(int argc, char const *argv[]) {
+    const int SIZE = 6;
+    A a[SIZE] = {4,22, 19,5,8,20};
+    MSET1 m1;
+    m1.insert(a,a+SIZE);
+    m1.insert(22);  // 插入一个22
+    cout << "1) " << m1.count(22) << endl;   //  1) 2     计算其中22的个数
+    cout << "2) ";  Print(m1.begin(),m1.end()); //  2) 4 5 8 19 20 22 22
+    MSET1::iterator pp = m1.find(19);
+    if(pp != m1.end()) {
+        cout << "found" << endl;  // found
+    }
+    cout << "3) "; cout << *m1.lower_bound(5) << "," << *m1.upper_bound(8) << endl; // 3) 5,19   [4,5) < 5  , [19,22) > 8
+    pp = m1.erase(m1.lower_bound(8),m1.upper_bound(19));  // 删除 8, 19
+    cout << "4) "; Print(m1.begin(),m1.end()); // 4) 4 5 20 22 22
+    cout << "5) "; cout << *pp  << endl;  // pp指向被删除元素的下一个元素  5) 20
 
+    MSET2 m2;
+    m2.insert(a,a + SIZE);
+    cout << "6）"; Print(m2.begin(),m2.end());  // 6）20 22 4 5 8 19  按照个位数大小排序
 }
+
+Output:
+1) 2
+2) 4 5 8 19 20 22 22 
+found
+3) 5,19
+4) 4 5 20 22 22 
+5) 20
+6）20 22 4 5 8 19
