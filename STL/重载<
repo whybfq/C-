@@ -1,0 +1,60 @@
+/*********************************************************************************
+  *Author:  San
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Date:  August 7,2018
+  *Description:    重载"<" 用于STL中的通用算法min_element和max_element
+  *         
+  *Bug:
+  *Function List:
+     1.
+  *History:
+   1.Date:
+     Author:
+     Modification:
+**********************************************************************************/
+#include <algorithm>
+#include <iostream>
+#include <sstream>   // 内存输入输出  istringstream  ostringstream
+#include <stdexcept>
+#include <typeinfo>
+#include <vector>
+#include <queue>
+#include <list>
+#include <string>
+#include <set>
+#include <stack>
+#include <queue>
+
+using namespace std;
+
+class A {
+public:
+    int n;
+    A(int i) : n(i) { }
+};
+
+bool operator < (const A & a1, const A & a2){
+    cout << " < called " << endl;
+    if(a1.n == 3 && a2.n == 7) return true;
+    return false;
+}
+int main(int argc, char const *argv[]) {
+    A aa[] = {3,5,7,2,1};
+    cout << min_element(aa,aa + 5)->n  << endl; // 5<3 unfounded  7<3 unfounded  2<3 unfounded 1<3 unfounded
+    cout << max_element(aa,aa + 5)->n  << endl; // 3<5 false 3<7 true 7<2 false 7<1 false
+}
+
+
+Output:
+
+ < called 
+ < called 
+ < called 
+ < called 
+3
+ < called 
+ < called 
+ < called 
+ < called 
+7
