@@ -4,10 +4,15 @@
   *OS:  macOS High Sierra 10.13.6
   *Date:  August 7,2018
   *Description:    重载"<" 用于STL中的通用算法min_element和max_element
-  *         
+  *              min_element 最小指没有元素比它小
+  *              max_element 返回[first,last)中的最大元素(不小于任何其他元素）的迭代器
+  *
   *Bug:
   *Function List:
-     1.
+  *  1.      template<class Fwdlt>
+  *          Fwdlt min_element(Fwdlt first, Fwdlt last)   返回[first,last)中的最小元素(没有元素比它小，可能会重载"<"）的迭代器 
+     2.      template<class Fwdlt>
+             Fwdlt max_element(Fwdlt first,Fwdlt last);  以 "<"作为比较器
   *History:
    1.Date:
      Author:
@@ -44,6 +49,7 @@ int main(int argc, char const *argv[]) {
     cout << min_element(aa,aa + 5)->n  << endl; // 5<3 unfounded  7<3 unfounded  2<3 unfounded 1<3 unfounded
     cout << max_element(aa,aa + 5)->n  << endl; // 3<5 false 3<7 true 7<2 false 7<1 false
 }
+
 
 
 Output:
