@@ -3,11 +3,18 @@
   *IDE: Clion 2018.3
   *OS:  macOS High Sierra 10.13.6
   *Date:  August 7,2018
-  *Description:   STL中的变序算法
+  *Description:   STL中的变序算法  copy()中较为一般的用法
   *
   *Bug:
   *Function List:
-  *  1.
+  *  1.  template<class Inlt,class Outlt>
+  *      Outlt copy(Lnlt first,Inlt last, Outlt x);    在[0,last-first)中执行*(x+N)=*(first+N),return  (x+N)
+  *
+  *      The souce code of copy
+  *      copy(_InputIterator __first, _InputIterator __last, _OutputIterator __result)
+         {
+            return _VSTD::__copy(__unwrap_iter(__first), __unwrap_iter(__last), __unwrap_iter(__result));
+         }
   *History:
    1.Date:
      Author:
@@ -63,8 +70,10 @@ int main(int argc, char const *argv[]) {
     vector<int> cubes(SIZE);
     transform(a1,a1 + SIZE,cubes.begin(),calculateCube);
     cout << endl << "8) ";
-    copy(cubes.begin(),cubes.end(),output);   // 8) 1 8 27 64 125 216 343 512 729 1000
+    copy(cubes.begin(),cubes.end(),output);   // output:  8) 1 8 27 64 125 216 343 512 729 1000
+
 }
+
 
 Output:
 1) 7 1 4 6 8 9 5 2 3 10 
