@@ -1,0 +1,68 @@
+/*********************************************************************************
+  *Author:  San
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Date:  August 7,2018
+  *Description:    The basic_use of Associated container
+  *              类模板 1） 顺序容器  vector, deque（双向队列）, list（双向列表）
+  *                    2)  关联容器  set(不允许相同元素） ,multiset（允许相同元素） , map,multimap   （排序）
+  *        元素是排序的，查找时具有良好性能，通常以平衡二叉树实现， 插入和检索 O(log(N))
+  *                    3)  容器适配器  stack（栈，后进先出） , queue（队列，先进先出）, priority_queue（优先级队列） 不支持迭代器
+    2) 关联容器       除了通用函数之外，还支持以下成员函数
+                    iterator find(const T& val)     查找等于某个值的元素 !（ ( x < y) && ( y < x) )
+                    iterator lower_bound(const T& val) 查找某个下界,在[it,end())查找一个最大位置it
+                    iterator upper_bound(const T& val)  查找某个上界,在[it,end())查找一个最小位置it
+                    equal_range  同时查找上界和下界
+                    int count(const T& val)     计算等于某个值的元素个数
+                    void insert(iterator first,iterator last)    插入一个元素或区间
+  *Bug:
+  *Function List:
+     1.
+  *History:
+   1.Date:
+     Author:
+     Modification:
+**********************************************************************************/
+#include <algorithm>
+#include <iostream>
+#include <sstream>   // 内存输入输出  istringstream  ostringstream
+#include <stdexcept>
+#include <typeinfo>
+#include <vector>
+#include <queue>
+#include <list>
+#include <string>
+
+#include <stack>
+#include <queue>
+
+using namespace std;
+
+// pair 模板  map/multimap放着的都是pair模板类对象，且按first从小到大排序
+template<class _T1,class _T2>
+struct pair {
+    typedef _T1 first_type;
+    typedef _T2 second_type;
+    _T1 first;
+    _T2 second;
+    pair(): first(), second() { }
+    pair(const _T1 & _a, const _T2& _b) : first(_a),second(_b) { }
+    template<class _U1,class _U2>
+    pair(const pair<_U1,_U2>& _p):first(_p.first),second(_p.second) { }
+    // Example of usage: pair<int,int> p(pair<double,double>(5.5,4.6));   // p.first=5, p.second=4
+};
+
+
+// multiset
+
+//less模板的定义是： template<class T>    struct less : public binary_funcion<T, T, bool>{ bool operator()(const T & x,const T& y){ return x < y; } const;  };
+template<class Key,class Pred = less<Key>, class A = allocator<Key> >  // Pred类型的变量决定了multiset中的元素  Pred中的缺省类型为less<Key>
+class multiset { };
+
+// member function:
+pair<iterator,iterator> queal_range(const T& val);   // 同时求lower
+iterator erase(iterator it);  //删除it指向的元素，返回其后面的元素的迭代器
+
+int main(int argc, char const *argv[]) {
+
+}
