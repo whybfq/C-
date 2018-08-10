@@ -1,0 +1,77 @@
+/*********************************************************************************
+  *Author:  San
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Date:  August 7,2018
+  *Description:   STL中的变序算法
+  *
+  *Bug:
+  *Function List:
+  *  1.
+  *History:
+   1.Date:
+     Author:
+     Modification:
+**********************************************************************************/
+#include <algorithm>
+#include <iostream>
+#include <sstream>   // 内存输入输出  istringstream  ostringstream
+#include <stdexcept>
+#include <typeinfo>
+#include <vector>
+#include <queue>
+#include <list>
+#include <string>
+#include <set>
+#include <stack>
+#include <queue>
+#include <iterator>
+#include <numeric>
+
+using namespace std;
+
+class A {
+public:
+    bool operator()(int n){return n < 9; }   // A() 返回一个小于9的元素
+};
+
+void outputSquare(int value){ cout << value * value << " "; }
+int calculateCube(int value){ return value*value*value; }
+
+int main(int argc, char const *argv[]) {
+    const int SIZE = 10;
+    int a1[] = {1,2,3,4,5,6,7,8,9,10};
+    int a2[] = {100,2,8,1,50,3,8,9,10,2};
+    vector<int> v(a1, a1 + SIZE);
+    ostream_iterator<int> output(cout," ");  //把类模板ostream_iterator<int>实例化,输出都是int，输出等价于cout,每输出一个int加个空格
+    random_shuffle(v.begin(),v.end());  // 伪随机打乱一个数组，每次输出都会不同
+    cout << endl << "1) ";
+    copy(v.begin(),v.end(),output); // 通过copy实现输出，把一个区间的内容拷贝到另一个区间 output 1) 7 1 4 6 8 9 5 2 3 10
+    copy(a2,a2 + SIZE, v.begin());
+    cout << endl << "2) ";
+    cout << count(v.begin(),v.end(),8);  // a2中出现了两次8, output 2) 2
+    cout << endl << "3) ";
+    cout << count_if(v.begin(),v.end(),A());  // 这里的A()相当于op(),小于9的元素个数   3) 6
+    cout << endl << "4) ";
+    cout << *(min_element(v.begin(),v.end()));   // 4) 1
+    cout << endl << "5) ";
+    cout << *(max_element(v.begin(),v.end()));   // 5) 100
+    cout << endl << "6）";
+    cout << accumulate(v.begin(),v.end(),0);   // 求和  6）193
+    cout << endl << "7) ";
+    for_each(v.begin(),v.end(),outputSquare);   // 计算相应的平方  7) 10000 4 64 1 2500 9 64 81 100 4
+    vector<int> cubes(SIZE);
+    transform(a1,a1 + SIZE,cubes.begin(),calculateCube);
+    cout << endl << "8) ";
+    copy(cubes.begin(),cubes.end(),output);   // 8) 1 8 27 64 125 216 343 512 729 1000
+}
+
+Output:
+1) 7 1 4 6 8 9 5 2 3 10 
+2) 2
+3) 6
+4) 1
+5) 100
+6）193
+7) 10000 4 64 1 2500 9 64 81 100 4 
+8) 1 8 27 64 125 216 343 512 729 1000
