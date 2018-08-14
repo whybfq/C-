@@ -1,0 +1,71 @@
+/*********************************************************************************
+  *Author:  San
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Date:  August 13,2018
+  *Description:   STL中的变序算法  find()
+  *
+  *Bug:
+  *Function List:
+  *  1.  template<class Inlt,class Outlt>
+  *      Outlt copy(Lnlt first,Inlt last, Outlt x);    在[0,last-first)中执行*(x+N)=*(first+N),return  (x+N)
+  *
+  *      The souce code of copy
+  *      copy(_InputIterator __first, _InputIterator __last, _OutputIterator __result)
+         {
+            return _VSTD::__copy(__unwrap_iter(__first), __unwrap_iter(__last), __unwrap_iter(__result));
+         }
+
+      2. template<class Fwdlt>
+         Fwdlt unique(Fwdlt first, Fwdlt last)
+
+      3. template<class Fwdlt, class Pred>
+         Fwdlt unique<Fwdlt first, Fwdlt last, Pred pr);    // pr(x,y)为true说明 x与y相等
+         unique : 对[first,last)这个序列中连续相等对元素，只留下第一个
+                  return iterator ， points to the last element of the interval after the element is deleted.指向元素删除后的区间的最后一个元素的后面
+  *History:
+   1.Date:
+     Author:
+     Modification:
+**********************************************************************************/
+#include <algorithm>
+#include <iostream>
+#include <sstream>   // 内存输入输出  istringstream  ostringstream
+#include <stdexcept>
+#include <typeinfo>
+#include <vector>
+#include <queue>
+#include <list>
+#include <string>
+#include <set>
+#include <stack>
+#include <queue>
+#include <iterator>
+#include <numeric>
+
+using namespace std;
+
+class MyLess {
+public:
+    bool operator()(int n1, int n2){
+    return (n1 % 10) < (n2 % 10);
+}
+};
+
+int Greater(int n){
+    return n > 10;
+}
+
+int main(int argc, char const *argv[]) {
+    const int SIZE = 10;
+    int a1[] = {2,8,1,50,3,100,8,9,10,2};
+    vector<int> v(a1,a1+SIZE);
+    vector<int>::iterator location;
+    location = find(v.begin(),v.end() , 10);
+    if(location != v.end()) {
+        cout << endl << "1)" << location - v.begin();
+    }
+}
+
+Output:
+1)8
