@@ -34,4 +34,8 @@ int main(int argc, char const *argv[]) {
     cout << "Standard Clib:" << __STDC_HOSTED__  << endl;  // 包含完成的标准C库，  Standard Clib:1
     cout << "Standatd C : " << __STDC__  << endl;  //编译器实现和C标准一致  Standatd C : 1
 //    cout << "ISO/IEC" << __STDC_ISO_10646__  << endl;  // not define
+
+    cout << "min of long long " << LLONG_MIN  << endl;  // min of long long -9223372036854775808
+    cout << "max of long long " << LLONG_MAX << endl;  // max of long long 9223372036854775807
+    cout << "max of unsigned long long " << ULLONG_MAX  << endl; // max of unsigned long long 18446744073709551615
 }
