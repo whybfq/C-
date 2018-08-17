@@ -62,7 +62,7 @@ int main(int argc, char const *argv[]) {
         cout << "caught funC. " << endl;  // caught funC.
     }
     try{
-        funA();  // terminate called after throwing an instance of 'int'
+        funA();  // terminate called after throwing an instance of 'int'  自己会调用terminate中断异常
     } catch(...){
         cout << "caught funA. " << endl;
     }
