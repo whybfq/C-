@@ -1,0 +1,74 @@
+/*********************************************************************************
+  *Author:  San
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Date:  August 7,2018
+  *Description:    basic use of exception
+  *          bad_alloc  在用new分配内存时失败时引发异常
+  *          out_of_range 数组或string下标越界引发异常
+  *Bug:
+  *Function List:
+     1.
+  *History:
+   1.Date:
+     Author:
+     Modification:
+**********************************************************************************/
+#include <iostream>
+#include <stdexcept>
+#include <typeinfo>
+#include <vector>
+using namespace std;
+
+class Base {
+    virtual void func() { }
+};
+
+class Derived : public Base {
+public:
+    void Print(){ };
+};
+
+void PrintObj(Base & b){
+    try {
+        Derived & rd = dynamic_cast<Derived&>(b); //此转换若不安全，会抛出bad_cast异常
+        rd.Print();
+    } catch (bad_cast& e){  // equal to catch(bad_cast e)
+        cerr << e.what()  << endl;   //std::bad_cast
+    }
+}
+
+int main(int argc, char const *argv[]) {
+    Base b;
+    PrintObj(b);  //  std::bad_cast
+
+    // bad_alloc 在用new分配内存时失败时引发异常
+    try{
+        char *p = new char[0x7fffffffffffff];  // 分配空间失败 Failure of distribution space
+    } catch (bad_alloc & e){
+        cerr << e.what()  << endl;
+    }
+
+    // out_of_range  例如数组下表越界
+    vector<int> v(10);
+    try {
+        v.at(100) = 100;
+    } catch(out_of_range& e) {
+        cerr << e.what()  << endl;
+    }
+    string s = "hello";
+    try{
+        char c = s.at(100);
+    } catch(out_of_range& e) {
+        cerr << e.what()  << endl;
+    }
+}
+
+Output:
+std::bad_cast
+haximap(53724,0x7fff8e3fc380) malloc: *** mach_vm_map(size=36028797018963968) failed (error code=3)
+*** error: can't allocate region
+*** set a breakpoint in malloc_error_break to debug
+std::bad_alloc
+vector
+basic_string
