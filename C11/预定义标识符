@@ -1,0 +1,43 @@
+/*********************************************************************************
+  *Author:  San
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Date:  August 13,2018
+  *Description:  C11 中常见的预定义标识符
+  *
+  *Bug:
+  *Function List:
+      1.
+  *History:
+   1.Date:
+     Author:
+     Modification:
+**********************************************************************************/
+#include <algorithm>
+#include <iostream>
+#include <sstream>   // 内存输入输出  istringstream  ostringstream
+#include <stdexcept>
+#include <typeinfo>
+#include <vector>
+#include <queue>
+#include <list>
+#include <string>
+#include <set>
+#include <stack>
+#include <queue>
+#include <iterator>
+#include <numeric>
+
+using namespace std;
+
+//#pragma once    // _Pragma("once");  指示compiler该头文件只被编译一次
+
+struct TestStruct{
+    TestStruct() : name(__func__){ }
+    const char *name;
+};
+
+int main(int argc, char const *argv[]) {
+    TestStruct ts;
+    cout << ts.name  << endl;
+}
