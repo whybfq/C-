@@ -1,0 +1,74 @@
+/*********************************************************************************
+  *Author:  San
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Date:  August 17,2018
+  *Description:  the basic use of noexcept()
+  *
+  *Bug:
+  *Function List:
+      1. void Throw(){ throw 1; }  // throw an exception
+      2. void NoBlockThrow(){ Throw();  }  // call Throw()  会让异常继续抛出直到main中的catch语句将其捕捉a
+      3. void BlockThrow()noexcept{ Throw(); }  // call Throw() 但是用noexcept修饰    会调用std::terminate中断程序的执行
+  *History:
+   1.Date:
+     Author:
+     Modification:
+**********************************************************************************/
+#include <algorithm>
+#include <climits>
+#include <cassert>
+#include <cstdio>
+#include <iostream>
+#include <sstream>   // 内存输入输出  istringstream  ostringstream
+#include <stdexcept>
+#include <typeinfo>
+#include <vector>
+#include <queue>
+#include <list>
+#include <string>
+#include <set>
+#include <stack>
+#include <queue>
+#include <iterator>
+#include <numeric>
+
+using namespace std;
+
+struct A{    // 析构函数默认为noexcept(true)
+    ~A(){ throw 1; }
+};
+
+struct B{
+    ~B()noexcept(false){throw 2; }    // noexcept(false) 析构函数不再保持默认值,可以抛出异常
+};
+struct C{   // use struct B, noexcept(false) 析构函数不再保持默认值,可以抛出异常
+    B b;
+};
+
+int funA(){ A a; }
+int funB(){ B b; }
+int funC(){ C c; }
+
+int main(int argc, char const *argv[]) {
+    try {
+        funB();
+    } catch(...){
+        cout << "caught funB. " << endl;  // caught funB.
+    }
+    try{
+        funC();
+    } catch(...){
+        cout << "caught funC. " << endl;  // caught funC.
+    }
+    try{
+        funA();  // terminate called after throwing an instance of 'int'
+    } catch(...){
+        cout << "caught funA. " << endl;
+    }
+}
+
+Output:
+caught funB. 
+caught funC. 
+libc++abi.dylib: terminating with uncaught exception of type int
