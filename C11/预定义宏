@@ -1,0 +1,37 @@
+/*********************************************************************************
+  *Author:  San
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Date:  August 13,2018
+  *Description:  C11 中常见的预定义宏
+  *
+  *Bug:
+  *Function List:
+      1.
+  *History:
+   1.Date:
+     Author:
+     Modification:
+**********************************************************************************/
+#include <algorithm>
+#include <iostream>
+#include <sstream>   // 内存输入输出  istringstream  ostringstream
+#include <stdexcept>
+#include <typeinfo>
+#include <vector>
+#include <queue>
+#include <list>
+#include <string>
+#include <set>
+#include <stack>
+#include <queue>
+#include <iterator>
+#include <numeric>
+
+using namespace std;
+
+int main(int argc, char const *argv[]) {
+    cout << "Standard Clib:" << __STDC_HOSTED__  << endl;  // 包含完成的标准C库，  Standard Clib:1
+    cout << "Standatd C : " << __STDC__  << endl;  //编译器实现和C标准一致  Standatd C : 1
+//    cout << "ISO/IEC" << __STDC_ISO_10646__  << endl;  // not define
+}
