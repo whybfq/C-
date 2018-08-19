@@ -1,0 +1,34 @@
+/*********************************************************************************
+ *Author:  Sann
+ *IDE: Clion 2018.3
+ *OS:  macOS High Sierra 10.13.6
+ *Date:  August 19,2018
+ *Description:  the basic use of unique_ptr and shared_ptr
+ *Function List:
+ *History:  //modify history list, every record should consist the date, Revision and modification content introduction
+    1.Date:
+      Author:
+      Modification:
+*******************************************************************************1***/
+
+#include <iostream>
+#include <vector>
+#include <memory>
+using namespace std;
+
+int main(int argc, char const *argv[]) {
+    unique_ptr<int> up1(new int(11));
+    cout << *up1 << endl;  // 11
+    unique_ptr<int> up3 = move(up1);
+    cout << *up3 << endl;
+    up3.reset(); //  显示释放内存
+    up1.reset(); // will not cause run-time error
+//    cout << *up3 << endl;  //Exception: EXC_BAD_ACCESS (code=1, address=0x0)
+
+    shared_ptr<int>sp1(new int(22));
+    shared_ptr<int>sp2 = sp1;
+    cout << *sp1 << " " << * sp2 << endl; // 22 22
+    sp1.reset();
+    cout << *sp2 << endl; // 22
+}
+
