@@ -3,7 +3,7 @@
  *IDE: Clion 2018.3
  *OS:  macOS High Sierra 10.13.6
  *Date:  August 19,2018
- *Description:  the basic use of unique_ptr and shared_ptr
+ *Description:  the basic use of unique_ptr, shared_ptr and weak_ptr
  *Function List:
  *History:  //modify history list, every record should consist the date, Revision and modification content introduction
     1.Date:
@@ -15,6 +15,15 @@
 #include <vector>
 #include <memory>
 using namespace std;
+
+void Check(weak_ptr<int>&wp){
+    shared_ptr<int> sp = wp.lock();   // transfer to shared_ptr<int>
+    if( sp != nullptr){
+        cout << "still " << *sp << endl;
+    } else {
+        cout << "pointer is invalid . " << endl;
+    }
+}
 
 int main(int argc, char const *argv[]) {
     unique_ptr<int> up1(new int(11));
@@ -28,7 +37,15 @@ int main(int argc, char const *argv[]) {
     shared_ptr<int>sp1(new int(22));
     shared_ptr<int>sp2 = sp1;
     cout << *sp1 << " " << * sp2 << endl; // 22 22
-    sp1.reset();
+
     cout << *sp2 << endl; // 22
+
+    weak_ptr<int> wp = sp1;
+    Check(wp);   // still 22
+    sp1.reset();
+    cout << *sp2 << endl;  // 22
+    Check(wp);    // still 22
+    sp2.reset();
+    Check(wp);   // pointer is invalid . 
 }
 
