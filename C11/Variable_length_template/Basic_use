@@ -2,7 +2,7 @@
   *Author:  San
   *IDE: Clion 2018.3
   *OS:  macOS High Sierra 10.13.6
-  *Date:  August 7,2018
+  *Date:  August 19,2018
   *Description:
   *
   *Bug:struct A{
@@ -21,12 +21,12 @@
 #include <cstring>
 using namespace std;
 
-double SumOfFloat(int count,...){
+double SumOfFloat(int count,...){  // 变长函数  count代表变长参数个数
     va_list ap;
     double sum = 0;
-    va_start(ap,count);   //获得变长列表的句柄ap
+    va_start(ap,count);   //获得变长列表的句柄ap，ap成为被传递的变长参数的一个handler
     for(int i = 0; i < count; ++i){
-        sum += va_arg(ap,double);   // 每次获得一个参数
+        sum += va_arg(ap,double);   // 每次获得一个参数,va_arg通过改变指针的方式（每次增加sizeof(double字节）来返回下一个指针所指向的对象
     }
     va_end(ap);
     return sum;
