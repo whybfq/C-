@@ -1,0 +1,38 @@
+/*********************************************************************************
+  *Author:  San
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Date:  August 7,2018
+  *Description:
+  *
+  *Bug:struct A{
+  *Function List:
+     1.
+  *History:};
+   1.Date:
+     Author:
+     Modification:
+**********************************************************************************/
+
+#include <iostream>
+#include <string>
+#include <cstdarg>
+#include <stdarg.h>
+#include <cstring>
+using namespace std;
+
+double SumOfFloat(int count,...){
+    va_list ap;
+    double sum = 0;
+    va_start(ap,count);   //获得变长列表的句柄ap
+    for(int i = 0; i < count; ++i){
+        sum += va_arg(ap,double);   // 每次获得一个参数
+    }
+    va_end(ap);
+    return sum;
+}
+
+int main(int argc, char const *argv[]) {
+    cout << SumOfFloat(3,1.23f,3.4 , 5.6);  // 10.231
+}
+
