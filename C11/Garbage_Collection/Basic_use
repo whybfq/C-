@@ -19,6 +19,10 @@ using namespace std;
 //void declare_reachable(void *p);  //垃圾回收器本来就知道指针所指向的内存大小，因此传入void*指针就足够了
 //template <class T>T*undeclare_reachable(T*p)noexcept;  // 为了返回合适的类型一攻程序使用
 
+//有时程序员会选择一大片连续内存进行指针操作，也可使用declare_no_pointers以及undeclare_no_pointers告诉垃圾回收器该内存区域不存在有效的指针
+//void declare_no_pointers(char*p, size_t n)noexcept;   //指定从p开始的连续n的内存
+//void undeclare_no_pointers(char*p, size_t n)noexcept;
+
 int main(int argc, char const *argv[]) {
     int *p = new int;
     //在p被隐藏前声明为可达的
