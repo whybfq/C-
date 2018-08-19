@@ -16,8 +16,8 @@
 #include <memory>
 using namespace std;
 
-//void declare_reachable(void *p);
-//template <class T>T*undeclare_reachable(T*p)noexcept;
+//void declare_reachable(void *p);  //垃圾回收器本来就知道指针所指向的内存大小，因此传入void*指针就足够了
+//template <class T>T*undeclare_reachable(T*p)noexcept;  // 为了返回合适的类型一攻程序使用
 
 int main(int argc, char const *argv[]) {
     int *p = new int;
