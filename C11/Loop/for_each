@@ -1,0 +1,42 @@
+/*********************************************************************************
+ *Author:  Sann
+ *IDE: Clion 2018.3
+ *OS:  macOS High Sierra 10.13.6
+ *Date:  August 19,2018
+ *Description:  基于范围的for循环以及简单的for_each()使用
+ *Function List:
+ *History:  //modify history list, every record should consist the date, Revision and modification content introduction
+    1.Date:
+      Author:
+      Modification:
+*******************************************************************************1***/
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int action(int &e){ cout << e *2 << " "; }
+
+int main(int argc, char const *argv[]) {
+    int a[3] = {1,23,4};
+    int     *p;
+    for ( p = a; p < a + sizeof(a)/sizeof(a[0]); ++p) {
+        cout << *p * 2 << " ";   // 2 46 8
+    }
+
+    for_each(a, a + sizeof(a)/sizeof(a[0]),action);  // 2 46 8
+
+    for(int e:a) {  // the same as for(int&e:a)
+        cout << e*2 << " ";  // 2 46 8
+    }
+
+    vector<int> v = {1,2,3};
+    for(auto i = v.begin(); i != v.end(); ++i) {
+        cout << *i << " " ; // i is iterator   // 1 2 3
+    }
+    cout << endl;
+    for(auto e:v){
+        cout << e << " ";   // e 是解引后的对象  1 2 3
+    }
+}
+
