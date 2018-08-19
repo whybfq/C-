@@ -18,32 +18,44 @@ using namespace std;
 
 constexpr int GetConst(){ return  1; }  // 常量表达式，使用之前必须先定义
 
-constexpr int f(int x){
+constexpr int f(int x){  // 常量表达式也可以有多余的语句
     static_assert( 0 == 0, "assert fail .");
     return x;
 }
 
 constexpr int k(int x) { return  x = 1; } // is not allowed in C11 but allowed in C14
 
-constexpr int Fibonacci(int n) {  //模版元编程 Template meta-programming
-    return(n == 1)?1:(n==2)?1:Fibonacci(n-1)+Fibonacci(n-2);
-}
+//constexpr int Fibonacci(int n) {
+//    return(n == 1)?1:(n==2)?1:Fibonacci(n-1)+Fibonacci(n-2);
+//}
+
+
+//模版元编程 Template meta-programming
+template<long num>
+struct Fibonacci{
+    static const long val = Fibonacci<num-1>::val+Fibonacci<num-2>::val;
+};
+
+template < > struct Fibonacci<2>{static const long val = 1; };
+template < > struct Fibonacci<1>{static const long val = 1; };
+template < > struct Fibonacci<0>{static const long val = 0; };
 
 int main(int argc, char const *argv[]) {
+//    int fib[] = {
+//            Fibonacci(11),Fibonacci(12),
+//            Fibonacci(13),Fibonacci(14),
+//    };
     int fib[] = {
-            Fibonacci(11),Fibonacci(12),
-            Fibonacci(13),Fibonacci(14),
-            Fibonacci(15),Fibonacci(16)
+            Fibonacci<11>::val, Fibonacci<12>::val,
+            Fibonacci<13>::val, Fibonacci<14>::val,
     };
-    for(int i:fib)cout << i << endl;
+    for(int i:fib){
+        cout << i << endl;
+    }
 }
-
-
 
 Output:
 89
 144
 233
 377
-610
-987
