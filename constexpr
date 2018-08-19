@@ -25,7 +25,7 @@ constexpr int f(int x){
 
 constexpr int k(int x) { return  x = 1; } // is not allowed in C11 but allowed in C14
 
-constexpr int Fibonacci(int n) {
+constexpr int Fibonacci(int n) {  //模版元编程 Template meta-programming
     return(n == 1)?1:(n==2)?1:Fibonacci(n-1)+Fibonacci(n-2);
 }
 
@@ -35,8 +35,10 @@ int main(int argc, char const *argv[]) {
             Fibonacci(13),Fibonacci(14),
             Fibonacci(15),Fibonacci(16)
     };
-    for(int i:fib)cout << i << endl;   
+    for(int i:fib)cout << i << endl;
 }
+
+
 
 Output:
 89
