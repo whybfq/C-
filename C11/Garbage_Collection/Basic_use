@@ -1,0 +1,30 @@
+/*********************************************************************************
+ *Author:  Sann
+ *IDE: Clion 2018.3
+ *OS:  macOS High Sierra 10.13.6
+ *Date:  August 19,2018
+ *Description:  declare_reachable和undeclare_reachable之间确立了一个代码范围，两者之间的代码运行中，p所指的对象不会被垃圾回收器所回收。
+ *Function List:
+ *History:  //modify history list, every record should consist the date, Revision and modification content introduction
+    1.Date:
+      Author:
+      Modification:
+*******************************************************************************1***/
+
+#include <iostream>
+#include <vector>
+#include <memory>
+using namespace std;
+
+//void declare_reachable(void *p);
+//template <class T>T*undeclare_reachable(T*p)noexcept;
+
+int main(int argc, char const *argv[]) {
+    int *p = new int;
+    //在p被隐藏前声明为可达的
+    declare_reachable(p);  //显示通知垃圾回收器某个对象应被认为可达的，即使它的所有指针都对回收器不可见  underclare_reachable()可取消这种可达声明
+    int *q = (int*)((long long)p^2012);
+    q = undeclare_reachable<int>( (int*) ( (long long)q^2012) );   // 解除可达声明
+    *q = 10;
+}
+
