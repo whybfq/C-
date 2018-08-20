@@ -11,10 +11,10 @@ void learn_lambada_func1(){
     ///Similar to the parameter value, the value of the early capture of the variable can be copied, 
     ///the difference is that the captured variable is copied when the lambda expression is created, but not copied when called
 
-    cout<<stored_value_1<<endl;     ///Output 1
+    cout<<stored_value_1<<endl;     // 1
 
 }
 int main(int agrc ,char* agrv[]){
-    learn_lambada_func1();            /// 这时, stored_value_1 == 1, 而 value_1 == 100.
-                                      /// 因为 copy_value_1 在创建时就保存了一份 value_1 的拷贝
+    learn_lambada_func1();            /// at this time, stored_value_1 == 1, and value_1 == 100.
+                                      /// for copy_value_1 在创建时就保存了一份 value_1 的拷贝
 }
