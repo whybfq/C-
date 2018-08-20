@@ -3,7 +3,7 @@
   *IDE: Clion 2018.3
   *OS:  macOS High Sierra 10.13.6
   *Date:  August 20,2018
-  *Description:  变长模板函数
+  *Description:  使用非类型模板
   *
   *Bug:
   *Function List:
@@ -20,8 +20,8 @@ using namespace std;
 
 template <long...nums>struct Multiply;
 template <long first,long...last>
-struct Multiply<first,last...>{
-    static const long val = first * Multiply<last...>::val;
+struct Multiply<first,last...>{   //接受非类型参数的变长模板Multiply
+    static const long val = first * Multiply<last...>::val;  // 进行编译时期的值计算
 };
 template <>
 struct Multiply<>{
