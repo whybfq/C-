@@ -21,6 +21,10 @@ using namespace std;
 
 std::atomic_flag lock1 = ATOMIC_FLAG_INIT;  // false state
 
+//将 lock封装为锁操作
+//void Lock(atomic_flag*lock1) { while(lock1->test_and_set());  }
+//void Unlock(atomic_flag *lock1) { lock1->clear(); }
+
 void f(int n) {
     while (lock1.test_and_set(std::memory_order_acquire)) { // try to get lock， test_and_set()为原子操作，用于在一个内存空间原子地写入新值并且返回旧值，因此它会返回之前地lock值
         cout << "Waiting from thread " << n << endl;  // 自旋
@@ -43,3 +47,9 @@ int main(int argc, char const *argv[]) {
     t2.join();
 }
 
+Output:
+ThreadWaiting from thread 21is going to start. 
+
+Waiting from thread Thread12
+starts working
+Thread1starts working 
