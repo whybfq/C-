@@ -29,13 +29,13 @@ void f(int n) {
     while (lock1.test_and_set(std::memory_order_acquire)) { // try to get lock， test_and_set()为原子操作，用于在一个内存空间原子地写入新值并且返回旧值，因此它会返回之前地lock值
         cout << "Waiting from thread " << n << endl;  // 自旋
     }
-    cout << "Thread" << n << "starts working " << endl;
+    cout << "Thread " << n << " starts working " << endl;
 }
 
 void g(int n){
-    cout << "Thread" << n << "is going to start. "<< endl;
+    cout << "Thread " << n << " is going to start. "<< endl;
     lock1.clear();  // lock1的值设为false, t1自旋终止
-    cout << "Thread" << n << "starts working" << endl;
+    cout << "Thread " << n << " starts working" << endl;
 }
 
 int main(int argc, char const *argv[]) {
@@ -48,8 +48,8 @@ int main(int argc, char const *argv[]) {
 }
 
 Output:
-ThreadWaiting from thread 21is going to start. 
+Thread Waiting from thread 21 is going to start. 
 
-Waiting from thread Thread12
-starts working
-Thread1starts working 
+Waiting from thread Thread 12
+ starts working
+Thread 1 starts working 
