@@ -44,7 +44,7 @@ int main(int argc, char const *argv[]) {
 #include <thread>
 using namespace std;
 
-atomic_llong total{0};   // Atomic data type
+atomic_llong total{0};   // Atomic data type 对应内置的long long
 
 void func(int){
     for (long long i = 0; i < 10000000LL; ++i) {
