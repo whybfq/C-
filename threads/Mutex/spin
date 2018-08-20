@@ -47,7 +47,7 @@ int main(int argc, char const *argv[]) {
     t2.join();
 }
 
-Output:
+Output(Each time the result is different):
 Thread Waiting from thread 21 is going to start. 
 
 Waiting from thread Thread 12
