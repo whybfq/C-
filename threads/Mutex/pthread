@@ -9,9 +9,9 @@
   *Function List:
   *  1.
   *History:
-   1.Date:
-     Author:
-     Modification:
+   1.Date:   Aug 20, 2018
+     Author:  San
+     Modification: 改成来C11中的原子数据类型，操作更加方便 Converted to atomic data type in C11, operation is more convenient.
 **********************************************************************************/
 
 #include <iostream>
@@ -36,4 +36,26 @@ int main(int argc, char const *argv[]) {
     pthread_join(thread1,NULL);
     pthread_join(thread2,NULL);
     cout << total << endl;  // 56
+}
+
+
+/**********************************************************************************/
+#include <iostream>
+#include <thread>
+using namespace std;
+
+atomic_llong total{0};   // Atomic data type
+
+void func(int){
+    for (long long i = 0; i < 10000000LL; ++i) {
+         total += i;
+    }
+}
+
+int main(int argc, char const *argv[]) {
+    thread t1(func,0);
+    thread t2(func,0);
+    t1.join();
+    t2.join();
+    cout << total << endl;   // 99999990000000
 }
