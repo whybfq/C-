@@ -1,0 +1,45 @@
+/*********************************************************************************
+  *Author:  San
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Date:  August 20,2018
+  *Description:  通过自旋让t1线程等待t2
+  *
+  *Bug:
+  *Function List:
+  *  1.
+  *History:
+   1.Date:
+     Author:
+     Modification:
+**********************************************************************************/
+#include <atomic>
+#include <iostream>
+#include <thread>
+#include <unistd.h>
+using namespace std;
+
+std::atomic_flag lock1 = ATOMIC_FLAG_INIT;  // false state
+
+void f(int n) {
+    while (lock1.test_and_set(std::memory_order_acquire)) { // try to get lock， test_and_set()为原子操作，用于在一个内存空间原子地写入新值并且返回旧值，因此它会返回之前地lock值
+        cout << "Waiting from thread " << n << endl;  // 自旋
+    }
+    cout << "Thread" << n << "starts working " << endl;
+}
+
+void g(int n){
+    cout << "Thread" << n << "is going to start. "<< endl;
+    lock1.clear();  // lock1的值设为false, t1自旋终止
+    cout << "Thread" << n << "starts working" << endl;
+}
+
+int main(int argc, char const *argv[]) {
+    lock1.test_and_set();
+    thread t1(f,1);  // 执行函数f()   f中地test_and_set将一直返回true,并不断打印信息，即自旋等待
+    thread t2(g,2);
+    t1.join();
+    usleep(100);
+    t2.join();
+}
+
