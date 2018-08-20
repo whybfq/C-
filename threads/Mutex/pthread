@@ -23,8 +23,8 @@ static long long total = 0;
 pthread_mutex_t m = PTHREAD_MUTEX_INITIALIZER;  // mutex lock m
 void *func(void *){
     for (long long j = 0; j < 8; ++j) {
-        pthread_mutex_lock(&m);
-        total += j;
+        pthread_mutex_lock(&m);   // 如果去掉加/解锁，结果不再准确
+        total += j;   // 原子操作语句
         pthread_mutex_unlock(&m);
     }
 }
@@ -37,4 +37,3 @@ int main(int argc, char const *argv[]) {
     pthread_join(thread2,NULL);
     cout << total << endl;  // 56
 }
-
