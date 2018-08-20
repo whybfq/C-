@@ -59,3 +59,4 @@ int main(int argc, char const *argv[]) {
     t2.join();
     cout << total << endl;   // 99999990000000
 }
+
