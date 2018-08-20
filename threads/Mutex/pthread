@@ -1,0 +1,40 @@
+/*********************************************************************************
+  *Author:  San
+  *IDE: Clion 2018.3
+  *OS:  macOS High Sierra 10.13.6
+  *Date:  August 20,2018
+  *Description:  使用pthread库（POSIX标准）实现粗力度的互斥
+  *
+  *Bug:
+  *Function List:
+  *  1.
+  *History:
+   1.Date:
+     Author:
+     Modification:
+**********************************************************************************/
+
+#include <iostream>
+#include <pthread.h>
+using namespace std;
+
+static long long total = 0;
+
+pthread_mutex_t m = PTHREAD_MUTEX_INITIALIZER;  // mutex lock m
+void *func(void *){
+    for (long long j = 0; j < 8; ++j) {
+        pthread_mutex_lock(&m);
+        total += j;
+        pthread_mutex_unlock(&m);
+    }
+}
+
+int main(int argc, char const *argv[]) {
+    pthread_t thread1, thread2;
+    if(pthread_create(&thread1,NULL, &func,NULL )) { throw; }
+    if(pthread_create(&thread2,NULL, &func,NULL )) { throw; }
+    pthread_join(thread1,NULL);
+    pthread_join(thread2,NULL);
+    cout << total << endl;  // 56
+}
+
