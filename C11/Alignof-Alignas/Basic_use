@@ -29,6 +29,8 @@ class InComplete;
 struct Completed{};
 
 int main(int argc, char const *argv[]) {
+    cout << alignof(std::max_align_t) << endl; // 16 平台上支持的最大标量数据的对齐值
+
     cout << "sizeof(HowManyBytes): " << sizeof(HowManyBytes) << endl;  // 8
     cout << "offset of char a: " << offsetof(HowManyBytes,a) << endl;  // 0 查询HowManyBytes中a的偏移量
     cout << "offset of int b: " << offsetof(HowManyBytes,b) << endl;   // 4
@@ -41,5 +43,4 @@ int main(int argc, char const *argv[]) {
 
     alignas(double)char c;  // the same as " alignas(alignof(double))char c; "
 }
-
 
