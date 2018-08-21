@@ -1,14 +1,14 @@
 /*********************************************************************************
-  *Author:  San
+  *@author:  San
+  *@date:  August 21,2018
+  *@brief:  C11 通用属性[[noreturn]] && [[carries_dependency]]
+  *@bug : there is an error using [[carries_dependency]]
+  * 
   *IDE: Clion 2018.3
   *OS:  macOS High Sierra 10.13.6
-  *Date:  August 21,2018
-  *Description:  C11 通用属性[[noreturn]] && [[carries_dependency]]
-  *
-  *Bug:
   *Function List:
-  *  1.    void *align(std::size_t alignment,std::size_t size,void *&ptr,std::size_t& space);
-  *        函数在ptr指向为space的内存中进行对齐方式调整，将ptr开始的size大小的数据调整为按alignment对齐
+  *  1.     当平台是若内存模型时，并且很关心并行程序的执行性能时，可以考虑使用 [[carries_dependency]]
+    
   *History:
    1.Date:
      Author:
@@ -20,16 +20,44 @@
 #include <memory>
 using namespace std;
 
-[[noreturn]]void Func(int i) { // noreturn主要标识不会返回的函数，不会返回和没有返回值不同，（void函数调用完成还会执行后续code),所以这里使用norerun不合适
-    if (i < 0) {
-        throw "negative";
-    } else if(i > 0) {
-        throw "positive";
-    }
+//[[noreturn]]void Func(int i) { // noreturn主要标识不会返回的函数，不会返回和没有返回值不同，（void函数调用完成还会执行后续code),所以这里使用norerun不合适
+//    if (i < 0) {
+//        throw "negative";
+//    } else if(i > 0) {
+//        throw "positive";
+//    }
+//}
+
+atomic<int*> p1;
+atomic<int*> p2;
+atomic<int*> p3;
+atomic<int*> p4;
+
+void func_in1(int *val) {
+   cout << *val << endl;
+}
+
+void func_in2(int *[[carries_dependency]] val) {  //error: 'carries_dependency' attribute cannot be applied to types
+    p2.store(val,memory_order_release);
+    cout << *p2 << endl;
+}
+
+[[carries_dependency]]int *func_out {
+    return(int*)p3.load(memory_order_consume);
+};
+
+void Thread(){
+    int *p_ptr1 = (int*)p1.load(memory_order_consume);  // L1
+    cout << *p_ptr1 << endl;  // L2
+    func_in1(p_ptr1) ;   // L3
+    func_in2(p_ptr1);    // L4
+    int *p_ptr2 = func_out();  // L5
+    p4.store(p_ptr2,memory_order_release);   // L6
+    cout << *p_ptr2 << endl;
 }
 
 int main(int argc, char const *argv[]) {
-    Func(-1);   // libc++abi.dylib: terminating with uncaught exception of type char const*    Process finished with exit code 6
-
+    // Test [[noreturn]]
+//    Func(-1);   // libc++abi.dylib: terminating with uncaught exception of type char const*    Process finished with exit code 6
 
 }
