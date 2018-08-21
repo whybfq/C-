@@ -43,4 +43,8 @@ int main(int argc, char const *argv[]) {
 //         << alignof(InComplete) << endl  //can't compile, class Incomplete is an incomplete typedef
 
     alignas(double)char c;  // the same as " alignas(alignof(double))char c; "
+//    alignas(double)void f();  // error 'alignas' attribute only applies to variables, data members and tag types
+    alignas(double)unsigned char d[sizeof(double)];   // right
 }
+
+//extern int area(int n)__attribute__((const ))
