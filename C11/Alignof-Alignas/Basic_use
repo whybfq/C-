@@ -3,7 +3,7 @@
   *IDE: Clion 2018.3
   *OS:  macOS High Sierra 10.13.6
   *Date:  August 21,2018
-  *Description:  the basic use of alignof and alignas in C11
+  *Description:  the basic use of alignof（对齐操作符） and alignas(alignment-specifier)对齐描述符 in C11
   *Bug:
   *Function List:
   *  1.
