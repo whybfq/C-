@@ -19,7 +19,8 @@ using namespace std;
 
 //extern int area(int n)__attribute__((const ));
 
-struct alignas(8) HowManyBytes{  //对齐到8字节的边界
+struct alignas(32) HowManyBytes{  //对齐到8字节的边界  (这里超过标准对齐，基本对齐16，称为扩展对齐（extended alignment),
+                        // 按照C++标准程序是不规范的(ill-formed),随意的扩展对齐may cause error
     char a;
     int b;
 };
@@ -29,18 +30,17 @@ class InComplete;
 struct Completed{};
 
 int main(int argc, char const *argv[]) {
-    cout << alignof(std::max_align_t) << endl; // 16 平台上支持的最大标量数据的对齐值
+    cout << alignof(std::max_align_t) << endl; // 16 平台上支持的最大标量数据的对齐值，这是C11中规定的"基本对齐值"(fundamental alignment)"
 
-    cout << "sizeof(HowManyBytes): " << sizeof(HowManyBytes) << endl;  // 8
+    cout << "sizeof(HowManyBytes): " << sizeof(HowManyBytes) << endl;  // 32
     cout << "offset of char a: " << offsetof(HowManyBytes,a) << endl;  // 0 查询HowManyBytes中a的偏移量
     cout << "offset of int b: " << offsetof(HowManyBytes,b) << endl;   // 4
 
     // 使用C++11中的alignof来查询HowManyBytes的对齐方式
-    cout << "alignof(HowManyBytes): " << alignof(HowManyBytes) << endl;  // (4->)8
+    cout << "alignof(HowManyBytes): " << alignof(HowManyBytes) << endl;  // (4->)32
 
     cout << alignof(Completed) << endl;  // 1
 //         << alignof(InComplete) << endl  //can't compile, class Incomplete is an incomplete typedef
 
     alignas(double)char c;  // the same as " alignas(alignof(double))char c; "
 }
-
