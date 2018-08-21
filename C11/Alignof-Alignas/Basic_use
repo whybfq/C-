@@ -4,6 +4,7 @@
   *OS:  macOS High Sierra 10.13.6
   *Date:  August 21,2018
   *Description:  the basic use of alignof（对齐操作符） and alignas(alignment-specifier)对齐描述符 in C11
+  *              alignas既可以接受常量表达式，也可以接受类型作为参数
   *Bug:
   *Function List:
   *  1.
@@ -37,5 +38,8 @@ int main(int argc, char const *argv[]) {
 
     cout << alignof(Completed) << endl;  // 1
 //         << alignof(InComplete) << endl  //can't compile, class Incomplete is an incomplete typedef
+
+    alignas(double)char c;  // the same as " alignas(alignof(double))char c; "
 }
+
 
