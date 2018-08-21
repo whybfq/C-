@@ -23,6 +23,10 @@ struct alignas(8) HowManyBytes{  //对齐到8字节的边界
     int b;
 };
 
+
+class InComplete;
+struct Completed{};
+
 int main(int argc, char const *argv[]) {
     cout << "sizeof(HowManyBytes): " << sizeof(HowManyBytes) << endl;  // 8
     cout << "offset of char a: " << offsetof(HowManyBytes,a) << endl;  // 0 查询HowManyBytes中a的偏移量
@@ -30,4 +34,8 @@ int main(int argc, char const *argv[]) {
 
     // 使用C++11中的alignof来查询HowManyBytes的对齐方式
     cout << "alignof(HowManyBytes): " << alignof(HowManyBytes) << endl;  // (4->)8
+
+    cout << alignof(Completed) << endl;  // 1
+//         << alignof(InComplete) << endl  //can't compile, class Incomplete is an incomplete typedef
 }
+
