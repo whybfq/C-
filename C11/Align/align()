@@ -33,6 +33,6 @@ int main(int argc, char const *argv[]) {
     size_t sz = size;
     void *aligned = align(alignof(double)*4,size,p,sz); //将p指向为sz的内存中进行对齐方式调整，将p开始的size大小的数据调整为按alignof(double)*4对齐
     if(aligned != nullptr){
-        cout << alignof(p) << endl;
+        cout << alignof(p) << endl;   // 8
     }
 }
