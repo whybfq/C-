@@ -3,12 +3,12 @@
   *@date:  August 21,2018
   *@brief:  C11 通用属性[[noreturn]] && [[carries_dependency]]
   *@bug : there is an error using [[carries_dependency]]
-  * 
+  *
   *IDE: Clion 2018.3
   *OS:  macOS High Sierra 10.13.6
   *Function List:
   *  1.     当平台是若内存模型时，并且很关心并行程序的执行性能时，可以考虑使用 [[carries_dependency]]
-    
+
   *History:
    1.Date:
      Author:
@@ -37,8 +37,9 @@ void func_in1(int *val) {
    cout << *val << endl;
 }
 
+//complier会假设函数内存会正确的处理内存顺序，因此不再产生内存栅栏指令
 void func_in2(int *[[carries_dependency]] val) {  //error: 'carries_dependency' attribute cannot be applied to types
-    p2.store(val,memory_order_release);
+    p2.store(val,memory_order_release);   // 使用内存顺序memory_order_release
     cout << *p2 << endl;
 }
 
@@ -47,12 +48,12 @@ void func_in2(int *[[carries_dependency]] val) {  //error: 'carries_dependency' 
 };
 
 void Thread(){
-    int *p_ptr1 = (int*)p1.load(memory_order_consume);  // L1
+    int *p_ptr1 = (int*)p1.load(memory_order_consume);  // L1   p1.load采用memory_order_const sume内存顺序，因此任何关于p1 or p_ptr1的原子操作，必须发送在L1句之后
     cout << *p_ptr1 << endl;  // L2
-    func_in1(p_ptr1) ;   // L3
+    func_in1(p_ptr1) ;   // L3 编译器可能在func_in1调用表达式之前插入内存栅栏
     func_in2(p_ptr1);    // L4
-    int *p_ptr2 = func_out();  // L5
-    p4.store(p_ptr2,memory_order_release);   // L6
+    int *p_ptr2 = func_out();  // L5 使用[[carries_dependency]]，不会在返回前为p3.load(memory_order_const sume)插入内存栅栏指令
+    p4.store(p_ptr2,memory_order_release);   // L6 // p4.store使用memory_order_release，因此func_out不产生内存栅栏也无问题
     cout << *p_ptr2 << endl;
 }
 
