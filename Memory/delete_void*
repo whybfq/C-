@@ -1,0 +1,52 @@
+/*********************************************************************************
+  *@copyright (C)  Aug 2018  San
+  *@bug :
+  *@brief:   delete an pointer which is void*, the onlp thing happen is that release some memory
+  *          Deleting void pointers can cause memory leaks
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+class Object {
+public:
+    Object(int sz, char c) : size(sz) , id(c) {
+        data = new char[size];
+        cout << "constructing object " << id << ", size = " << size << endl;
+    }
+    ~Object(){
+        cout << "Destruction object " << id << endl;
+        delete []data; //no destructor calls are necessary
+    }
+private:
+    void *data; // some storge
+    const int size;
+    const char id;
+
+
+
+};
+///zq
+int main(void)
+{
+    Object* a = new Object(40,'a');
+    delete a;
+    void *b = new Object(0,'b');
+    delete(b);
+}
+
+Output:
+constructing object a, size = 40
+Destruction object a
+constructing object b, size = 0
