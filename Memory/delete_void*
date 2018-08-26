@@ -1,3 +1,4 @@
+
 /*********************************************************************************
   *@copyright (C)  Aug 2018  San
   *@bug :
@@ -38,9 +39,9 @@ private:
 int main( )
 {
     Object* a = new Object(40,'a');
-    delete a;
+    delete a;  //指向object对象
     void *b = new Object(0,'b');
-    delete(b);
+    delete(b);  // 不会调用析构函数，因此不会释放data指向的内存，虽然编译器没有任何警告，但是已经丢失了大量的可用内存
 }
 
 
