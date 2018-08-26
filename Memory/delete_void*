@@ -16,8 +16,8 @@
        Modification:
 **********************************************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
+using namespace std;
 
 class Object {
 public:
@@ -33,18 +33,16 @@ private:
     void *data; // some storge
     const int size;
     const char id;
-
-
-
 };
-///zq
-int main(void)
+
+int main( )
 {
     Object* a = new Object(40,'a');
     delete a;
     void *b = new Object(0,'b');
     delete(b);
 }
+
 
 Output:
 constructing object a, size = 40
