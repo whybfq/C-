@@ -1,0 +1,39 @@
+/*********************************************************************************
+  *@copyright (C)  Aug 2018  San
+  *@brief: decltype作用于标识符和类访问表达式，左值，则decltype(exp)是exp类型的左值，否则和exp类型一致
+  *        if exp是一个引用
+  *@bug :
+  *
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+
+#include <iostream>
+#include <cstdio>
+using namespace std;
+
+
+class Foo{
+public:
+    static const int Number = 0;
+    int x;
+};
+
+int main() {
+    int n = 0;
+    volatile const int &x = n;
+    decltype(n) a = n;  // a -> int
+    decltype(x) b = n;  // b -> const  volatile int &
+    decltype(Foo::Number) c = 0;  // c -> const  int
+    Foo foo;
+    decltype(foo.x) d = 0; // d -> int, Class access expression
+}
