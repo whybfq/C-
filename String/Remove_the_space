@@ -33,7 +33,9 @@ char *strRemov(char *dst, const char *src, char ch = ' ') {
 
 int main() {
     char a[100] = "你 g客 户 好, i a t!", b[100];
-    puts(strRemov(b, a));
-    cout << b << endl;
+    puts(strRemov(b, a));  //  cout << b << endl;
     return 0;
 }
+
+Output:
+你g客户好,iat!
