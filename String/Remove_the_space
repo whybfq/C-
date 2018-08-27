@@ -4,7 +4,7 @@
   *@bug :
   *
   *@CMAKE_CXX_STANDARD 17
-  *@IDE: Clion 2018.3
+  *@IDE: Clion 2018.2
   *@OS:  macOS High Sierra 10.13.6
   *
   *@function_lists:
@@ -34,7 +34,6 @@ char *strRemov(char *dst, const char *src, char ch = ' ') {
 int main() {
     char a[100] = "你 g客 户 好, i a t!", b[100];
     puts(strRemov(b, a));  //  cout << b << endl;
-    return 0;
 }
 
 Output:
