@@ -1,0 +1,39 @@
+/*********************************************************************************
+  *@copyright (C)  Aug 2018  San
+  *@brief: 若不 使用 auto， 就不 得 不对 func 再 增加 一个 模板 参数， 并在 外部 调用 时 手动 指定 get 的 返回 值 类型。
+  *@bug :
+  *
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+
+#include <iostream>
+using namespace std;
+
+class Foo{
+public:
+    static int get(void){ return 0; }
+};
+
+class Bar {
+public:
+    static const char* get(void) { return "0"; }
+};
+
+// define a Norm function func(),对所有具有静态get方法对类型A,在得到get的结果后做统一的后续处理
+template <class A>
+void func(void) { auto val = A::get(); }
+
+int main() {
+    func<Foo>();
+    func<Bar>();
+}
