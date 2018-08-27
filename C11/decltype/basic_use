@@ -24,7 +24,8 @@ int main() {
     decltype( x) y = 1; // y -> int
     decltype( x + y) z = 0; // z -> int
     const int& i = x;
-    decltype( i) j = y; // j -> const int &
+    decltype( i) j = y; // j -> const int &  j 的结果表明decltype通过表达式得到的类型，可以保留住表达式的引用及const限定符。实际上对于一般的标记符表达式（id- expression）， 
+                        //decltype将精确地推导出表达式定义本身的类型，不会像 auto 那样在某些情况下舍弃掉引用和 cv 限定符。
     const decltype( z) * p = &z; // *p -> const int, p -> const int *
     decltype( z) * pi = &z; // *pi -> int , pi -> int *
     decltype( pi)* pp = &pi; // *pp -> int * , pp -> int * *
