@@ -1,0 +1,31 @@
+/*********************************************************************************
+  *@copyright (C)  Aug 2018  San
+  *@brief: The basic use of decltype in C11
+  *@bug :
+  *
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int x = 0;
+    decltype( x) y = 1; // y -> int
+    decltype( x + y) z = 0; // z -> int
+    const int& i = x;
+    decltype( i) j = y; // j -> const int &
+    const decltype( z) * p = &z; // *p -> const int, p -> const int *
+    decltype( z) * pi = &z; // *pi -> int , pi -> int *
+    decltype( pi)* pp = &pi; // *pp -> int * , pp -> int * *
+}
