@@ -16,7 +16,6 @@
        Author:
        Modification:
 **********************************************************************************/
-#include "Tree.h"
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
