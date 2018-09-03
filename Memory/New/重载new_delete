@@ -1,0 +1,77 @@
+/*********************************************************************************
+  *@copyright (C)  Sep 2018  San
+  *@bug :
+  *@brief:   delete an pointer which is void*, the onlp thing happen is that release some memory
+  *          Deleting void pointers can cause memory leaks
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+#include "Tree.h"
+#include <cstdio>
+#include <cstdlib>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cstring>
+
+using namespace std;
+
+void *operator new(size_t sz) {
+    cout << "operator new functon: " << sz << " Bytes "<< endl;
+    void *m = malloc(sz);
+    if(!m)puts("out of memory");
+    return m;
+}
+
+void operator delete(void* m) {
+    puts("operator delete function ");
+    free(m);
+}
+
+class S {
+public:
+    S() { puts("S::S() "); }
+    ~S() { puts("S::~S() "); }
+private:
+    int i;
+};
+int main( )
+{
+    puts(" creating & destroying an int ");
+    int *p = new int(47);
+    delete p;
+    puts(" crating & destroying an s ");
+    S* s = new S;
+    delete s;
+    puts(" creating & destroying S[3] ");
+    S* sa = new S[3];
+    delete []sa;
+}
+
+Output:
+ creating & destroying an int 
+operator new functon: 4 Bytes 
+operator delete function 
+ crating & destroying an s 
+operator new functon: 4 Bytes 
+S::S() 
+S::~S() 
+operator delete function 
+ creating & destroying S[3] 
+operator new functon: 20 Bytes 
+S::S() 
+S::S() 
+S::S() 
+S::~S() 
+S::~S() 
+S::~S() 
+operator delete function 
