@@ -1,8 +1,9 @@
 /*********************************************************************************
   *@copyright (C)  Sep 2018  San
   *@bug :
-  *@brief:   delete an pointer which is void*, the onlp thing happen is that release some memory
-  *          Deleting void pointers can cause memory leaks
+  *@brief:   重载全局的new和delete,只是改变了原有的内存分配方法，记住这一点是很重要的。
+  * 编译器将用重载的 new 代替默认的版本去分配内存，然后为那个内存调用构造函数。所以，虽然当编译器看到 new 时，编译器分配内存并调用构造函数，但是当重载 new 时，可以改变的只是内存分配部分（ delete 也有相似的限制。）
+
   *@CMAKE_CXX_STANDARD 17
   *@IDE: Clion 2018.3
   *@OS:  macOS High Sierra 10.13.6
@@ -56,22 +57,3 @@ int main( )
     S* sa = new S[3];
     delete []sa;
 }
-
-Output:
- creating & destroying an int 
-operator new functon: 4 Bytes 
-operator delete function 
- crating & destroying an s 
-operator new functon: 4 Bytes 
-S::S() 
-S::~S() 
-operator delete function 
- creating & destroying S[3] 
-operator new functon: 20 Bytes 
-S::S() 
-S::S() 
-S::S() 
-S::~S() 
-S::~S() 
-S::~S() 
-operator delete function 
