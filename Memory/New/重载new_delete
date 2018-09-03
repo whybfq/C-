@@ -47,15 +47,15 @@ public:
 private:
     int i;
 };
-int main( )
+int main( )  //所有情况都使用了全局重载版本的new和delete 
 {
-    puts(" creating & destroying an int ");
+    puts(" creating & destroying an int "); //使用puts(),当创建一个iostream对象时（像全局的cin,cout和cerr),它们调用new去分配内存,用printf()不会进入死锁状态，因为它不调用new来初始化本身.
     int *p = new int(47);
     delete p;
     puts(" crating & destroying an s ");
     S* s = new S;
     delete s;
     puts(" creating & destroying S[3] ");
-    S* sa = new S[3];
+    S* sa = new S[3];  //额外的内存会被分配用于存放它所包含的对象的数量信息。
     delete []sa;
 }
