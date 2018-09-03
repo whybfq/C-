@@ -26,8 +26,10 @@
 
 using namespace std;
 
-void *operator new(size_t sz) {
-    cout << "operator new functon: " << sz << " Bytes "<< endl;
+void *operator new(size_t sz) {    // 重载的new必须有一个size_t参数（sizes的标准C类型）。这个参数由编译器产生并传递给我们，它是要分配内存的对象的长度。必须返回一个指向等于这个长度（或大于这个长度，如果有这样做的原因）的对象的指针，
+    // 如果没有找到存储单元（在这种情况下，构造函数不被调用），则返回一个0。然而如果找不到存储单元，不能仅仅返回0
+    // ，也许还应该做一些诸如调用new-handler或产生一个异常信息之类的事，通知这里存在问题。
+    cout << "operator new functon: " << sz << " Bytes "<< endl;9
     void *m = malloc(sz);
     if(!m)puts("out of memory");
     return m;
@@ -40,7 +42,7 @@ void operator delete(void* m) {
 
 class S {
 public:
-    S() { puts("S::S() "); }
+    S() { puts("S::S() ");  }
     ~S() { puts("S::~S() "); }
 private:
     int i;
