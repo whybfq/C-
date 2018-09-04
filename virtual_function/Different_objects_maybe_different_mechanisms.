@@ -1,0 +1,52 @@
+/*********************************************************************************
+  *@copyright (C)  Sep 2018  San
+  *@bug :
+  *
+  *@brief: 虚函数机制，典型的编译器 [1] 对每个包含虚函数的类创建一个表（称为 VTABLE ）。在 VTABLE 中，编译器放置特定类的虚函数的地址。在每个带有虚函数的类中，编译器秘密地放置一个指针，
+  * 称为 vpointer （缩写为 VPTR ），指向这个对象的 VTABLE 。当通过基类指针做虚函数调用时（也就是做多态调用时），
+  * 编译器静态地插入能取得这个 VPTR 并在 VTABLE 表中查找函数地址的代码，这样就能调用正确的函数并引起晚捆绑的发生。
+  *@CMAKE_CXX_STANDARD 17
+  *
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+
+#include <iostream>
+using namespace std;
+
+class Pet {
+public:
+    virtual string speak() const { return"Pet"; }
+};
+
+class Dog : public Pet {
+public:
+    string speak() const { return "Bark!"; }
+};
+
+
+
+//在p1-＞speak（）和p2.speak（）中，使用地址，就意味着信息不完全：
+// p1和p2可能表示Pet的地址，也可能表示其派生对象的地址，所以必须使用虚函数。
+// 而当调用p3.speak（）时不存在含糊，编译器知道确切的类型且知道它是一个对象，
+// 所以它不可能是由Pet派生的对象，而确切的只是一个Pet。这样，可以使用早捆绑。
+// 但是，如果不希望编译器的工作如此复杂，仍然可以使用晚捆绑，并且会产生相同的行为。
+int main(int argc, char const *argv[]) {
+    Dog ralph;
+    Pet *p1 = &ralph;
+    Pet &p2 = ralph;
+    Pet p3;
+    // Late binging for both:
+    cout << " p1->speak() = " << p1->speak() << endl;
+    cout << " p2.speak() = " << p2.speak() << endl;
+    //Eafly binding(probably)
+    cout << " p3.speak() = " << p3.speak() << endl;
+}
