@@ -18,9 +18,9 @@
   *  1.
 
   *@history:
-     1.Date:
-       Author:
-       Modification:
+     1.Date: 
+       Author: san 
+       Modification:   just add virtual to paly() in class Instrument 
 **********************************************************************************/
 
 #include <iostream>
@@ -30,7 +30,7 @@ enum note { middleC, Csharp, Eflat};  // Etc.
 
 class Instrument {
 public:
-    void play(note) const {
+    void play(note) const {   // add "virtual" in the beginning
         cout << "instrument::play" << endl;
     }
 };
