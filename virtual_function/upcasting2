@@ -1,0 +1,106 @@
+/*********************************************************************************
+  *@copyright (C)  Sep 2018  San
+  *@bug :  The output should be "Wind : play" rather than "Instrument : play"
+  *@reason: 把函数体与函数调用相联系称为捆绑（binding）。当捆绑在程序运行之前（由编译器和连接器）完成时，这称为早捆绑（earlybinding）。
+  * 我们可能没有听过这个术语，因为在过程型语言中不会有这样的选择：C编译只有一种函数调用方式，就是早捆绑。
+  *
+  * 上面程序中的问题是早捆绑引起的，因为编译器在只有Instrument地址时它并不知道要调用的正确函数。解决方法被称为晚捆绑（latebinding），
+  * 这意味着捆绑根据对象的类型，发生在运行时。晚捆绑又称为动态捆绑（dynamicbinding）或运行时捆绑（runtimebinding）。
+  * 当一个语言实现晚捆绑时，必须有某种机制来确定运行时对象的类型并调用合适的成员函数。
+  * 对于一种编译语言，编译器并不知道实际的对象类型，但它插入能找到和调用正确函数体的代码。
+  * 晚捆绑机制因语言而异. C++中晚捆绑只对virtual函数起作用
+  *@brief:   This is an sample example for upcasting
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author: san
+       Modification:   just add virtual to paly() in class Instrument
+**********************************************************************************/
+
+#include <iostream>
+using namespace std;
+
+enum note { middleC, Csharp, Eflat};  // Etc.
+
+class Instrument {
+public:
+    virtual void play(note) const = 0; //pure virtual functions
+    virtual char* what() const = 0;  // assume this will modify the object
+    virtual void adjust(int) = 0;
+};
+
+class Wind : public Instrument { // Wind objects are Instruments because they have the same interface
+public:
+    void play(note) const {  // redifine interface function:
+        cout << "Wind::play" << endl;
+    }
+    char *what() const { return "Wind"; }
+    void adjust(int){ }
+};
+
+class Percussion : public Instrument {
+public:
+    void play(note) const {
+        cout << "Percussiong::play" << endl;
+    }
+    char* what() const { return "Percussion"; }
+    void adjust(int){ }
+};
+
+class Stringed : public Instrument {
+public:
+    void play(note) const {
+        cout << "Stringed::play" << endl;
+    }
+    char *what() const { return "Stringed"; }
+    void adjust(int) { }
+};
+
+class Brass : public Wind {
+public:
+    void play(note) const {
+        cout << "Brass::play" << endl;
+    }
+    char* what() const { return "Brass" ; }
+};
+
+class Woodwind : public Wind {
+public:
+    void play(note) const {
+
+    }
+};
+void tune(Instrument& i) {
+    i.play(middleC);
+}
+
+// New function:
+void f(Instrument& i) {
+    i.adjust(1);
+}
+
+int main(int argc, char const *argv[]) {
+    Wind flute;
+    Percussion drum;
+    Stringed violin;
+    Brass flugelhorn;
+    Woodwind recorder;
+    tune(flute);    // Upcasting
+    tune(drum);
+    tune(violin);
+    tune(flugelhorn);
+    tune(recorder);
+    f(flugelhorn);
+}
+
+Output:
+Wind::play
+Percussiong::play
+Stringed::play
+Brass::play
