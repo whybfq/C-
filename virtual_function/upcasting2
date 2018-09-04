@@ -18,9 +18,9 @@
   *  1.
 
   *@history:
-     1.Date:
-       Author: san
-       Modification:   just add virtual to paly() in class Instrument
+     1.Date: 
+       Author: san 
+       Modification:   just add virtual to paly() in class Instrument 
 **********************************************************************************/
 
 #include <iostream>
@@ -30,9 +30,9 @@ enum note { middleC, Csharp, Eflat};  // Etc.
 
 class Instrument {
 public:
-    virtual void play(note) const = 0; //pure virtual functions
-    virtual char* what() const = 0;  // assume this will modify the object
-    virtual void adjust(int) = 0;
+    void play(note) const {   // add "virtual" in the beginning
+        cout << "instrument::play" << endl;
+    }
 };
 
 class Wind : public Instrument { // Wind objects are Instruments because they have the same interface
@@ -40,64 +40,17 @@ public:
     void play(note) const {  // redifine interface function:
         cout << "Wind::play" << endl;
     }
-    char *what() const { return "Wind"; }
-    void adjust(int){ }
 };
 
-class Percussion : public Instrument {
-public:
-    void play(note) const {
-        cout << "Percussiong::play" << endl;
-    }
-    char* what() const { return "Percussion"; }
-    void adjust(int){ }
-};
-
-class Stringed : public Instrument {
-public:
-    void play(note) const {
-        cout << "Stringed::play" << endl;
-    }
-    char *what() const { return "Stringed"; }
-    void adjust(int) { }
-};
-
-class Brass : public Wind {
-public:
-    void play(note) const {
-        cout << "Brass::play" << endl;
-    }
-    char* what() const { return "Brass" ; }
-};
-
-class Woodwind : public Wind {
-public:
-    void play(note) const {
-
-    }
-};
 void tune(Instrument& i) {
     i.play(middleC);
 }
 
-// New function:
-void f(Instrument& i) {
-    i.adjust(1);
-}
-
 int main(int argc, char const *argv[]) {
     Wind flute;
-    Percussion drum;
-    Stringed violin;
-    Brass flugelhorn;
-    Woodwind recorder;
     tune(flute);    // Upcasting
-    tune(drum);
-    tune(violin);
-    tune(flugelhorn);
-    tune(recorder);
-    f(flugelhorn);
 }
+
 
 Output:
 Wind::play
