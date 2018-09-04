@@ -1,0 +1,69 @@
+/*********************************************************************************
+  *@copyright (C)  Sep 2018  San
+  *@bug :
+  *
+  *@brief: 虚函数机制，典型的编译器 [1] 对每个包含虚函数的类创建一个表（称为 VTABLE ）。在 VTABLE 中，编译器放置特定类的虚函数的地址。在每个带有虚函数的类中，编译器秘密地放置一个指针，
+  * 称为 vpointer （缩写为 VPTR ），指向这个对象的 VTABLE 。当通过基类指针做虚函数调用时（也就是做多态调用时），
+  * 编译器静态地插入能取得这个 VPTR 并在 VTABLE 表中查找函数地址的代码，这样就能调用正确的函数并引起晚捆绑的发生。
+  *@CMAKE_CXX_STANDARD 17
+  *
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+
+#include <iostream>
+using namespace std;
+
+enum note { middleC, Csharp, Eflat};  // Etc.
+
+class NoVirtual {
+public:
+    void x() const { }
+    int i() const { return 1; }
+
+private:
+    int a;
+//    int b;
+};
+
+class OneVirtual {
+    int a;
+public:
+    virtual void x() const { }
+    int i() const { return 1; }
+};
+
+class TwoVirtuals{
+   int a;
+
+public:
+    virtual void x() const { }
+    virtual int i() const { return 1; }
+};
+
+/*不带虚函数，对象的长度恰好就是所期望的长度：单个[2]int的长度。而带有单个虚函数的OneVirtual，对象的长度是NoVirtual的长度加上一个void指针的长度。它反映出，如果有一个或多个虚函数，编译器都只在这个结构中插入一个单个指针（VPTR）。
+ * 因此OneVirtual和TwoVirtuals的长度没有区别。这是因为VPTR指向一个存放函数地址的表。我们只需要一个表，因为所有虚函数地址都包含在这个单个表中。这个例子至少要求一个数据成员。
+ * 如果没有数据成员，C++编译器会强制这个对象是非零长度，因为每个对象必须有一个互相区别的地址。如果我们想象在一个零长度对象的数组中索引寻址，就能理解这一点。把一个“哑”成员插入到对象中，
+ * 否则这个对象就会是零长度。当类型信息由于存在这个关键字virtual而被插入时，这个“哑”成员的位置就被占用。在上例中，用注释符号将int.    */
+int main(int argc, char const *argv[]) {
+    cout << "int : " << sizeof(int) << endl;
+    cout << "Novirtual " << sizeof(NoVirtual) << endl;
+    cout << "void* : " << sizeof(void*) << endl;
+    cout << "OneVirtual : " << sizeof(OneVirtual) << endl;
+    cout << "TwoVirtuals : " << sizeof(TwoVirtuals) << endl;
+}
+
+Output:
+int : 4
+Novirtual 4
+void* : 8
+OneVirtual : 16
+TwoVirtuals : 16
