@@ -1,0 +1,44 @@
+/*********************************************************************************
+  *@copyright (C)  Sep 2018  San
+  *@bug :  The output should be "Wind : play" rather than "Instrument : play" 
+  *@brief:   This is an sample example for upcasting
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+
+#include <iostream>
+using namespace std;
+
+enum note { middleC, Csharp, Eflat};  // Etc.
+
+class Instrument {
+public:
+    void play(note) const {
+        cout << "instrument::play" << endl;
+    }
+};
+
+class Wind : public Instrument { // Wind objects are Instruments because they have the same interface
+public:
+    void play(note) const {  // redifine interface function:
+        cout << "Wind::play" << endl;
+    }
+};
+
+void tune(Instrument& i) {
+    i.play(middleC);
+}
+
+int main(int argc, char const *argv[]) {
+    Wind flute;
+    tune(flute);    // Upcasting
+}
