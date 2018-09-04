@@ -80,11 +80,11 @@ void f(Instrument& i) {
 }
 
 int main(int argc, char const *argv[]) {
-    Wind flute;
-    Percussion drum;
-    Stringed violin;
-    Brass flugelhorn;
-    Woodwind recorder;
+    Wind flute;  // flute: Wind
+    Percussion drum;  // drum: Percussion
+    Stringed violin;  // violin: Stringed
+    Brass flugelhorn; // flugehorn: Brass
+    Woodwind recorder; // recorder: Woodwind
     tune(flute);    // Upcasting
     tune(drum);
     tune(violin);
