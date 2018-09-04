@@ -1,6 +1,14 @@
 /*********************************************************************************
   *@copyright (C)  Sep 2018  San
-  *@bug :  The output should be "Wind : play" rather than "Instrument : play" 
+  *@bug :  The output should be "Wind : play" rather than "Instrument : play"
+  *@reason: 把函数体与函数调用相联系称为捆绑（binding）。当捆绑在程序运行之前（由编译器和连接器）完成时，这称为早捆绑（earlybinding）。
+  * 我们可能没有听过这个术语，因为在过程型语言中不会有这样的选择：C编译只有一种函数调用方式，就是早捆绑。
+  * 
+  * 上面程序中的问题是早捆绑引起的，因为编译器在只有Instrument地址时它并不知道要调用的正确函数。解决方法被称为晚捆绑（latebinding），
+  * 这意味着捆绑根据对象的类型，发生在运行时。晚捆绑又称为动态捆绑（dynamicbinding）或运行时捆绑（runtimebinding）。
+  * 当一个语言实现晚捆绑时，必须有某种机制来确定运行时对象的类型并调用合适的成员函数。
+  * 对于一种编译语言，编译器并不知道实际的对象类型，但它插入能找到和调用正确函数体的代码。
+  * 晚捆绑机制因语言而异.
   *@brief:   This is an sample example for upcasting
   *@CMAKE_CXX_STANDARD 17
   *@IDE: Clion 2018.3
