@@ -3,6 +3,7 @@
   *@bug :
   *@reason:
   *@brief:   This is an sample example for upcasting 若一个类中全是虚函数，则为抽象类（pure abstract class)
+  *          把工作代码尽可能放在靠近我们的类层次根的地方。
   *@CMAKE_CXX_STANDARD 17
   *@IDE: Clion 2018.3
   *@OS:  macOS High Sierra 10.13.6
