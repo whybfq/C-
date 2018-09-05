@@ -24,7 +24,7 @@ class Pet {
 public:
     Pet(const string& petName) : pname(petName) { }
     virtual string name() const { return pname; }
-    virtual string speak() const { return  " "; }
+    virtual string speak() const { return  " Pet "; }
 };
 
 class Dog : public Pet {
@@ -41,7 +41,7 @@ public:
 
 int main(int argc, char const *argv[]) {
     Pet *p[] = { new Pet("generic"),new Dog("bob") };
-    cout << "p[0]->speak() = " << p[0]->speak() << endl;   // p[0]->speak() =
+    cout << "p[0]->speak() = " << p[0]->speak() << endl;   // p[0]->speak() = Pet
     cout << "p[1]->speak() = " << p[1]->speak() << endl;   // p[1]->speak() = bob sys 'Brak!'
 //    cout <<  p[1]->sit() << endl;   // error, illegal , for编译器对指向基类对象对指针工作，
     cout << ((Dog*)p[1])->sit() << endl; //bob sits  除非我们知道指针实际指向哪一种特殊子类对对象，因此需进行类型转换
