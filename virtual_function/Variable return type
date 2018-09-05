@@ -1,0 +1,81 @@
+/*********************************************************************************
+  *@copyright (C)  Sep 2018  San
+  *@bug :
+  *@reason:
+  *@brief:  return a pointer or reference to a derived type during overriding
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author: san
+       Modification:
+**********************************************************************************/
+
+#include <iostream>
+#include <string>
+#include <cstring>
+using namespace std;
+
+
+class PetFood {
+public:
+    virtual string foodType() const = 0;
+};
+
+class Pet {
+public:
+    virtual string type() const = 0;
+    virtual PetFood* eats() = 0; // 返回一个指向PetFood的指针
+};
+
+class Bird : public Pet {
+public:
+    string type() const { return "Bird"; }
+    class BirdFood : public PetFood {
+    public:
+        string foodType() const {
+            return "Bird food ";
+        }
+    };
+    PetFood* eats() { return &bf; }  // upcast to base type  向上转型为PetFood
+private:
+    BirdFood bf;
+};
+
+class Cat : public Pet{
+public:
+    string type() const { return "Cat"; }
+    class CatFood : public PetFood {
+    public:
+        string foodType() const {
+            return "Birds";
+        }
+    };
+    CatFood* eats() { return &cf ; }  // return exact type instead:
+
+private:
+    CatFood cf;
+
+};
+
+int main(int argc, char const *argv[]) {
+    Bird b;
+    Cat c;
+    Pet *p[] = { &b, &c };
+    for (int i = 0; i < sizeof p/sizeof*p; ++i) {
+        cout <<  p[i]->type() << " eats " << p[i]->eats()->foodType() << endl;
+    }
+    Cat::CatFood* cf = c.eats();  // can return the excat type
+    Bird::BirdFood* bf;
+//    bf = b.eats();  // illeagal   cannot return urn the exact type:
+    bf = dynamic_cast<Bird::BirdFood*>(b.eats());  // downcast
+}
+
+Output:
+Bird eats Bird food 
+Cat eats Birds
