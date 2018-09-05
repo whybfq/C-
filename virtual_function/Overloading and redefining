@@ -2,7 +2,7 @@
   *@copyright (C)  Sep 2018  San
   *@bug :
   *@reason:
-  *@brief: an example for object slice
+  *@brief: 重新定义一个基类中的重载函数将会隐藏所有该函数的其他基类版本。当对虚函数进行操作时，情况会有点不同。
   *@CMAKE_CXX_STANDARD 17
   *@IDE: Clion 2018.3
   *@OS:  macOS High Sierra 10.13.6
