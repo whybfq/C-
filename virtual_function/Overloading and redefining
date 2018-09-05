@@ -1,0 +1,85 @@
+/*********************************************************************************
+  *@copyright (C)  Sep 2018  San
+  *@bug :
+  *@reason:
+  *@brief: an example for object slice
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author: san
+       Modification:
+**********************************************************************************/
+
+#include <iostream>
+#include <string>
+#include <cstring>
+using namespace std;
+
+class Base {
+public:
+    virtual int f() const {
+        cout << "Base::f()\n";
+        return 1;
+    }
+    virtual void f(string) const { }
+    virtual void g() const { }
+};
+
+class Derived1 : public Base {
+public:
+    void g() const { }
+};
+
+class Derived2 : public Base {
+public:
+    // Overriding a virtual funciton:
+    int f() const {
+        cout << "Derived2 :: f()\n ";
+        return 2;
+    }
+};
+
+class Derived3 : public Base {
+public:
+    //Cannot change return type:
+    // ! void f() const { cout <<  "Derived3::f() \n"; }
+};
+
+class Derived4 : public Base {
+public:
+    // Change argument list:
+    int f(int) const  {
+        cout << "Derived4::f()\n";
+        return 4;
+    }
+};
+
+//如果重新定义了基类中的一个重载成员函数，则在派生类中其他的重载函数将会被隐藏。这可由 main （）中测试
+// Derived4 的代码显示出来，即使 f （）的新版本实际上并没有重新定义一个已存在的虚函数的接口， f （）的两个基类版本会被 f （ int ）隐藏。
+// 然而，如果把 d4 向上类型转换到 Base ，则只有基类版本是可行的（因为基类约定允许），
+// 而派生类版本是不可行的（因为在基类中没有特定的方法）。
+int main(int argc, char const *argv[]) {
+    string s("hello world");
+    Derived1 d1;
+    int x = d1.f();  //Base::f()
+    d1.f(s);
+    Derived2 d2;  
+    x = d2.f();   //Derived2 :: f()
+    // ! d2.f(s) // string version hidden
+    Derived4 d4;
+    x = d4.f(1);   // Derived4::f()
+    //! x = d4.f();  // f() version hidden
+    // ! d4.f(s) ;   // string version hidden
+    Base& br = d4;  // Upcast
+    // ! br.f(1);   // Derived version unavailable
+    br.f(); // Base version available  // Base::f()
+    br.f(s);  // Base version available
+
+}
+
