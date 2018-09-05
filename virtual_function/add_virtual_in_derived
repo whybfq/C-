@@ -2,7 +2,7 @@
   *@copyright (C)  Sep 2018  San
   *@bug :
   *@reason:
-  *@brief:   This is an sample example for why we need RTTI (run-time_type Identification)，有关向下类型转换
+  *@brief:   This is an sample example for why we need RTTI (run-time_type Identification)，有关向下类型转换,类图以基类为顶点
   *@CMAKE_CXX_STANDARD 17
   *@IDE: Clion 2018.3
   *@OS:  macOS High Sierra 10.13.6
