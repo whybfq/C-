@@ -1,0 +1,67 @@
+/*********************************************************************************
+  *@copyright (C)  Sep 2018  San
+  *@bug :
+  *@reason:
+  *@brief: an example for object slice
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author: san
+       Modification:
+**********************************************************************************/
+
+#include <iostream>
+#include <string>
+#include <cstring>
+using namespace std;
+
+class Pet {
+    string pname;
+public:
+    Pet(const string& petName) : pname(petName) { }
+    virtual string name() const { return pname; }
+    virtual string description() const { return " This is " + pname;  }
+    virtual string speak() const { return  " Pet "; }
+};
+
+class Dog : public Pet {
+    string favoriteActivity;
+public:
+    Dog(const string& name, const string& activity) : Pet(name), favoriteActivity(activity) { }
+    string description() const {
+        return Pet::name() + " likes to " + favoriteActivity;
+    }
+};
+
+/*第一， describe （）接受的是一个 Pet 对象（而不是指针或引用），
+ * 所以 describe （）中的任何调用都将引起一个与 Pet 大小相同的对象压栈并在调用后清除。
+ * 这意味着，如果一个由 Pet 派生来的类的对象被传给 describe （），则编译器会接受它，
+ * 但只拷贝这个对象的对应于 Pet 的部分，切除这个对象的派生部分，*/
+void describe(Pet p) {  // Slices the object
+    cout << p.description() << endl;
+}
+
+
+/*
+现在，我们可能对这个虚函数调用有这样的疑问：如果Dog：description（）使用了Pet（它仍存在）和Dog（它不再存在，因为已被切掉），
+当调用它时，会发生什么呢？其实我们已经从灾难中被解救出来，这个对象正安全地按值传递。这是因为派生类对象已经被强迫地变为基类对象
+ ，所以编译器知道这个对象的确切类型。另外，当按值传递时，Pet对象的拷贝构造函数被调用，该构造函数初始化VPTR指向Pet的VTABLE，
+ 并且只拷贝这个对象的Pet部分。这里没有显式的拷贝构造函数，所以编译器自动地生成一个。
+ 由于所有上述原因，因此这个对象在切片过程中真的变成了一个Pet对象。对象切片实际上是当它拷贝到一个新的对象时，
+ 去掉原来对象的一部分，而不是像使用指针或引用那样简单地改变地址的内容。
+ 因此，不常使用对象向上类型转换，事实上，通常是要提防或防止这种操作。注意，在本例中，如果description（）在基类中是一个纯虚函数（这并不是毫无理由的，因为它在基类中实际上也并没有做什么事情）
+ ，因为编译器不会允许我们“创建”基类对象（这就是我们通过传值向上类型转换所发生的事情），所以它将阻止对对象进行“切片”。这可能会是纯虚函数最重要的作用：
+ 如果某人试着这么做，将通过生成一个编译错误来阻止对象切片。
+*/
+int main(int argc, char const *argv[]) {
+    Pet p("Alfred");
+    Dog d("Fluffy", "sleep");
+    describe(p);   // This is Alfred
+    describe(d);   // This is Fluffy
+}
