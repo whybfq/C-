@@ -63,5 +63,5 @@ int main(int argc, char const *argv[]) {
     Pet p("Alfred");
     Dog d("Fluffy", "sleep");
     describe(p);   // This is Alfred
-    describe(d);   // This is Fluffy
+    describe(d);   // This is Fluffy instead of "Fluffy likes to sleep"
 }
