@@ -1,0 +1,48 @@
+/*********************************************************************************
+  *@copyright (C)  Sep 2018  San
+  *@bug :
+  *@reason:
+  *@brief:   This is an sample example for why we need RTTI (run-time_type Identification)，有关向下类型转换
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author: san
+       Modification:
+**********************************************************************************/
+
+#include <iostream>
+using namespace std;
+
+class Pet {
+    string pname;
+public:
+    Pet(const string& petName) : pname(petName) { }
+    virtual string name() const { return pname; }
+    virtual string speak() const { return  " "; }
+};
+
+class Dog : public Pet {
+    string name;
+public:
+    Dog(const  string& petName) : Pet(petName) { }
+    virtual string sit() const {
+        return Pet::name() + " sits";
+    }
+    string speak() const {
+        return Pet::name() + " sys 'Brak!' " ;
+    }
+};
+
+int main(int argc, char const *argv[]) {
+    Pet *p[] = { new Pet("generic"),new Dog("bob") };
+    cout << "p[0]->speak() = " << p[0]->speak() << endl;   // p[0]->speak() =
+    cout << "p[1]->speak() = " << p[1]->speak() << endl;   // p[1]->speak() = bob sys 'Brak!'
+//    cout <<  p[1]->sit() << endl;   // error, illegal , for编译器对指向基类对象对指针工作，
+    cout << ((Dog*)p[1])->sit() << endl; //bob sits  除非我们知道指针实际指向哪一种特殊子类对对象，因此需进行类型转换
+}
