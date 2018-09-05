@@ -1,0 +1,66 @@
+/*********************************************************************************
+  *@copyright (C)  Aug 2018  San
+  *@brief: 后置（ trailing- return- type，
+            auto and decltype
+  *@bug :
+  *
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+
+#include <iostream>
+#include <cstdio>
+#include <vector>
+
+using namespace std;
+
+//typedef decltype(nullptr) nullptr_t;
+//typedef decltype(sizeof(0)) size_t;
+
+
+template <typename R, typename T, typename U>
+R add(T t, U u) {
+    return t * u;
+}
+
+int a = 1; float b = 2.0;
+auto c = add<decltype(a + b) > (a,b);
+
+//template <typename T, typename U>  // wrong
+//decltype( t + u ) add(T t, U u){ // 因为C++的返回值是前置语法,在返回值定义的时候参数变量还不存在
+//    return t + u;
+//}
+
+// improve1
+template <typename T, typename U>
+decltype((T() + U()) ) add(T t, U u){
+    return t + u;
+}
+
+// 考虑的T，U可能是没有无参构造函数的类  improve 2
+template <typename T, typename U>  // 正确写法
+decltype((*(T*)0) + (*(U*)0) ) add(T t, U u){
+    return t + u;
+}
+
+// 返回类型后置 trailing-return-type 跟踪返回类型 improve3
+template < typename  T, typename U >
+auto add(T t, U u) -> decltype(t + u){
+    return t  + u;
+}
+
+int& foo(int & i);
+float foo(float& f);
+template <typename T>
+auto func(T& val) -> decltype(foo(val)){
+    return foo(val);
+}
