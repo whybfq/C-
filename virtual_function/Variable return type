@@ -21,7 +21,6 @@
 #include <cstring>
 using namespace std;
 
-
 class PetFood {
 public:
     virtual string foodType() const = 0;
