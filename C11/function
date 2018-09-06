@@ -1,0 +1,65 @@
+/*********************************************************************************
+  *@copyright (C)  Aug 2018  San
+  *@brief: std::function是可调用对象的包装器。它是一个类模板，可以容纳除了类成员（函数）指针之外的所有可调用对象。
+  *          通过指定它的模板参数，它可以用统一的方式处理函数、函数对象、函数指针，并允许保存和延迟执行它们。
+  *          an sample example for function
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+
+#include <iostream>
+#include <cstdio>
+#include <functional>  // std::function
+#include <vector>
+#include <map>
+#include <set>
+
+using namespace std;
+
+void func(void){
+    cout << __FUNCTION__ << endl;
+}
+
+class Foo {
+public:
+    static int foo_func(int a) {
+        cout << __FUNCTION__ << "(" << a << ") -> : ";
+        return a;
+    }
+};
+
+class Bar {
+public:
+    int operator() (int a ){
+        cout << __FUNCTION__ << "(" << a << ") -> : ";
+        return a;
+    }
+};
+
+//std：：function的使用方法，当我们给std：：function填入合适的函数签名（即一个函数类型，
+//只需要包括返回值和参数表）之后，它就变成了一个可以容纳所有这一类调用方式的“函数包装器”。
+int main(int argc, char const *argv[]) {
+    function<void(void)> fr1 = func;   // bind a normal funciton()
+    fr1();
+    //绑定一个类的静态成员函数
+    function<int(int)> fr2 = Foo:: foo_func;
+    cout << fr2(123) << endl;
+    Bar bar;
+    fr2 = bar;    // 绑定一个仿函数
+    cout << fr2(123) << endl;
+
+}
+
+Output:
+func
+foo_func(123) -> : 123
+operator()(123) -> : 123
