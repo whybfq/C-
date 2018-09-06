@@ -18,6 +18,7 @@
 
 #include <iostream>
 #include <cstdio>
+#include <fstream>
 using namespace std;
 
 char *strRemov(char *dst, const char *src, char ch = ' ') {
@@ -34,6 +35,9 @@ char *strRemov(char *dst, const char *src, char ch = ' ') {
 const int MAX = 500;
 
 int main() {
+    ifstream in("testin.text");
+    ofstream out("testout.text");
+
 // input method1 : scanf()
 //    char st[MAX];
 //    scanf("%[^\n]",st);// \n作为字符串输入的结束符
@@ -55,7 +59,8 @@ int main() {
 //    cout << st4 << endl;
 
     char a[100] = "你 g客 户 好, i a t!", b[100];
-    puts(strRemov(b, a));  //  cout << b << endl;
+    //puts(strRemov(b， a));  //  cout << b << endl;
+    out << strRemov(b, a) << endl;  // put the result into testout.test
 }
 
 Output:
