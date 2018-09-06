@@ -31,7 +31,29 @@ char *strRemov(char *dst, const char *src, char ch = ' ') {
     return dst;
 }
 
+const int MAX = 500;
+
 int main() {
+// input method1 : scanf()
+//    char st[MAX];
+//    scanf("%[^\n]",st);// \n作为字符串输入的结束符
+//    printf("%s",st);
+
+// input method2 : getline()
+//    string st2;
+//    getline(cin,st2);
+//    cout << st << endl;
+
+// input method3 : cin.get()
+//    char st3[MAX];
+//    cin.get(st3,MAX);
+//    cout << st3 << endl;
+
+// input metho4 : cin.getline(char *str, int maxnum) include<string>  cin.getline()函数可以同cin.get()函数类似，也可接收空格，遇回车结束输入
+//    char st4[MAX];
+//    cin.getline(st4,MAX);
+//    cout << st4 << endl;
+
     char a[100] = "你 g客 户 好, i a t!", b[100];
     puts(strRemov(b, a));  //  cout << b << endl;
 }
