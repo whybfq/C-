@@ -11,7 +11,7 @@
   *@history:
      1.Date:
        Author:
-       Modification:  add bind() and output_add_2()
+       Modification:
 **********************************************************************************/
 
 #include <iostream>
@@ -42,9 +42,26 @@ void output_add_2(int x) {
 }
 
 int main(int argc, char const *argv[]) {
-    auto fr = std::bind(output, std::placeholders::_1);
-    for (int i = 0; i < 10; ++i) {
-        call_when_even(i,fr);  // 0 2 4 6 8
+    {
+        auto fr = std::bind(output, std::placeholders::_1);
+        for (int i = 0; i < 10; ++i) {
+            call_when_even(i, fr);   // 0 2 4 6 8
+        }
+        cout << endl;
     }
-    cout << endl;
+    {
+        auto fr = std::bind(output_add_2, std::placeholders::_1);
+        for (int j = 0; j < 10; ++j) {
+            call_when_even(j, fr);
+        }
+        cout << endl;
+    }
 }
+
+Output:
+0 2 4 6 8 
+2
+4
+6
+8
+10
