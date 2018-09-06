@@ -1,0 +1,45 @@
+/*********************************************************************************
+  *@copyright (C)  Aug 2018  San
+  *@brief: std：： initializer_ list 是非常高效的。它的 内部 并不 负责 保存 初始化列表 中元素的拷贝， 仅仅 存储 了 列表 中 元素 的 引用 而已。
+
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+
+#include <iostream>
+#include <cstdio>
+#include <vector>
+#include <map>
+#include <set>
+
+using namespace std;
+
+//initializer_list是一个轻量级的容器，内部定义了iterator,接受任意长度，但要求元素必须是同种类型
+void func(initializer_list<int> l){  // 它有三个成员接口： size(),begin(),end(),只能整体初始化或赋值
+    for (auto i = l.begin(); i != l.end() ; ++i) {
+        cout << *i << endl;  // 元素是只读的
+    }
+
+}
+
+int main(int argc, char const *argv[]) {
+    func( { });
+    func({1,2,3});
+
+    std::initializer_list<int> list = { 12,23,223};
+    size_t n = list.size();   // n == 3
+}
+
+Output:
+1
+2
+3
