@@ -11,7 +11,7 @@
   *@history:
      1.Date:
        Author:
-       Modification:
+       Modification:  add bind() and output_add_2()
 **********************************************************************************/
 
 #include <iostream>
