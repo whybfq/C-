@@ -35,8 +35,15 @@ char *strRemov(char *dst, const char *src, char ch = ' ') {
 const int MAX = 500;
 
 int main() {
-    ifstream in("testin.text");
-    ofstream out("testout.text");
+    ifstream in("testin.txt");
+    ofstream out("testout.txt");
+
+    string a;
+    getline(in,a);  // input
+
+    char p[MAX],b[MAX];
+    strcpy(p,a.c_str());  // change sting to char[]
+    out << strRemov(b, p) << endl;  // put the result into testout.test
 
 // input method1 : scanf()
 //    char st[MAX];
@@ -58,10 +65,7 @@ int main() {
 //    cin.getline(st4,MAX);
 //    cout << st4 << endl;
 
-    char a[100] = "你 g客 户 好, i a t!", b[100];
+//    char a[100] = "你 g客 户 好, i a t!", b[100];
     //puts(strRemov(b， a));  //  cout << b << endl;
-    out << strRemov(b, a) << endl;  // put the result into testout.test
+//    out << strRemov(b, a) << endl;  // put the result into testout.test
 }
-
-Output:
-你g客户好,iat!
