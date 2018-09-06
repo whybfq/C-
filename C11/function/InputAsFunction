@@ -1,0 +1,45 @@
+/*********************************************************************************
+  *@copyright (C)  Sep 2018  San
+  *@brief: std::function作为函数入参
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <fstream>
+#include <functional>
+#include <set>
+#include <string>
+#include <cmath>
+#include <map>
+#include <vector>
+using namespace std;
+
+void call_when_even(int x, const std::function<void(int) > & f){
+    if( !(x & 1)){  // x % 2 == 0
+        f(x);
+    }
+}
+
+void output(int x){
+    cout << x << " ";
+}
+
+int main(int argc, char const *argv[]) {
+    for (int i = 0; i < 10; ++i) {
+        call_when_even(i,output);
+    }
+    cout << endl;   // 0 2 4 6 8
+}
