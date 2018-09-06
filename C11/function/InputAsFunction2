@@ -38,7 +38,7 @@ void output(int x){
 }
 
 void output_add_2(int x) {
-    cout <<  x + 2 << endl;
+    cout <<  x + 2 << " ";
 }
 
 int main(int argc, char const *argv[]) {
@@ -46,7 +46,7 @@ int main(int argc, char const *argv[]) {
         //当然，这里直接使用std：：function类型来保存std：：bind的返回值也是可以的。
         auto fr = std::bind(output, std::placeholders::_1); // std::bind的返回类型是一个stl内部定义的仿函数类型），
         for (int i = 0; i < 10; ++i) {
-            call_when_even(i, fr); // 0 2 4 6 8 
+            call_when_even(i, fr);  // 0 2 4 6 8
         }
         cout << endl;
     }
@@ -54,17 +54,9 @@ int main(int argc, char const *argv[]) {
         auto fr = std::bind(output_add_2, std::placeholders::_1); // std::placeholders：：_1是一个占位符，代表这个位置将在函数调用时，被传入的第一个参数所替代。
 
         for (int j = 0; j < 10; ++j) {
-            call_when_even(j, fr);
+            call_when_even(j, fr);  // 2 4 6 8 10 
         }
         cout << endl;
     }
+    bind(output,123802)(); // 123802
 }
-
-
-Output:
-0 2 4 6 8 
-2
-4
-6
-8
-10
