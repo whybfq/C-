@@ -81,3 +81,8 @@ int main(int argc, char const *argv[]) {
     aa.notify();
 }
 
+Output:
+func
+foo_func(123) -> : 123
+operator()(123) -> : 123
+operator()
