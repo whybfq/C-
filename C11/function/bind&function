@@ -37,9 +37,9 @@ public:
 
 int main(int argc, char const *argv[]) {
     A a;
-    function<void(int, int)> fr = bind(&A:: output, &a, placeholders::_1,placeholders::_2);
+    function<void(int, int)> fr = bind(&A:: output, &a, placeholders::_1,placeholders::_2); //将A的成员函数的指针和a绑定，并转换为一个仿函数放入fr中存储
     fr(1,2);  // 1 2
-    function<int&(void)> fr_i = bind(&A::i_, &a);
+    function<int&(void)> fr_i = bind(&A::i_, &a);//将A的成员i_的指针和a绑定，访问结果放入function<int&(void)>中存储，并可以在需要时修改访问这个成员
     fr_i() = 123;
     cout << a.i_ <<  endl;  // 123
 }
