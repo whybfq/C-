@@ -1,0 +1,56 @@
+/*********************************************************************************
+  *@copyright (C)  Sep 2018  San
+  *@brief: std::function配合std::bind
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <fstream>
+#include <functional>
+#include <set>
+#include <string>
+#include <cmath>
+#include <map>
+#include <vector>
+using namespace std;
+
+class A {
+public:
+    int i_ = 0;
+    void func(int x,int y){
+//        auto x1 = []{ return i_;  }; // error,未捕获外部变量
+        auto x2 = [=]{ return i_ + x + y; };
+        auto x3 = [&]{ return i_ + x + y; };
+        auto x4 = [this]{ return i_; };
+//        auto x5 = [this]{ return i_ + x + y; };  //error 未捕获x和y
+        auto x6 = [this, x , y]{ return i_ + x + y; };
+        auto x7 = [this]{ return i_++; };
+
+    }
+};
+
+
+int main(int argc, char const *argv[]) {
+    int a = 0, b = 1;
+//    auto f1 = []{ return a; };  // error, 未捕获外部变量
+    auto f2 = [&]{ return  a++; }; //ok,捕获所有外部变量
+    auto f3 = [=]{ return a; }; //ok,捕获所有外部变量
+//    auto f4 = [=]{ return a++; };// error,a以赋值方式捕获，无法修改
+//    auto f5 = [a]{ return a + b; }; // error,未捕获变量b
+    auto f6 = [a,&b]{ return a + (b++);  };
+    auto f7 = [=,&b]{return a + (b++); }; //捕获所有外部变量和b的引用
+}
+
