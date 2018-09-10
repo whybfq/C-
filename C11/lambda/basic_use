@@ -53,9 +53,18 @@ int main(int argc, char const *argv[]) {
     auto f6 = [a,&b]{ return a + (b++);  };
     auto f7 = [=,&b]{return a + (b++); }; //捕获所有外部变量和b的引用
 
-    auto f = [=]{return a; };
-    a += 1;
+//    auto f = [=]{return a; };
+//    a += 1;
+//    cout << f() << endl;  // 0
+//    cout << a << endl;  // 1
+    
+     auto f = [=]() mutable {return a++; }; //按值捕获无法修改捕获的外部变量，因为operator()默认是const，mutable作用在于取消这一属性
+
     cout << f() << endl;  // 0
     cout << a << endl;  // 1
+
+    typedef void(*Ptr)(int*);
+    Ptr p = [](int* p){delete p; }; //无状态，可以转换为函数指针
+//    Ptr p1 = [&](int* p){ delete p; };  // error，捕获了变量，不能直接转换为函数指针
 }
 
