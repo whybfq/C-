@@ -52,5 +52,10 @@ int main(int argc, char const *argv[]) {
 //    auto f5 = [a]{ return a + b; }; // error,未捕获变量b
     auto f6 = [a,&b]{ return a + (b++);  };
     auto f7 = [=,&b]{return a + (b++); }; //捕获所有外部变量和b的引用
+
+    auto f = [=]{return a; };
+    a += 1;
+    cout << f() << endl;  // 0
+    cout << a << endl;  // 1
 }
 
