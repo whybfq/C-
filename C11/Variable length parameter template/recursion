@@ -46,9 +46,9 @@ void print(T head, Args... rest){
 //    cout << t << endl;
 //}
 
-//若是不用终止函数
+//若是不用终止函数,直接展开，关键是逗号表达式
 template<class T, class ... Args>  // 展开函数
-void print(T head, Args... rest){
+void print(T head, Args... rest){  // 处理参数包中每个参数
     cout << "parameter " << head << endl;
     print(rest...);
 }
