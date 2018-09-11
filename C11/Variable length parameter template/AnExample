@@ -1,0 +1,48 @@
+/*********************************************************************************
+  *@copyright (C)  Sep 2018  San
+  *@brief: the basic use of emplace_back
+  * 我们应该尽量用emplace/emplace_back来代替原来的插入元素的接口以提高性能。需要注意的是，
+  * 我们还不能完全用emplace_back来取代push_back等老接口，因为在某些场景下并不能直接使用
+  * emplace来进行就地构造，比如，当结构体中没有提供相应的构造函数时就不能用emplace了，
+  * 这时就只能用push_back。
+
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.3
+  *@brief: a simple example for 可变长参数模板
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <fstream>
+#include <functional>
+#include <set>
+#include <string>
+#include <cmath>
+#include <memory>
+#include <map>
+#include <typeinfo>
+#include <type_traits>
+#include <vector>
+using namespace std;
+
+template <class ... T>
+void f(T... args){
+    cout << sizeof...(args)<< endl;
+}
+
+int main(int argc, char const *argv[]) {
+    f();   // 0
+    f(1,2);  // 2
+    f(1,2.3, "    ");  // 3
+}
