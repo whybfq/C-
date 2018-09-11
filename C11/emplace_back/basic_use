@@ -1,0 +1,41 @@
+/*********************************************************************************
+  *@copyright (C)  Sep 2018  San
+  *@brief: the basic use of emplace_back
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <fstream>
+#include <functional>
+#include <set>
+#include <string>
+#include <cmath>
+#include <map>
+#include <typeinfo>
+#include <vector>
+using namespace std;
+
+struct A {
+    int x;
+    double y;
+    A(int a, double b) : x(a), y(b) { }
+};
+
+int main(int argc, char const *argv[]) {
+    vector<A> v;
+    v.emplace_back(1,2);
+    cout << v.size() << endl;  // 1
+}
