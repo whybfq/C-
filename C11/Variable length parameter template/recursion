@@ -30,16 +30,11 @@
 #include <vector>
 using namespace std;
 
-template <class ... T>
-void f(T... args){
-    cout << sizeof...(args)<< endl;
-}
-
-void print(){
+void print(){  // 递归终止函数
     cout << "empty" << endl;
 }
 
-template<class T, class ... Args>
+template<class T, class ... Args>  // 展开函数
 void print(T head, Args... rest){
     cout << "parameter " << head << endl;
     print(rest...);
