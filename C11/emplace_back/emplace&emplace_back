@@ -1,0 +1,80 @@
+/*********************************************************************************
+  *@copyright (C)  Sep 2018  San
+  *@brief: the basic use of emplace_back
+  * 我们应该尽量用emplace/emplace_back来代替原来的插入元素的接口以提高性能。需要注意的是，
+  * 我们还不能完全用emplace_back来取代push_back等老接口，因为在某些场景下并不能直接使用
+  * emplace来进行就地构造，比如，当结构体中没有提供相应的构造函数时就不能用emplace了，
+  * 这时就只能用push_back。
+
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <fstream>
+#include <functional>
+#include <set>
+#include <string>
+#include <cmath>
+#include <map>
+#include <typeinfo>
+#include <vector>
+using namespace std;
+
+struct Complicated{
+    int year;
+    double country;
+    string name;
+    Complicated(int a, double b,string c) : year(a), country(b), name(c)
+    {
+        cout << "is contructed"<< endl;
+    }
+    Complicated(const Complicated& other) : year(other.year),country(other.country),name(other.name)
+    {
+        cout << "is moved" << endl;
+    }
+};
+
+int main(int argc, char const *argv[]) {
+    map<int, Complicated> m;
+    int anInt = 4;
+    double aDouble = 5.0;
+    string aString = "C++";
+    cout << "--insert--" << endl;  // 两次移动内存
+    m.insert(make_pair(4,Complicated(anInt, aDouble,aString)));
+
+    cout << "--emplace--" << endl; // should be easier for the optimizer
+    m.emplace(4,Complicated(anInt,aDouble,aString)); // 只移动一次内存
+    cout << "--emplace_back--" << endl;  //无内存移动，直接构造
+    vector<Complicated> v;
+    v.emplace_back(anInt, aDouble, aString);
+    cout << "--push_back--" << endl;
+    v.push_back(Complicated(anInt,aDouble,aString)); //两次移动内存
+}
+
+Output:
+--insert--
+is contructed
+is moved
+is moved
+--emplace--
+is contructed
+is moved
+--emplace_back--
+is contructed
+--push_back--
+is contructed
+is moved
+is moved
