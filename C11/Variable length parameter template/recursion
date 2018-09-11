@@ -58,6 +58,7 @@ void printarg(T t){ cout << t << endl;}
 template<class... Args>
 void expand(Args... args){
     int arr[] = { (printarg(args), 0)... };
+    //std:: initializer_list<int>((printarg(args),  0)...);
 }
 
 int main(int argc, char const *argv[]) {
