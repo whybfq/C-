@@ -46,8 +46,23 @@ void print(T head, Args... rest){
 //    cout << t << endl;
 //}
 
+//若是不用终止函数
+template<class T, class ... Args>  // 展开函数
+void print(T head, Args... rest){
+    cout << "parameter " << head << endl;
+    print(rest...);
+}
+
+template<class T>
+void printarg(T t){ cout << t << endl;}
+template<class... Args>
+void expand(Args... args){
+    int arr[] = { (printarg(args), 0)... };
+}
+
 int main(int argc, char const *argv[]) {
     print(1,2,3,4); //print(1,2,3,4); -> print(2,3,4); -> print(3,4);  ->  print(4)
+    // expand(1,2,3,4);
 }
 
 Output:
