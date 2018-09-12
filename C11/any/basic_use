@@ -41,5 +41,4 @@ int main(int argc, char const *argv[]) {
     v.push_back(b);  // 存入一个double值
     int va = boost:: any_cast<int>(a); // 1
     double  vb = boost:: any_cast<double>(b);  // 2.3
-
 }
