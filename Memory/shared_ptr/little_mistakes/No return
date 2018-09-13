@@ -11,7 +11,7 @@
 
   *@history:
      1.Date:
-       Author:
+       Author:  
        Modification:
 **********************************************************************************/
 
@@ -37,14 +37,22 @@ shared_ptr<int> p(new int(1));
 shared_ptr<int> p2 = p ;
 shared_ptr<int> ptr;
 
-struct A{
+//struct A{
+//    shared_ptr<A>GetSelf(){
+//        return shared_ptr<A>(this);   // don't do this
+//    }
+//};
+
+// improve: 让目标类通过派生std：：enable_shared_from_this<T>类，然后使用基类的成员函数shared_from_this来返回this的shared_ptr，
+struct A : public std:: enable_shared_from_this<A> {
     shared_ptr<A>GetSelf(){
-        return shared_ptr<A>(this);   // don't do this
+        return shared_from_this();   // don't do this
     }
 };
 
 int main(int argc, char const *argv[]) {
     shared_ptr<A> sp1(new A);
-    shared_ptr<A> = sp1->GetSelf(); //error: expected unqualified-id
+//    shared_ptr<A> = sp1->GetSelf(); //error: expected unqualified-id
+    shared_ptr<A> p = sp1->GetSelf();
 }
 
