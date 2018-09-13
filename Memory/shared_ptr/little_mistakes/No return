@@ -1,0 +1,50 @@
+/*********************************************************************************
+  *@copyright (C)  Sep 2018  San
+  *@brief: 通过shared_from_this（）返回this指针。不要将this指针作为shared_ptr返回出来，
+  * 因为this指针本质上是一个裸指针，因此，这样可能会导致重复析构，看下面的例子。
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+
+#include <iostream>
+#include <boost/any.hpp>
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <fstream>
+#include <functional>
+#include <set>
+#include <string>
+#include <cmath>
+#include <memory>
+#include <map>
+#include <typeindex>
+#include <typeinfo>
+#include <type_traits>
+#include <vector>
+using namespace std;
+
+shared_ptr<int> p(new int(1));
+shared_ptr<int> p2 = p ;
+shared_ptr<int> ptr;
+
+struct A{
+    shared_ptr<A>GetSelf(){
+        return shared_ptr<A>(this);   // don't do this
+    }
+};
+
+int main(int argc, char const *argv[]) {
+    shared_ptr<A> sp1(new A);
+    shared_ptr<A> = sp1->GetSelf(); //error: expected unqualified-id
+}
+
