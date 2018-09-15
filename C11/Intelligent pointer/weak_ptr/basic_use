@@ -23,7 +23,7 @@
 int main(int argc, char const *argv[]) {
     shared_ptr<int> sp(new int(10));
     weak_ptr<int> wp(sp);
-    if(wp.expired()) {
+    if(wp.expired()) {  // expired() to observe the resource has been released
         cout << "weak_ptr is nvalid, the monitored smart pointer has been released.\n";
     } else {
         cout << "weak_ptr is available. \n";
