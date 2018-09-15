@@ -19,14 +19,32 @@
 **********************************************************************************/
 
 #include <iostream>
+using namespace std;
+
+weak_ptr<int> gw;    // use lock() to get the monitored shared_ptr
+void f(){
+    if(gw.expired()){
+        cout << "gw is expired\n";
+    } else {
+        auto spt = gw.lock();
+        cout << *spt << endl;
+    }
+}
 
 int main(int argc, char const *argv[]) {
     shared_ptr<int> sp(new int(10));
     weak_ptr<int> wp(sp);
-    if(wp.expired()) {  // expired() to observe the resource has been released
+    if(wp.expired()) {   // expired() to observe the resource has been released
         cout << "weak_ptr is nvalid, the monitored smart pointer has been released.\n";
     } else {
         cout << "weak_ptr is available. \n";
     }   // weak_ptr is available.
     cout << wp.use_count() << endl;  // 1
+
+    {
+        auto sp = make_shared<int>(42);
+        gw = sp;
+        f();  // 42
+    }
+    f();  //gw is expired
 }
