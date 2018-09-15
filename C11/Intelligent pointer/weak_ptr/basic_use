@@ -21,7 +21,12 @@
 #include <iostream>
 
 int main(int argc, char const *argv[]) {
-    std::shared_ptr<int> sp(new int(10));
-    std::weak_ptr<int> wp(sp);
-    std::cout << wp.use_count() << std::endl;  // 1
+    shared_ptr<int> sp(new int(10));
+    weak_ptr<int> wp(sp);
+    if(wp.expired()) {
+        cout << "weak_ptr is nvalid, the monitored smart pointer has been released.\n";
+    } else {
+        cout << "weak_ptr is available. \n";
+    }   // weak_ptr is available.
+    cout << wp.use_count() << endl;  // 1
 }
