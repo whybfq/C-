@@ -1,6 +1,10 @@
 /*********************************************************************************
   *@copyright (C)  Sep 2018  San
-  *@brief:
+  *@brief:  an very simple example of weak_ptr
+  * 弱引用指针weak_ptr是用来监视shared_ptr的，不会使引用计数加1，
+  * 它不管理shared_ptr内部的指针，主要是为了监视shared_ptr的生命周期，更像是shared_ptr的一个助手
+  * 它的构造不会增加引用计数，它的析构也不会减少引用计数，纯粹只是作为一个旁观者来监视shared_ptr中
+  * 管理的资源是否存在。weak_ptr还可以用来返回this指针和解决循环引用的问题
   *@CMAKE_CXX_STANDARD 17
   *@IDE: Clion 2018.3
   *@OS:  macOS High Sierra 10.13.6
