@@ -15,26 +15,9 @@
 **********************************************************************************/
 
 #include <iostream>
-#include <boost/any.hpp>
-#include <cstdio>
-#include <cstring>
-#include <cstdlib>
-#include <fstream>
-#include <functional>
-#include <set>
-#include <string>
-#include <cmath>
-#include <memory>
-#include <map>
-#include <typeindex>
-#include <typeinfo>
-#include <type_traits>
-#include <vector>
-using namespace std;
 
 int main(int argc, char const *argv[]) {
-    shared_ptr<int> sp(new int(10));
-    weak_ptr<int> wp(sp);
-    cout << wp.use_count() << endl;  // 1
+    std::shared_ptr<int> sp(new int(10));
+    std::weak_ptr<int> wp(sp);
+    std::cout << wp.use_count() << std::endl;  // 1
 }
-
