@@ -1,0 +1,40 @@
+/*********************************************************************************
+  *@copyright (C)  Sep 2018  San
+  *@brief:
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+
+#include <iostream>
+#include <boost/any.hpp>
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <fstream>
+#include <functional>
+#include <set>
+#include <string>
+#include <cmath>
+#include <memory>
+#include <map>
+#include <typeindex>
+#include <typeinfo>
+#include <type_traits>
+#include <vector>
+using namespace std;
+
+int main(int argc, char const *argv[]) {
+    shared_ptr<int> sp(new int(10));
+    weak_ptr<int> wp(sp);
+    cout << wp.use_count() << endl;  // 1
+}
+
