@@ -1,0 +1,30 @@
+/*********************************************************************************
+  *@copyright (C)  Sep 2018  San
+  *@brief: chrono 中的time_point()必须用clock计时
+  *
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.3
+  *@OS:  macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1. time_from_eproch() 用来获得1970.1.1到time_point经过的duration
+
+  *@history:
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+//chrono 用time_point获取从clock的纪元开始所经过的duration(比如可能是1970.1.1以来的时间间隔) ;
+
+#include <chrono>
+#include <ratio>
+#include <iostream>
+
+int main(int argc, char const *argv[]) {
+    using namespace std:: chrono;
+    typedef duration<int, std:: ratio<60*60*24>> days_type;
+    time_point<system_clock, days_type> today =
+            time_point_cast<days_type>(system_clock:: now() );
+    std:: cout << today.time_since_epoch().count() << " days since epoch"
+    << std:: endl;    // 17790 days since epoch
+}
