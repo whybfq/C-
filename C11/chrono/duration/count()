@@ -31,4 +31,10 @@ int main(int argc, char const *argv[]) {
     chrono::duration<double, ratio<1,30>> hz30{ 3.5};
     cout << "3 ms duration has " << ms.count() << " ticks\n"   // 3 ms duration has 3 ticks
         << "6000 us furation has " << us.count() << " ticks\n";  // 6000 us furation has 6000 ticks
+    
+    chrono:: minutes t1(10);
+    chrono:: seconds t2(60);
+    chrono:: seconds t3 = t1 - t2;
+    cout << t3.count() << " seconds" << endl;
+}
 }
