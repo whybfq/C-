@@ -1,3 +1,21 @@
+/*********************************************************************************
+  *@copyright (C) 2018 san All Rights Reserved
+  *@file    main.cpp
+  *@date    Sep 2018
+  *@author  san
+  *@brief:  return a pointer or reference to a derived type during overriding
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE:    Clion 2018.3
+  *@OS:     macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1.
+
+  *@history:
+     1.Date:
+       Author: san
+       Modification:
+**********************************************************************************/
 #include <thread>
 #include <iostream>
 
@@ -12,5 +30,5 @@ int main()
         n += addNum;
     },500);
     t.join();
-    std::cout << n1 << ' ' << n2 << " "<<n<<std::endl;
+    std::cout << n1 << ' ' << n2 << " "<<n<<std::endl; // 1000 1100 1200
 }
