@@ -1,12 +1,17 @@
 /*********************************************************************************
   *@copyright (C) 2018 san All Rights Reserved
-  *@file    mutex_basic_use.cpp
+  *@file    mutex.cpp
   *@date    Sep 2018
   *@author  san
-  *@brief:  return a pointer or reference to a derived type during overriding
   *@CMAKE_CXX_STANDARD 17
   *@IDE:    Clion 2018.3
   *@OS:     macOS High Sierra 10.13.6
+  *
+  *@brief: C++11中提供了如下4种语义的互斥量（mutex）：
+  * std：：mutex：独占的互斥量，不能递归使用。
+  * std：：timed_mutex：带超时的独占互斥量，不能递归使用。
+  * std：：recursive_mutex：递归互斥量，不带超时功能。
+  * std：：recursive_timed_mutex：带超时的递归互斥量。
   *
   *@function_lists:
   *  1. func() Set time to let thread join and leave
