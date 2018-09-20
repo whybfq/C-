@@ -31,40 +31,11 @@ void do_once() {
     call_once(flag, [](){ cout << "Called once " << endl; });
 }
 
-struct Counter {  // 用mutex实现的计时器
-    int value;
-    std:: mutex mutex2;
-    void increment(){
-        lock_guard<mutex> lock(mutex);
-        ++value;
-    }
-    void decrement(){
-        lock_guard<mutex> lock(mutex);
-        --value;
-    }
-    int get() {
-        return value;
-    }
-};
-
-struct AtomicCounter {    //原子变量实现的计时器
-    atomic<int> value;
-    void increment() {
-        ++value;
-    }
-    void decrement() {
-        --value;
-    }
-    int get() {
-        return value.load();
-    }
-};
-
 int main() {
     thread t1(do_once);
     thread t2(do_once);
     thread t3(do_once);
-    t1.join();
-    t2.join();
+    t1.join();   // Called once 
+    t2.join();    
     t3.join();
 }
