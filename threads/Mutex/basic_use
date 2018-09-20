@@ -1,0 +1,44 @@
+/*********************************************************************************
+  *@copyright (C) 2018 san All Rights Reserved
+  *@file    mutex_basic_use.cpp
+  *@date    Sep 2018
+  *@author  san
+  *@brief:  return a pointer or reference to a derived type during overriding
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE:    Clion 2018.3
+  *@OS:     macOS High Sierra 10.13.6
+  *
+  *@function_lists:
+  *  1. func() Set time to let thread join and leave
+
+  *@history:
+     1.Date:
+       Author: san
+       Modification:
+**********************************************************************************/
+
+#include <thread>
+#include <iostream>
+#include <mutex>
+#include <chrono>
+using namespace std;
+
+mutex g_lock;
+void func(){
+    g_lock.lock();
+    cout << " entered thread " << this_thread:: get_id() << endl;
+    this_thread:: sleep_for(chrono:: seconds(4));
+    cout << "leaving thread " << this_thread:: get_id() << endl;
+    g_lock.unlock();
+}
+
+int main()
+{
+   thread t1(func);
+   thread t2(func);
+   thread t3(func);
+   t1.join();
+   t2.join();
+   t3.join();
+}
+
