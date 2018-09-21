@@ -1,0 +1,61 @@
+/*********************************************************************************
+  *@copyright (C) 2018 san All Rights Reserved
+  *@file    all_once.cpp
+  *@date    Sep 2018
+  *@author  san
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE:    Clion 2018.3
+  *@OS:     macOS High Sierra 10.13.6
+  *
+  *@brief: the basic use of call_once & once_flag
+  *@function_lists:
+  *  1.
+
+  *@warning:
+  *@history:
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+
+#include <thread>
+#include <iostream>
+#include <mutex>
+#include <atomic>
+#include <utility>
+#include <sqlite3.h>
+#include <string>
+#include <cstdio>
+#include <chrono>
+#include <future>
+using namespace std;
+
+void doTest() {
+    // create datebase
+    sqlite3* conn = NULL;
+    int result = sqlite3_open("test.db",&conn);
+    // create table
+    const char* createTableSQL = "CREATE TABEL if not exists PersonTable(ID INTEGER "
+                                 "NOT NULLL, Name Text, Address BLOB);";
+    sqlite3_exec(conn, createTableSQL, nullptr,nullptr, nullptr);
+    // insert data
+    const char* sqlinsert = "INSERT INTO PersonTable(ID,Name,Address)VALUES(,  ,);";
+    int id = 2;
+    const char* name = "Peter";
+    const char* city = "zhuhai";
+    sqlite3_stmt* stmt2 = NULL;
+    // translate the SQL script
+    sqlite3_prepare_v2(conn, sqlinsert, strlen(sqlinsert),&stmt2,NULL);
+    // bind parameters
+    sqlite3_bind_int(stmt2,1,id);
+    sqlite3_bind_text(stmt2,3,city,strlen(city),SQLITE_TRANSIENT);
+    // Perform SQL operations
+    sqlite3_step(stmt2);
+    // Release handle and close database
+    sqlite3_finalize(stmt2);
+    sqlite3_close(conn);
+}
+
+int main(int argc, char const *argv[]) {
+    doTest();
+}
