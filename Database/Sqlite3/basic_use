@@ -1,13 +1,13 @@
 /*********************************************************************************
   *@copyright (C) 2018 san All Rights Reserved
-  *@file    all_once.cpp
+  *@file    basic1.cpp
   *@date    Sep 2018
   *@author  san
   *@CMAKE_CXX_STANDARD 17
   *@IDE:    Clion 2018.3
   *@OS:     macOS High Sierra 10.13.6
   *
-  *@brief: the basic use of call_once & once_flag
+  *@brief: the basic use of sqlite3
   *@function_lists:
   *  1.
 
