@@ -12,6 +12,8 @@
   *  1.
 
   *@warning:
+  *@bug:  ld: symbol(s) not found for architecture x86_64
+          clang: error: linker command failed with exit code 1 (use -v to see invocation)
   *@history:
      1.Date:
        Author:
@@ -29,6 +31,26 @@
 #include <chrono>
 #include <future>
 using namespace std;
+
+bool Test() {
+    sqlite3* co1 = nullptr;
+    //open database
+    int result = sqlite3_open("test.db",&co1);
+    if(result != SQLITE_OK){
+        sqlite3_close(co1);
+        return false;
+    }
+    //create table
+    const char* sqlcreat = " create table if not exists PersonTable(ID INTERGER "
+                           "NOT NULL,Name Text, Address BLOB );" ;
+    result = sqlite3_exec(co1,sqlcreat,nullptr,nullptr, nullptr);
+
+    // do sth else to operate the database
+    // close the database in the end
+
+    result = sqlite3_close(co1);
+    return result = SQLITE_OK;
+}
 
 void doTest() {
     // create datebase
@@ -57,5 +79,6 @@ void doTest() {
 }
 
 int main(int argc, char const *argv[]) {
+//    Test();  // there is still some bug in the program
     doTest();
 }
