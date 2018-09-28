@@ -1,0 +1,47 @@
+/*********************************************************************************
+  *@copyright (C) 2018 san All Rights Reserved
+  *@file    VirtualsInDestructors.cpp
+  *@date    Sep 2018
+  *@author  san
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE:    Clion 2018.3
+  *@OS:     macOS High Sierra 10.13.6
+  *
+  *@brief:
+  *@function_lists:
+  *  1.
+
+  *@warning:
+  *@history:
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Base {
+public:
+    virtual ~Base() {
+        cout << "Base1()\n";
+        f();
+    }
+    virtual void f() { cout <<  "Base::f()\n"; }
+};
+
+class Derived : public Base {
+public:
+    ~Derived() { cout << "~Derived()\n "; }
+    void f() { cout << "Derived::f()\n"; }
+};
+
+int main(int argc, char const *argv[]) {
+    Base *bp = new Derived;  // Upcast
+    delete bp;
+}
+
+Output:
+~Derived()
+ Base1()
+Base::f()
