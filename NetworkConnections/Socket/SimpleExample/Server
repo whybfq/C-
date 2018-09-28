@@ -1,0 +1,74 @@
+***
+#include <iostream>
+#include <stdio.h> 
+#include <stdlib.h> 
+#include <string.h> 
+#include <errno.h> 
+#include <sys/socket.h> 
+#include <arpa/inet.h> 
+#include <netinet/in.h> 
+#include <sys/types.h> 
+#include <unistd.h> 
+#include <sys/time.h> 
+using namespace std;
+#define BUFLEN 1024  //缓冲区长度
+#define PORT 6666
+#define LISTNUM 20 //等待连接队列的最大长度
+
+int main() 
+{ 
+    int sockfd, newfd; 
+    struct sockaddr_in s_addr, c_addr; 
+    char buf[BUFLEN]; 
+    socklen_t len; 
+    unsigned int port, listnum; 
+    fd_set rfds;  //Local variable is never used
+    struct timeval tv; 
+    int retval,maxfd;  //Local variable is never used
+
+    /*1.建立socket*/ 
+    if((sockfd = socket(PF_INET, SOCK_STREAM, 0)) == -1){ 
+                //PF 表示PROTOCL FAMILY 协议族
+                // SOCK_STREAM 表示采用TCP协议
+                // 0是通常的默认情况
+        perror("socket"); 
+        exit(errno); 
+    }else 
+        printf("socket create success!\n"); 
+        /*2.准备通信地址*/
+    memset(&s_addr,0,sizeof(s_addr)); 
+    s_addr.sin_family = AF_INET;  //sin_family协议族，AF_INET采用TCP/IP协议
+    s_addr.sin_port = htons(PORT);  // socket对应的端口
+    s_addr.sin_addr.s_addr = htons(INADDR_ANY);  //INADDR_ANY对本机所有IP有效，INADDR_ANY相当                                                       于inet_addr("0.0.0.0");***
+    //1.2两步与client相同      
+    /*3.绑定socket与通信地址 */
+    if((bind(sockfd, (struct sockaddr*) &s_addr,sizeof(struct sockaddr))) == -1){
+        perror("bind");
+        exit(errno);
+    }else
+        printf("bind success!\n"); //绑定成功
+    /*4.监听（等待连接）*/
+    if(listen(sockfd,listnum) == -1){
+        perror("listen");
+        exit(errno);
+    }else
+        printf("the server is listening!\n");
+    socklen_t _size = sizeof(struct sockaddr);
+    /*5.accept函数（连接）*/
+    newfd = accept(sockfd,(sockaddr*)&c_addr,&_size);
+    /*6.连接成功，把accept返回的socket描述符当做文件描述符进行操作，可以用四个函数，write,read,send,recv,*/
+    if(newfd < 0){
+        cout<<"accept failed."<<endl;
+    }
+
+    while(1){
+        cout<<"recv"<<endl;
+        len = recv(newfd,buf,BUFLEN,0);
+        buf[len] = '\0';
+        cout<<buf<<endl;
+    }
+    /*7.关闭socket描述符*/
+    close(sockfd);
+    return 0;
+}
+
