@@ -66,7 +66,7 @@ int main(int argc, char const *argv[]) {
     Bird b;
     Cat c;
     Pet* p[] = {&b,&c };
-    for (int i = 0; i < sizeof p/ sizeof * p; ++i) {
+    for (int i = 0; i < sizeof p/ sizeof （* p）; ++i) {
         cout << p[i]->type() << " eats " << p[i]->eats()->foodType() << endl;
     }
     // Can return the exact type:
