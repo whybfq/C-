@@ -1,4 +1,22 @@
-***
+/*********************************************************************************
+  *@copyright (C) 2018 san All Rights Reserved
+  *@file    Server.cpp
+  *@date    Sep 2018
+  *@author  san
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE:    Clion 2018.3
+  *@OS:     macOS High Sierra 10.13.6
+  *
+  *@brief:   A total of 7 steps 
+  *@function_lists:
+  *  1.
+
+  *@warning:
+  *@history:
+     1.Date:
+       Author:
+       Modification:
+**********************************************************************************/
 #include <iostream>
 #include <stdio.h> 
 #include <stdlib.h> 
