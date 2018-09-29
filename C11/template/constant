@@ -50,8 +50,9 @@ public:
 };
 
 template <class T, int size = 20>
-class Holder {
-public:
+class Holder {  // similar to class Array and it has a point to Array
+public:         // 该指针在构造函数中不被初始化，而是推迟到第一次访问时，it's called lazy initialization，
+     // 创造大量对象但不访问每个对象，可以节省存储
     Holder() : np(0) { }
     ~Holder() { delete np; }
     T&operator[](int i){
@@ -61,7 +62,6 @@ public:
         return np->operator[](i);
     }
     int length() const { return  size; }
-
 private:
     Array<T, size>*np;
 };
