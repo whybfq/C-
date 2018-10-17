@@ -71,6 +71,23 @@ void BubbleSort(int *A,int n){
     }
 }
 
+// More generally, it can happen that more than one element is placed in their final position on a single pass. 
+// In particular, after every pass, all elements after the last swap are sorted, and do not need to be checked again.
+// This allows us to skip over a lot of the elements, resulting in about a worst case 50% improvement in comparison
+// count (though no improvement in swap counts), 
+// and adds very little complexity because the new code subsumes the "swapped" variable
+void BubbleSort2(int A[], int n) {
+    while( n > 1) {
+        int newn = 0;
+        for (int i = 1; i < n; ++i) {
+            if(A[i - 1] > A[i]){
+                swap(A[i - 1], A[i]);
+                newn = i;
+            }
+        }
+        n = newn;
+    }
+}
 
 // 冒泡排序改进，鸡尾酒排序，（定向冒泡排序）
 // 数据结构 ---------- 数组
