@@ -1,8 +1,5 @@
 #include<iostream>
-
 using namespace std;
-
-
 
 // 分类 ------------- 内部非比较排序
 
@@ -19,13 +16,11 @@ using namespace std;
 // 稳定性 ----------- 稳定
 
 
-
 /* 本程序用数组模拟桶 */
 
 const int bn = 5;    // 这里排序[0,49]的元素，使用5个桶就够了，也可以根据输入动态确定桶的数量
 
 int C[bn];           // 计数数组，存放桶的边界信息
-
 
 
 void InsertionSort(int A[], int left, int right)
