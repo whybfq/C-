@@ -80,16 +80,14 @@ void BubbleSort(int *A,int n){
 // 所需辅助空间 ------ O(1)
 // 稳定性 ------------ 稳定
 void CocktailSort(int A[],int n){
-    int left=0, right=n-1,i;
+    int left=0, right=n-1;
     while(left <= right){
-        for(i = left; i < right; ++i){
-            if(A[i] > A[i+1])
-                Swap(A, i, i+1 );
+        for(int i = left; i < right; ++i){
+            if(A[i] > A[i+1]) Swap(A, i, i+1 );
         }
         --right;
-        for(i = right; i > left ; --i){
-            if(A[i-1] > A[i])
-                Swap(A,i-1,i);
+        for(int i = right; i > left ; --i){
+            if(A[i-1] > A[i]) Swap(A,i-1,i);
         }
         ++left;
     }
@@ -156,7 +154,6 @@ void SelectionSort2(T *A, int n){
     }
 }
 
-
 /******************************************************************************************************/
 
 int main(){
@@ -169,6 +166,5 @@ int main(){
     for(int i=0;i<n;++i){
         cout<<A[i]<<" "<<endl;
     }
-    cout<<endl;
 }
 
