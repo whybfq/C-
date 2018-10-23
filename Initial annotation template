@@ -1,0 +1,23 @@
+/*********************************************************************************
+  *@copyright (C)  2018 san All Rights Reserved
+  *@brief: 
+  *@bug :
+  *@author: sanner
+  *
+  *@CMAKE_CXX_STANDARD 17
+  *@IDE: Clion 2018.2
+  *@OS:  macOS 10.14
+  *
+  *@function_lists:
+  *  1.  void Swap(int A[] , int i, int j   -- exchange A[i] and A[j],dtype=int
+     
+     2.  
+  *@history:
+     1.@date:  
+       @author: 
+       @modification: Original
+     2.@date:  
+       @author: 
+       @modification: 
+     
+**********************************************************************************/
