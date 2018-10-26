@@ -6,6 +6,7 @@
   *Graphics: Intel Iris Pro 1536 MB
   *Date:  Oct ,2018
   *Description:  This file used to show some basics of using the exception
+  *              如果一个对象的构造函数在执行过程中抛出异常，那么这个对象的析构函数就不会被调用。
   *Others:
   *Function List:
      1.
