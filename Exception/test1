@@ -1,0 +1,42 @@
+#include <iostream>
+#include <thread>
+using namespace std;
+
+class Trace {
+public:
+    Trace() {
+        objid = counter++;
+        cout << "conststructing Trace #" << objid << endl;
+        if(objid == 3) throw 3;
+    }
+    ~Trace() {
+        cout << "destructing Trace " << objid << endl ;
+    }
+private:
+    static int counter;
+    int objid;
+
+};
+
+int Trace::counter = 0;
+
+int main(int argc, char const *argv[]) {
+    try {
+        Trace n1;   // conststructing Trace #0
+        // Throws exception;
+        Trace array[5];
+        Trace n2;
+    } catch (int i) {
+        cout << "caught " << i << endl;
+    }
+}
+
+Output:
+conststructing Trace #0
+conststructing Trace #1
+conststructing Trace #2
+conststructing Trace #3
+destructing Trace 2
+destructing Trace 1
+destructing Trace 0
+caught 3
