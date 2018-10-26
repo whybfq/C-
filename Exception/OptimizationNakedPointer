@@ -1,0 +1,109 @@
+/*********************************************************************************
+  *Author:  Sanner
+  *IDE: Clion 2018.3
+  *OS:  macOS 10.14
+  *Processor: 2.2 GHz Intel Core i7
+  *Graphics: Intel Iris Pro 1536 MB
+  *Date:  Oct ,2018
+  *Description:  The first file is to solve NakedPointer.
+  *              The difference betweent these two files are: 
+  *              这种方法使得每个指针都被嵌入到对象中。在调用UseResources类的构造函数之前这些对象的构造函数首先被调用，并且
+  *              如果它们之中的任何一个构造函数在抛出异常之前完成，那么这些对象的析构函数也会在栈反解的时候被调用。
+  *Others:     释放了Cat()对象，解决了内存泄露 Solved memory leak.
+  *Function List:
+     1.
+
+  *History:  //modify history list, every record should consist the date, Revision and modification content introduction
+     1.Date:
+       Author:
+       Modification:
+     2.Date:
+       Author:
+       Modification:
+
+**********************************************************************************/
+
+#include <iostream>
+#include <cstddef>
+
+using namespace std;
+
+// Simplified.
+template <class T, int sz = 1> class Pwrap {  // classical templates using abnornomal
+public:
+    class RangeError { }; // Exception class
+    Pwrap() {
+        ptr = new T[sz];
+        cout << "Pwrap constructor" << endl;
+    }
+    ~Pwrap() {
+        delete[] ptr;
+        cout << "Pwrap destrucotr " << endl;
+    }
+    /*
+     * 如果参数越界，则创建一个RangeError类型的异常对象。因为operator[]的返回值类型是一个引用，
+     * 所以它不能返回0。（程序中不能有空引用。）这是一个真正的异常情况—在当前语境中，程序不知道该做什么；
+     * 而且不能返回一个不可能的值。在这个例子中，RangeError[1]是非常简单的，
+     * 它假设类的名字能够表达所有必需的信息。如果认为出错对象的索引也很重要的话，
+     * 可以在RangeError类中添加一个数据成员来容纳这个索引值。
+     */
+    T& operator[](int i) throw(RangeError) { //Error  ISO C++17 does not allow dynamic exception specifications [-Wdynamic-exception-spec]
+        if(i >= 0 && i < sz) return ptr[i];  // RangeError is a nested class and is allowed in C++14
+        throw RangeError();
+    }
+private:
+    T* ptr;
+};
+
+class Cat {
+public:
+    Cat() { cout << "Cat() " << endl;}
+    ~Cat() { cout << "~Cat() " << endl; }
+    void g() { }
+};
+
+class Dog {
+public:
+    void *operator new(size_t sz) {
+        cout << "allocating a Dog " << endl;
+        throw 47;
+    }
+    void operator delete(void* p) {
+        cout << "deallocating a Dog " << endl;
+        ::operator delete(p);
+    }
+};
+
+class UseResources {
+public:
+    UseResources() { cout << "UseResources() " << endl; }
+    void f() { cats[1].g();  }
+    ~UseResources() { cout << "~UseResources()" << endl; }
+private:
+    Pwrap<Cat, 3> cats;
+    Pwrap<Dog> dog;
+};
+
+int main(int argc, char const *argv[]) {
+    try {
+        UseResources ur;  // Cat的构造函数创建三个对象
+    } catch (int) {
+        cout << "inside handler " << endl;
+    } catch (...) {
+        cout << "inside catch(...)" << endl;
+    }
+}
+
+Output:
+Cat() 
+Cat() 
+Cat() 
+Pwrap constructor
+Pwrap constructor
+UseResources() 
+~UseResources()
+Pwrap destrucotr 
+~Cat() 
+~Cat() 
+~Cat() 
+Pwrap destrucotr 
