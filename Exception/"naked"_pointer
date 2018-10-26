@@ -1,0 +1,74 @@
+/*********************************************************************************
+  *Author:  Sanner
+  *IDE: Clion 2018.3
+  *OS:  macOS 10.14
+  *Processor: 2.2 GHz Intel Core i7
+  *Graphics: Intel Iris Pro 1536 MB
+  *Date:  Oct ,2018
+  *Description:  如果一个对象的构造函数在执行过程中抛出异常，那么这个对象的析构函数就不会被调用。
+  *              困难的事情是在构造函数中分配资源。如果在构造函数中发生异常，析构函数将没有机会释放这些资源。
+  *              这个问题经常伴随着“悬挂”指针（“naked”pointer）出现。take this file as an example:
+  *              This file used to show the basic use of "naked" pointer.
+  *              Dog()中模拟内存不足，抛出异常，最终UseResources的构造函数没有完成，
+  *              In the same meaning, 在堆上成功创建的Cat对象不会被销毁
+  *Others:
+  *Function List:
+     1.
+
+  *History:  //modify history list, every record should consist the date, Revision and modification content introduction
+     1.Date:
+       Author:
+       Modification:
+     2.Date:
+       Author:
+       Modification:
+
+**********************************************************************************/
+
+#include <iostream>
+#include <thread>
+using namespace std;
+
+class Cat {
+public:
+    Cat() { cout << "Cat() " << endl;}
+    ~Cat() { cout << "~Cat() " << endl; }
+};
+
+class Dog {
+public:
+    void *operator new(size_t sz) {
+        cout << "allocating a Dog " << endl;
+        throw 47;
+    }
+    void operator delete(void* p) {
+        cout << "deallocating a Dog " << endl;
+        ::operator delete(p);
+    }
+};
+
+class UseResources {
+public:
+    UseResources(int count = 1) {
+        cout << "UseResources()"<< endl;
+        bp = new Cat[count];
+        op = new Dog;
+    }
+
+    ~UseResources() {
+        cout << "!UseResources()" << endl;
+        delete [] bp;
+        delete op;
+    }
+private:
+    Cat* bp;
+    Dog* op;
+};
+
+int main(int argc, char const *argv[]) {
+    try {
+        UseResources ur(3);  // Cat的构造函数创建三个对象
+    } catch(int) {
+        cout << "inside handler " << endl;
+    }
+}
