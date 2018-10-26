@@ -1,0 +1,48 @@
+/*********************************************************************************
+  *Author:  Sanner
+  *IDE: Clion 2018.3
+  *OS:  macOS 10.14
+  *Processor: 2.2 GHz Intel Core i7
+  *Graphics: Intel Iris Pro 1536 MB
+  *Date:  Oct ,2018
+  *Description:  This file is another way to solve the "naked" pointer
+  *              Using auto_ptr template(in the head file #include <memory>
+  *Others:
+  *Function List:
+     1.
+
+  *History:  //modify history list, every record should consist the date, Revision and modification content introduction
+     1.Date:
+       Author:
+       Modification:
+     2.Date:
+       Author:
+       Modification:
+**********************************************************************************/
+
+#include <memory>
+#include <iostream>
+#include <cstddef>
+
+using namespace std;
+class TraceHeap {
+public:
+    static void* operator new(size_t siz) {  // overload the new operator
+        void *p = ::operator new(siz);
+        cout << "Allocating TraceHeap object on the heap at address " << p << endl;
+        return p;
+    }
+    static void operator delete(void *p) {   // overload the delete oparator
+        cout << "Deleting TraceHeap object at address " << p << endl;
+    }
+    TraceHeap(int i) : i(i) { }
+    int getVal() const { return  i; }
+private:
+    int i;
+};
+
+int main(int argc, char const *argv[]) {
+    auto_ptr<TraceHeap> pMyObject(new TraceHeap(5)); //通过值引用的类对象总会被析构
+    cout << pMyObject->getVal() << endl;  // 5  函数间接使用了基本的原始指针
+    // 在栈反解时， pMyObject对象的析构函数会删除该原始指针
+}
