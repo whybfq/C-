@@ -1,0 +1,33 @@
+/*********************************************************************************
+  * @copyright (C)  2018 sanner All Rights Reserved
+  * @file: FunctionTryBlock.cpp {-bor}
+  * @brief: Function-level blocks.
+  *
+  * @bug :
+  * @author: sanner
+  *
+  * @CMAKE_CXX_STANDARD 14
+  * @IDE: Clion 2018.2
+  * @OS:  macOS 10.14
+  *
+  * @function_lists:
+  *  1.  fg: void Swap(int A[] , int i, int j   -- exchange A[i] and A[j],dtype=int
+
+     2.
+  * @history:
+     1.@date:
+       @author:
+       @modification: Original
+     2.@date:
+       @author:
+       @modification:
+
+**********************************************************************************/
+#include <iostream>
+using namespace std;
+
+int main(int argc, char const *argv[]) try {
+    throw "main";  // output main
+} catch (const char* msg) {
+    cout << msg << endl;
+}
