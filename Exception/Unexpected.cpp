@@ -64,3 +64,7 @@ int main(int argc, char const *argv[]) {
     }
 }
 
+Output
+Up caught 
+Fit caught 
+unexcepted exception thrown 
