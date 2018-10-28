@@ -53,8 +53,8 @@ void my_unexpected() {
 
 int main(int argc, char const *argv[]) {
     set_unexpected(my_unexpected);   // Ignores return value
-    for(int i = 1; i <= 3; ++i ){
-        try {
+    for(int i = 1; i <= 3; ++i ){    // Various scenarios
+        try {   
             f(i);
         } catch(Up) {
             cout << "Up caught " << endl;
