@@ -16,7 +16,7 @@
   *  1.  fg: void Swap(int A[] , int i, int j   -- exchange A[i] and A[j],dtype=int
 
      2.
-  * @history:
+  * @Revision:
      1.@date:
        @author:
        @modification: Original
