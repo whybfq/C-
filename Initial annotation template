@@ -1,5 +1,7 @@
 /*********************************************************************************
   * @copyright (C)  2018 sanner All Rights Reserved
+  * @license: GPL
+  * @version:
   * @file:
   * @brief:
   *
@@ -10,7 +12,7 @@
   * @IDE: Clion 2018.2
   * @OS:  macOS 10.14
   *
-  * @function_lists: 
+  * @function_lists:
   *  1.  fg: void Swap(int A[] , int i, int j   -- exchange A[i] and A[j],dtype=int
 
      2.
