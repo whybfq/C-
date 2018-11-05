@@ -8,7 +8,7 @@
   *
   *@CMAKE_CXX_STANDARD 17
   *@IDE: Clion 2018.2
-  *@OS:  macOS High Sierra 10.13.6
+  *@OS:  macOS 10.14
   *
   *@function_lists:
   *  1.  void Swap(int A[] , int i, int j   -- exchange A[i] and A[j],dtype=int
@@ -30,7 +30,21 @@
 #include <cstdlib>
 #include <iostream>
 #include <utility>
-using namespace std;
+
+using std:: cin ;
+using std:: cout;
+using std:: endl;
+using std:: swap;
+
+void BubbleSort(int *A, int n) {
+    for (int i = 0; i < n - 1; ++i) {
+        for (int j = i + 1; j < n ; ++j) {
+            if(A[i] > A[j]){
+                swap(A[i], A[j]);
+            }
+        }
+    }
+}
 
 void Swap(int A[] , int i, int j){
     int temp = A[i];
@@ -175,12 +189,12 @@ void SelectionSort2(T *A, int n){
 
 int main(){
     int A[] = { 6, 5, 3, 1, 8, 7, 2, 4 };   // 从小到大定向冒泡排序
-    int n = sizeof(A)/sizeof(int);
+    int n = sizeof(A) / sizeof(int);  // n = sizeof(A) / sizeof(A[0])
 //    BubbleSort(A,n);
 //    CocktailSort(A,n);
 
-    cout<<"the resulr of Sort: "<<endl;
+    cout << "the resulr of Sort: " << endl;
     for(int i=0;i<n;++i){
-        cout<<A[i]<<" "<<endl;
+        cout << A[i] << " " << endl;
     }
 }
