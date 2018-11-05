@@ -46,6 +46,24 @@ void BubbleSort(int *A, int n) {
     }
 }
 
+void BubbleSort_2(int a[], int size)
+{
+	 bool bSwaped = true;
+ 	for (int i = 0; i < size -1; i++)
+	 {
+		   bSwaped = false;  // 每次先重置为false
+		   for (int j = size - 1; j > i ; j--)
+		   {
+			     if (a[j-1] > a[j])
+			     {
+				        swap(a[j-1],a[j]);
+				        bSwaped = true;
+			     }
+		   }
+		   if (!bSwaped) break;  // // 如果上一次扫描没有发生交换，则说明数组已经全部有序，退出循环
+	  }
+}
+
 void Swap(int A[] , int i, int j){
     int temp = A[i];
     A[i] = A[j];
