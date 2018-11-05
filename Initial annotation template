@@ -1,19 +1,20 @@
 /*********************************************************************************
   * @copyright (C)  2018 sanner All Rights Reserved
-  * @license: GPL
+  * @license:   GPL
   * @version:
+  * @date:      Nov, 2018
   * @file:
   * @brief:
   *
   * @bug :
-  * @author: sanner
+  * @author:    sanner
   *
   * @CMAKE_CXX_STANDARD 14
-  * @IDE: Clion 2018.2
-  * @OS:  macOS 10.14
+  * @IDE:       Clion 2018.2
+  * @OS:        macOS 10.14
   *
   * @function_lists:
-  *  1.  fg: void Swap(int A[] , int i, int j   -- exchange A[i] and A[j],dtype=int
+  *  1.    fg:  void Swap(int A[] , int i, int j   -- exchange A[i] and A[j],dtype=int
 
      2.
   * @Revision:
