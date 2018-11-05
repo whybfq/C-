@@ -33,8 +33,8 @@ void Swap(int A[] , int i, int j){
 template <typename T>
 void swap1(T& a, T& b){
     T c(a);
-    a=b;
-    b=c;
+    a = b;
+    b = c;
 }
 
 
@@ -78,7 +78,6 @@ void QuickSort1(int a[], int low, int high)
         {
             ++first;
         }
-
         a[last] = a[first]; /*将比第一个大的移到高端*/
     }
     a[first] = key;/*枢轴记录到位*/
