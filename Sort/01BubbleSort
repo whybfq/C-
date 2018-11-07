@@ -33,17 +33,7 @@ using std:: cout;
 using std:: endl;
 using std:: swap;
 
-void BubbleSort(int *A, int n) {
-    for (int i = 0; i < n - 1; ++i) {
-        for (int j = i + 1; j < n ; ++j) {
-            if(A[i] > A[j]){
-                swap(A[i], A[j]);
-            }
-        }
-    }
-}
-
-void BubbleSort2(int a[], int size)  //using a flag bSwaped to determine if there is a redundant exchange in a loop
+void BubbleSort(int a[], int size)  //using a flag bSwaped to determine if there is a redundant exchange in a loop
 {
  	 for (int i = 0; i < size -1; i++)
 	 {
@@ -65,7 +55,7 @@ void BubbleSort2(int a[], int size)  //using a flag bSwaped to determine if ther
  * 一次执行交换的位置为lastSwapPos，则lastSwapPos在i与n之间，不难发现R[i..lastSwapPos]区间也是有序的，
  * 否则这个区间也会发生交换；所以下次扫描区间就可以由R[i..n] 缩减到[lastSwapPos..n]。
 */
-void BubbleSort3(int *A, int n) {
+void BubbleSort1(int *A, int n) {
     int lastSwapPos = 0, lastSwapPosTemp = 0;
     for (int i = 0 ; i < n - 1; ++i) {
         lastSwapPos = lastSwapPosTemp;
