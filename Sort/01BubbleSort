@@ -45,10 +45,9 @@ void BubbleSort(int *A, int n) {
 
 void BubbleSort2(int a[], int size)  //using a flag bSwaped to determine if there is a redundant exchange in a loop
 {
-	 bool bSwaped = true;
  	 for (int i = 0; i < size -1; i++)
 	 {
-		   bSwaped = false;  // 每次先重置为false
+		   bool bSwaped = false;  // 每次先重置为false
 		   for (int j = size - 1; j > i ; j--)
 		   {
 			     if (a[j-1] > a[j])
