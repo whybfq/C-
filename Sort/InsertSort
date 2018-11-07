@@ -71,6 +71,10 @@ void InsertionSort(int *A, int n)
 
 }
 
+for i = [1,n)
+    for (j = i; j > 0 && x[j-1] > x[j]; --j)
+         swap(x[j - 1], x[j]);   // improve change swap() to --> t=x[j]; x[j]=x[j-1]; x[j-1]=t;
+         
 void InsertionSort1(int *A,unsigned int n){
     int i,j,temp;
     for(i=1;i<n;++i){
