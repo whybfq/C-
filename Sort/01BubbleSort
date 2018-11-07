@@ -26,10 +26,7 @@
        @modification: Optimizing the bubble sort:
          by stopping the algorithm if inner loop didn’t cause any swap. add the variable swapped
 **********************************************************************************/
-
-#include <cstdlib>
 #include <iostream>
-#include <utility>
 
 using std:: cin ;
 using std:: cout;
