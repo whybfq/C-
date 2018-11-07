@@ -26,11 +26,10 @@
        @author:
        @modification:
 **********************************************************************************/
-
-#include <cstdlib>
 #include <iostream>
-#include <utility>
-using namespace std;
+using std:: cout  ;
+using std:: endl  ;
+using std:: string;
 
 void Swap(int A[] , int i, int j){
     int temp = A[i];
@@ -44,7 +43,6 @@ void swap1(T& a, T& b){
     a=b;
     b=c;
 }
-
 /******************************************************************************************************/
 
 //insertionSort
