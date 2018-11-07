@@ -33,21 +33,42 @@ using std:: cout;
 using std:: endl;
 using std:: swap;
 
-void BubbleSort(int a[], int size)  //using a flag bSwaped to determine if there is a redundant exchange in a loop
-{
- 	 for (int i = 0; i < size -1; i++)
-	 {
-		   bool bSwaped = false;  // 每次先重置为false
-		   for (int j = size - 1; j > i ; j--)
-		   {
-			     if (a[j-1] > a[j])
-			     {
-				        swap(a[j-1],a[j]);
-				        bSwaped = true;
-			     }
-		   }
-		   if (!bSwaped) break;  // // 如果上一次扫描没有发生交换，则说明数组已经全部有序，退出循环
-	  }
+void Swap(int A[] , int i, int j){
+    int temp = A[i];
+    A[i] = A[j];
+    A[j] = temp;
+}
+
+template <typename T>
+void swap1(T& a, T& b){  // attention local variable: need to use &
+    T c(a);
+    a=b;
+    b=c;
+}
+
+/******************************************************************************************************/
+// 数据结构 ---------- 数组
+
+// 最差时间复杂度 ---- O(n^2)
+
+// 最优时间复杂度 ---- 如果能在内部循环第一次运行时,使用一个旗标来表示有无需要交换的可能,可以把最优时间复杂度降低到O(n)
+
+// 平均时间复杂度 ---- O(n^2)
+
+// 所需辅助空间 ------ O(1)
+
+// 稳定性 ------------ 稳定( A[i]>A[i+1] )
+void BubbleSort(int *A,int n){
+    for(int i = 0;i < n; ++i){  // 每次最大元素就像气泡一样"浮"到数组的最后
+        bool swapped = false;    // flag
+        for(int j = 0; j < n-i-1; ++j){  // 依次比较相邻的两个元素,使较大的那个向后移  // or for (int j = n-1; j > i ; --j)
+            if(A[j] > A[j+1]){  // 如果条件改成A[i] >= A[i + 1],则变为不稳定的排序算法 // or if (a[j-1] > a[j]) swap( A[j],A[j-1] )
+                Swap(A,j,j+1);       
+                swapped = true;
+            }
+        }
+        if(!swapped) break;  // if no elements were swapped in inner loop, then break
+    }
 }
 
 /*
@@ -66,45 +87,6 @@ void BubbleSort1(int *A, int n) {
             }
         }
         if(lastSwapPos == lastSwapPosTemp) break;
-    }
-}
-
-void Swap(int A[] , int i, int j){
-    int temp = A[i];
-    A[i] = A[j];
-    A[j] = temp;
-}
-
-template <typename T>
-void swap1(T& a, T& b){  // attention local variable: need to use &
-    T c(a);
-    a=b;
-    b=c;
-}
-
-
-/******************************************************************************************************/
-// 数据结构 ---------- 数组
-
-// 最差时间复杂度 ---- O(n^2)
-
-// 最优时间复杂度 ---- 如果能在内部循环第一次运行时,使用一个旗标来表示有无需要交换的可能,可以把最优时间复杂度降低到O(n)
-
-// 平均时间复杂度 ---- O(n^2)
-
-// 所需辅助空间 ------ O(1)
-
-// 稳定性 ------------ 稳定( A[i]>A[i+1] )
-void BubbleSort2(int *A,int n){
-    for(int j = 0;j < n; ++j){  // 每次最大元素就像气泡一样"浮"到数组的最后
-        bool swapped = false;    // flag
-        for(int i = 0; i < n-j-1; ++i){  // 依次比较相邻的两个元素,使较大的那个向后移
-            if(A[i] > A[i+1]){  // 如果条件改成A[i] >= A[i + 1],则变为不稳定的排序算法
-                Swap(A,i,i+1);
-                swapped = true;
-            }
-        }
-        if(!swapped) break;  // if no elements were swapped in inner loop, then break
     }
 }
 
