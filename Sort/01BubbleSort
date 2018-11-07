@@ -95,7 +95,7 @@ void BubbleSort1(int *A, int n) {
 // This allows us to skip over a lot of the elements, resulting in about a worst case 50% improvement in comparison
 // count (though no improvement in swap counts), 
 // and adds very little complexity because the new code subsumes the "swapped" variable
-void BubbleSort3(int A[], int n) {
+void BubbleSort2(int A[], int n) {
     while( n > 1) {
         int newn = 0;
         for (int i = 1; i < n; ++i) {
