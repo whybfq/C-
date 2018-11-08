@@ -29,27 +29,54 @@ using std::cout;
 using std::string;
 using std::endl;
 
-void testInput() {
+void testCin() { //根据 cin>>sth 中 sth 的变量类型读取数据，这里变量类型可以为 int，float,char,char*,string 等诸多类型。这一输入操作，在遇到结束符（Space、Tab、Enter）就结束，且对于结束符，并不保存到 sth 中
+    char ch1[10],ch2[20];
+    cout << "please input two strings: " << endl;
+    cin >> ch1;
+    cin >> ch2;
+    cout << "two strings are: " << endl;
+    cout << ch1 << endl;
+    cout << ch2 << endl;
+}
+
+void testGetline() { // istream is,string str, 结束符
     string str;
     cout << "cin test " << endl;
-    getline(cin,str,'a'); // need to add #include <string> string库函数下,遇到a结束
+    getline(cin,str,'a');
     cout << str << endl;
 }
 
-//接收一定长度的字符串 cin.get(字符数组名，接收长度，结束符)，结束符为可选参数，默认为 Enter，
-//可以接受 Space 、Tab，对于结束符的处理要注意，结束符并不会丢掉
-void inputTest2() {
-    char ch1,ch2;
+void testGets() {  //( char *ch )
+    char ch[10];
+    cout << "please input the content of char* : " << endl;
+    gets(ch); // 注意输入的字符串长度不要大于n，否则会报错。同样gets()对空格也不敏感。
+    cout << ch << endl;
+}
+
+void inputcinget() {  // ch=cin.get  ==> cin.get(char ch)
+    char ch1,ch2[10];
     cout << "input two strings: " << endl;
     cin.get(ch1);
-    cin.get(ch2);
-    cout << "the two strings are: " << endl; 
+    cin.get(ch2,6);
+    cout << "the two strings are: " << endl;
     cout << ch1 << endl;
     cout << ch2 << endl;
-    cout << (int)ch1 << " " << (int)ch2 << endl;  // output ASCII 值
+    cout << (int)ch1 << " "  << endl;
+}
+
+void testcingetline() { // cin.getline() 字符数组名，接收长度，结束符
+    char ch1,ch2[10];
+    cout << "please input the string : " << endl;
+    cin.getline(ch2,6); //在不遇到结束符的情况下，最多可接收 6-1=5 个字符到 ch2 中
+    cin >> ch1;
+    cout << ch2 << endl;
+    cout << ch1 << endl << (int)ch1 << endl;
 }
 
 int main(int argc, char* argv[]) {
- // inputTest();
-    inputTest2();
+    testCin();
+//    testcingetline();
+//    testGetline();
+//    testGets();
 }
+
