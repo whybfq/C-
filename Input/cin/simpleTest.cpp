@@ -40,15 +40,17 @@ void testInput() {
     cout << str << endl;
 }
 
+//接收一定长度的字符串 cin.get(字符数组名，接收长度，结束符)，结束符为可选参数，默认为 Enter，
+//可以接受 Space 、Tab，对于结束符的处理要注意，结束符并不会丢掉
 void inputTest2() {
     char ch1,ch2;
     cout << "input two strings: " << endl;
     cin.get(ch1);
     cin.get(ch2);
-    cout << "the two strings are: " << endl;
+    cout << "the two strings are: " << endl; 
     cout << ch1 << endl;
     cout << ch2 << endl;
-    cout << (int)ch1 << " " << (int)ch2 << endl;
+    cout << (int)ch1 << " " << (int)ch2 << endl;  // output ASCII 值
 }
 
 int main(int argc, char* argv[]) {
