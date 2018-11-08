@@ -76,6 +76,7 @@ for i = [1,n)
          
 // 由于内循环总是给t赋同样的值（x[i]的初始值），所以可以将两个含t的赋值语句移出内循环，  // improved function
 void InsertionSort1(int *A,unsigned int n){    // This function should be faster than above functions
+    int j;
     for (int i = 1; i < n ; ++i) {
         int temp = *(A+i);
         for(j = i; j > 0 && *(A+j-1) > temp; --j){
