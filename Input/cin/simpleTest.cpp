@@ -32,11 +32,7 @@ using std::endl;
 void testInput() {
     string str;
     cout << "cin test " << endl;
-    cin >> str;
-
-    cout << str << endl;
-    cin.sync();
-    cin >> str;
+    getline(cin,str,'a'); // need to add #include <string> string库函数下,遇到a结束
     cout << str << endl;
 }
 
@@ -54,5 +50,6 @@ void inputTest2() {
 }
 
 int main(int argc, char* argv[]) {
+ // inputTest();
     inputTest2();
 }
