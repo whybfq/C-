@@ -42,7 +42,7 @@ void testCin() { //根据 cin>>sth 中 sth 的变量类型读取数据，这里�
 void testGetline() { // istream is,string str, 结束符
     string str;
     cout << "cin test " << endl;
-    getline(cin,str,'a');
+    getline(cin,str,'a'); // need to add #include <string> string库函数下,遇到a结束
     cout << str << endl;
 }
 
@@ -61,7 +61,7 @@ void inputcinget() {  // ch=cin.get  ==> cin.get(char ch)
     cout << "the two strings are: " << endl;
     cout << ch1 << endl;
     cout << ch2 << endl;
-    cout << (int)ch1 << " "  << endl;
+    cout << (int)ch1 << " "  << endl;  // output the value of ASCII
 }
 
 void testcingetline() { // cin.getline() 字符数组名，接收长度，结束符
