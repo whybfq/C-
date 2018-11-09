@@ -49,7 +49,6 @@ int main(int argc, char* argv[]) {
         auto now = std::chrono::high_resolution_clock::now();
         log_progress(now - t1);
     }
-    std::cout << std::endl;
 }
 
 Output:
