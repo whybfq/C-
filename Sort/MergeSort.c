@@ -6,7 +6,7 @@
   * @file:    MergeSort.c
   * @related: http://www.cnblogs.com/eniac12/p/5329396.html
   * @brief:   This file contains the method of merge sort
-  * @bug :    There is some bug in function MergeSortIteration and MergeSortRecursion
+  * @bug :    
   * @author:  sanner
   *
   * @CMAKE_CXX_STANDARD 14
