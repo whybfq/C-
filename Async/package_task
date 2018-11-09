@@ -1,18 +1,15 @@
 /**
- * @date 2018-06-03
- * @brief 这
- * @note  IDE: Clion 2018.3   OS: macOS High Sierra
- * @author whybfq
+ * @date   2018-06-03
+ * @brief 
+ * @note   IDE: Clion 2018.3   
+ * @author sanner
  * @cite   the basical use of package_ task and shared_ future 
- * @bug   There is a problem in the program. It can't be run right.
+ * @bug    There is a bug in the program. It can't be run right.
   * History:  //修改历史记录列表，每条修改记录应包含修改日期、修改者及修改内容简介
      1.Date: 2018/06/03
-       Author: whybfq
-       Modification: Original
-     2.…………
+       Author: 
+       Modification: 
  */
-
-
 
 #include <atomic>
 #include <thread>
@@ -47,4 +44,3 @@ int main() {
 Output:
 The result is : 4
 The shared_futureresult is 5
-
