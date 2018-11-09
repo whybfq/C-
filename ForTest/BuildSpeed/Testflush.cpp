@@ -52,3 +52,5 @@ int main(int argc, char* argv[]) {
     std::cout << std::endl;
 }
 
+Output:
+.. (466 ms).... (921 ms).... (1359 ms).... (1794 ms).... (2229 ms)..
