@@ -141,7 +141,7 @@ void InsertionSortDichotomy(int A[], int n) {
 void ShellSort(int A[], int n)
 {
     int h = 0;
-    while (h < n) {// 生成初始增量
+    while (h <= n/3) {// 生成初始增量
         h = 3 * h + 1;
     }
     while (h >= 1)
