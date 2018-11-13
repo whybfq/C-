@@ -18,12 +18,10 @@
        Author:
        Modification:
 **********************************************************************************/
-
 #include <stdio.h>
 #include <stdlib.h>
 
-///
-int main(void)
+int main()
 {
     printf("=======test         -1=======\n");
     //  如果是char, 那么系统认为最高位是符号位, 而int可能是16或者32位, 那么会对最高位进行扩展
