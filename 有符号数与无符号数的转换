@@ -23,7 +23,7 @@
 
 int main()
 {
-    printf("=======test         -1=======\n");
+    printf("=======test1=======\n");
     //  如果是char, 那么系统认为最高位是符号位, 而int可能是16或者32位, 那么会对最高位进行扩展
     signed char c7_1 = 0x00ff; //int i7_1 = (int)c7_1;
     //  如果是unsigned char, 那么不会扩展.
