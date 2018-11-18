@@ -19,10 +19,7 @@
   * @Revision:
      1.@date:
        @author:
-       @modification: Original
-     2.@date:
-       @author:
-       @modification:
+       @modification: 
 **********************************************************************************/
 归并排序(Merge Sort)
 归并排序是创建在归并操作上的一种有效的排序算法，效率为O(nlogn)，1945年由冯·诺伊曼首次提出。
