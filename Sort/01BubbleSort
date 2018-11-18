@@ -59,8 +59,8 @@ void swap1(T& a, T& b){  // attention local variable: need to use &
 void BubbleSort(int *A,int n){
     for(int i = 0;i < n; ++i){  // 每次最大元素就像气泡一样"浮"到数组的最后
         bool swapped = false;    // flag
-        for(int j = 0; j < n-i-1; ++j){  // 依次比较相邻的两个元素,使较大的那个向后移  // or for (int j = n-1; j > i ; --j)
-            if(A[j] > A[j+1]){  // 如果条件改成A[i] >= A[i + 1],则变为不稳定的排序算法 // or if (a[j-1] > a[j]) swap( A[j],A[j-1] )
+        for(int j = 0; j < n - 1 -i; ++j){  // 依次比较相邻的两个元素,使较大的那个向后移  // or for (int j = n-1; j > i ; --j)
+            if(A[j] > A[j + 1]){  // 如果条件改成A[i] >= A[i + 1],则变为不稳定的排序算法 // or if (a[j-1] > a[j]) swap( A[j],A[j-1] )
                 Swap(A,j,j+1);       
                 swapped = true;
             }
