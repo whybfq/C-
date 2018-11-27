@@ -3,8 +3,8 @@ int main(int argc, char *argv[]){
     while(1) {
         cin >> a;
         int len = strlen(a);
-        int mid=len/2-1;
-        int top =0;   ///Initialize the stack
+        int mid = len/2-1;
+        int top = 0;   ///Initialize the stack
         int next;
         if (len % 2 == 0) {
             next = mid + 1;
