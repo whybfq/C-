@@ -21,6 +21,8 @@
 #include <fstream>
 using namespace std;
 
+const int MAX = 500;
+
 char *strRemov(char *dst, const char *src, char ch = ' ') {
     int i = -1, j = 0;
     while( src[++i] ){
@@ -31,8 +33,6 @@ char *strRemov(char *dst, const char *src, char ch = ' ') {
     }
     return dst;
 }
-
-const int MAX = 500;
 
 int main() {
     ifstream in("testin.txt");
