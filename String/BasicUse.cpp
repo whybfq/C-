@@ -37,5 +37,25 @@ int  main(int argc, char* argv[]) {
     str.copy(cstr,2);    // Copy 2 characters to CSTR
     cstr[2] = '\0';      // Appended Terminator
     cout << cstr  << endl;  // 12
-    cout << str.data()  << endl;  // Convert to character array
+    cout << str.data() << endl;  // Convert to character array  123
+    cout << str.empty() << endl; // test the string is empty  0
+    cout << str.c_str() << endl; // Convert to string in C style  123
+    str.erase(2);       // Delete all characters starting from the second position
+    cout << str.c_str() << endl;  // 12
+    cout << str.find("2",0)  << endl; // look for the string "2" from the first position  1
+    str.assign("1234567890");   // reassign
+    cout << str.find_first_not_of("234",1) << endl; // 4 Find the first character that does not appear in "234"
+    cout << str.c_str()  << endl; // return the string in C style
+    str.insert(2,"ww");  // insert the string "ww" from the second position
+    cout << str.c_str() << endl; // return the string in C style
+    cout << str.max_size() << endl; // Calculate the maximum possible size in a string  18446744073709551599
+    cout << str.size() << endl; // the length of the string  12
+    cout << str.length() << endl; // the length of the string  12
+    cout << str.substr(1,3).c_str() << endl; // substring  2ww
+    cout << str.c_str() << endl;  // 12ww3456890
+    cout << str.replace(1,4,"bbbbbbb").c_str() << endl;  //1bbbbbbb4567890
+    str.resize(10);  // reassign 10 bytes of space
+    cout << str.max_size() << endl; // 18446744073709551599
+    str.swap(str2);  // swap with str2
+    cout << str.c_str() << endl; 200
 }
