@@ -5,7 +5,7 @@
   * @data:    Nov 2018
   * @file:    BasicUse.cpp
   * @related:
-  * @brief:   some basic uses in C++ string
+  * @brief:   some basic uses in C++ string class
   * @bug :
   * @author:  sanner
   *
@@ -57,5 +57,5 @@ int  main(int argc, char* argv[]) {
     str.resize(10);  // reassign 10 bytes of space
     cout << str.max_size() << endl; // 18446744073709551599
     str.swap(str2);  // swap with str2
-    cout << str.c_str() << endl; 200
+    cout << str.c_str() << endl; // 200
 }
