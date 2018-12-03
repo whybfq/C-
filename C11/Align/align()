@@ -1,14 +1,14 @@
 /*********************************************************************************
   *Author:  San
-  *IDE: Clion 2018.3
-  *OS:  macOS High Sierra 10.13.6
-  *Date:  August 21,2018
+  *IDE:     Clion 2018.3
+  *OS:      macOS High Sierra 10.13.6
+  *Date:    Aug,2018
   *Description:  std::align() 动态根据指定的对齐方式调整数据块的位置
   *
   *Bug:
   *Function List:
-  *  1.    void *align(std::size_t alignment,std::size_t size,void *&ptr,std::size_t& space);
-  *        函数在ptr指向为space的内存中进行对齐方式调整，将ptr开始的size大小的数据调整为按alignment对齐
+  *  1.     void *align(std::size_t alignment,std::size_t size,void *&ptr,std::size_t& space);
+  *         函数在ptr指向为space的内存中进行对齐方式调整，将ptr开始的size大小的数据调整为按alignment对齐
   *History:
    1.Date:
      Author:
