@@ -4,9 +4,6 @@
   * @version:
   * @data:    Nov 2018
   * @file:    BasicUse.cpp
-  * @param nums: The integer array.
-  * @param target: Target to find.
-  * @return: The first position of target. Position starts from 0.
   * @related:
   * @brief:   some basic uses in C++ string
   * @bug :
@@ -24,9 +21,8 @@
        @author:
        @modification:
 **********************************************************************************/
-    int binarySearch(vector<int> &A, int target) {
-        // write your code here
-        if(A.size() == 0) return -1;
+    int binarySearch(vector<int> &A, int target) {  // @param A: The integer arra  // @param target: Target to find.
+        if(A.size() == 0) return -1;   // @return: The first position of target. Position starts from 
 
         int start = 0;
         int end = int(A.size() - 1);
@@ -36,7 +32,7 @@
             mid = start + (end - start) / 2;
             if(A[mid] == target) end = mid;
             else if(A[mid] < target) start = mid;
-            else if(A[mid] > target) end = mid;
+            else end = mid;
         }
 
         if(A[start] == target) return start;
