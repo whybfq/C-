@@ -41,7 +41,8 @@ void PrintVector(T s, T e) {
 }
 
 template<class T>
-void PrintList(const list<T> & lst) {  // 不推荐的写法，还是用PrintVector中的两个迭代器参数会更好
+void PrintList(const list<T> & lst) {  // not recommend writing, or it would be better to use the two iterator
+                                       // parameters in Printvector()
     int tmp = lst.size();
     if(tmp > 0) {
         typename list<T>:: const_iterator i; // typename用来说明list<T>::const iterator是个类型
