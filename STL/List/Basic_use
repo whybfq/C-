@@ -1,9 +1,9 @@
 /*********************************************************************************
   *Author:  San
-  *IDE: Clion 2018.3
-  *OS:  macOS High Sierra 10.13.6
-  *Date:  August 7,2018
-  *Description:    some basic use of list  除了具有顺序容器都有的成员函数之外，还有8个元素,不支持随机存取
+  *IDE:   Clion 2018.3
+  *OS:    macOS High Sierra 10.13
+  *Date:  August, 2018
+  *Description:     some basic use of list  除了具有顺序容器都有的成员函数之外，还有8个元素,不支持随机存取
   *Bug:
   *Function List:   push_front :  在前面插入
   *                 pop_front : 删除前面的元素
