@@ -1,9 +1,7 @@
 
-
-
-    /*********************************************************************************
+/*********************************************************************************
   * @copyright (C)  2018 sanner All Rights Reserved
-  * @license: GP
+  * @license: GPL
   * @version:
   * @data:    Dec 2018
   * @file:    sum.cpp
@@ -69,6 +67,12 @@ long double Fib3(int n) {
     return s2;
 }
 
+// https://www.geeksforgeeks.org/program-for-nth-fibonacci-number/
+int Fib4(int n) { // find n'th fibonacci number
+    double phi = (1 + sqrt(5)) / 2;
+    return round( pow(phi, n) / sqrt(5) );
+}
+
 int main(int argc, char* argv[]) {
     time_t start, e, sumtime;
     int n;
@@ -77,8 +81,10 @@ int main(int argc, char* argv[]) {
     // cout << fixed << serp
 //    cout << "Fib1("<<n<<")=" << Fib1(n) << endl;
 //    cout << "Fib2("<<n<<")=" << Fib2(n) << endl;
-    cout << "Fib3("<<n<<")=" << Fib3(n) << endl;
+//    cout << "Fib3("<<n<<")=" << Fib3(n) << endl;
+    cout << "Fib4("<<n<<")=" << Fib4(n) << endl;
     e = clock();
     sumtime = e - start;
     cout << "time: " << sumtime << endl;
 }
+  
