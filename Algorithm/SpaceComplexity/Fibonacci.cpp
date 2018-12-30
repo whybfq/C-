@@ -14,7 +14,7 @@
   * @IDE:     Clion 2018.3
   * @OS:      macOS 10.14
   *
-  * @function_lists:
+  * @function_lists:    Fist: Time complexity    Space complexity
   *  1.
   * @Revision:
      1.@date:
@@ -29,12 +29,16 @@ using std:: cin;
 using std:: cout;
 using std:: endl;
 
+
+// O(2^n)  O(n)
 long long Fib1(int n) {
     if(n < 1) return -1;
     else if(n == 1 || n == 2) return 1;
     else return Fib1(n - 1) + Fib1(n - 2);
 }
 
+
+// O(n)  O(n)
 long double Fib2(int n) { // Save previous values to avoid heavy double counting
     long double temp;
     if(n < 1) return -1;
