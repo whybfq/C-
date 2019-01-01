@@ -44,8 +44,8 @@ int main(int argc, char* argv[]) {
 //    cout << std::left;   // align left， default is right alignment
     cout << std::setw(6) << d << endl;  //  1.414 There is a space on the far left to fill six characters
     cout << " current fill character" << endl;
-    cout << std::setfill('*') <<  std::setw(10) << d  << endl;
-    // The setfill() function can be inserted directly into the stream
+    cout << std::setfill('*') <<  std::setw(10) << d  << endl;  
+    // The setfill() function can be inserted directly into the stream, default is right aligment
 }
 
 Output:
