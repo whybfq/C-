@@ -1,8 +1,9 @@
-/*********************************************************************************
+
+  /*********************************************************************************
   * @copyright (C)  2018 sanner All Rights Reserved
   * @license: GPL
   * @version:
-  * @data:    Dec 2018
+  * @data:    Jan 2019
   * @file:    SettingAccuracy.cpp
   * @related:
   * @reference:
@@ -15,7 +16,9 @@
   * @OS:      macOS 10.14
   *
   * @function_lists:
-  *  1.
+  *  1.       setfill(char c)       -->    Set the padding character in C
+  *  2.       setprecision(int n)   -->    Set the numerical precision expressed in n
+  *  3.       setw(int n)           -->    Set the field width in n
   * @Revision:
      1.@date:
        @author:
