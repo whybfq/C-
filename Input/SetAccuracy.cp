@@ -46,3 +46,17 @@ int main(int argc, char* argv[]) {
     cout << std::setfill('*') <<  std::setw(10) << d  << endl;
     // The setfill() function can be inserted directly into the strem, the defaut is right alignment
 }
+
+
+Output:
+Precision setting： 
+1
+1
+1.4
+1.41
+1.414
+current precision: 4
+current width:0
+ 1.414
+ current fill character
+*****1.414
