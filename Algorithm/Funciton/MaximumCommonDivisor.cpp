@@ -3,7 +3,7 @@ int gcd(int x, int y) {
     t = x % y;   // Split phase division
     while(t != 0) {
         x = y;
-        y = t;
+        y = t;  // remainder as divisor
         t = x % y;
     }
     return y;
