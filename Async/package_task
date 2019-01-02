@@ -1,7 +1,7 @@
 /**
- * @date   2018-06-03
+ * @date   July,2018
  * @brief 
- * @note   IDE: Clion 2018.3   
+ * IDE:    Clion 2018.3   
  * @author sanner
  * @cite   the basical use of package_ task and shared_ future 
  * @bug    There is a bug in the program. It can't be run right.
@@ -30,14 +30,14 @@ int func(int x){ return x+2; }
 int main() {
    packaged_task<int(int)> tsk(func);
    future<int> fut  = tsk.get_future();     //get future
-           thread(move(tsk),2).detach();
-           int value = fut.get();
-           cout<<"The result is : "<<value<<endl;
-           vector<shared_future<int>> v;
-           auto f=std::async(launch::async,
+   thread(move(tsk),2).detach();
+   int value = fut.get();
+   cout<<"The result is : "<<value<<endl;
+   vector<shared_future<int>> v;
+   auto f=std::async(launch::async,
                    [](int a,int b){return a+b; } ,2,3);
-           v.emplace_back(f);
-           cout<<"The shared_futureresult is "<<v[0].get() << endl;
+   v.emplace_back(f);
+   cout<<"The shared_futureresult is "<<v[0].get() << endl;
 
 }
 
