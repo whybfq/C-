@@ -38,8 +38,8 @@ int main() {
                    [](int a,int b){return a+b; } ,2,3);
    v.emplace_back(f);
    cout<<"The shared_futureresult is "<<v[0].get() << endl;
-
 }
+
 
 Output:
 The result is : 4
