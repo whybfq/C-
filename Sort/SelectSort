@@ -1,3 +1,23 @@
+#include <iostream>
+
+using std:: cin ;
+using std:: cout;
+using std:: endl;
+using std:: swap;
+
+void Swap(int A[] , int i, int j){
+    int temp = A[i];
+    A[i] = A[j];
+    A[j] = temp;
+}
+
+template <typename T>
+void swap1(T& a, T& b){  // attention local variable: need to use &
+    T c(a);
+    a=b;
+    b=c;
+}
+
 /******************************************************************************************************/
 // Selecting Sort
 
