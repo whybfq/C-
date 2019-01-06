@@ -81,7 +81,7 @@ int main(int argc, char* argv[]) {
     int A[] = {12,23,92,1, 56, 67};
     int n = sizeof(A) / sizeof(A[0]);
 
-//    MergeSortRecursion(A,0,n);
+//    MergeSortRecursion(A,0,n - 1);
     MergeSortIteration(A,n);
     for (int i = 0; i < n; ++i) {
         cout << A[i] << " ";
