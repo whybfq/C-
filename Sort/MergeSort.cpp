@@ -79,7 +79,7 @@ void MergeSortIteration(int *A,int len) { // 非递归(迭代)实现的归并排
 
 int main(int argc, char* argv[]) {
     int A[] = {12,23,92,1, 56, 67};
-    int n = sizeof(A) / sizeof(A[0]);
+    int n = sizeof(A) / sizeof(A[0]); // n == 6
 
 //    MergeSortRecursion(A,0,n - 1);
     MergeSortIteration(A,n);
