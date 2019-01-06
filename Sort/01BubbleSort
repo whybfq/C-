@@ -134,69 +134,6 @@ void CocktailSort(int const A[],int n){
 }
 
 /******************************************************************************************************/
-// Selecting Sort
-
-// 数据结构 ---------- 数组
-
-// 最差时间复杂度 ---- O(n^2)
-// 最优时间复杂度 ---- O(n^2)
-// 平均时间复杂度 ---- O(n^2)
-
-// 选择排序的交换操作介于 0 和 (n - 1） 次之间。
-// 选择排序的比较操作为 n (n - 1） / 2 次之间。选择排序的赋值操作介于 0 和 3 (n - 1） 次之间。
-// 所需辅助空间 ------ O(1)
-// 总的比较次数N=(n-1）+(n-2）+...+1=n*(n-1）/2。
-
-// 稳定性 ------------ 不稳定
-void SelectionSort(int const A[],int n){
-    assert(A);
-    for(int i = 0; i < n-1; ++i){
-        int min = i;
-        for(int j = i+1; j < n; ++j){
-            if(A[j] < A[min]){
-                min = j;
-            }
-        }
-        if(min != i){
-            Swap(A,min,i);
-        }
-    }
-}
-
-void SelectionSort1(int const *A,int n){
-    assert(A);
-    for(int i = 0 ; i < n - 1; ++ i){   //n-1 selection
-        for(int j = i + 1;j < n; ++j)
-            if(A[i] > A[j])
-                swap1(A[j],A[i]);
-    }
-}
-
-//Reference : https://blog.csdn.net/qq_26768741/article/details/53313093
-template<typename T>
-void SelectionSort2(T *A, int n){
-    assert(A);
-    int left = 0,right = n-1;
-    while(left < right){
-        int min = left, max = right;
-        for(int i = left; i < right; ++i){
-            if(A[i] < A[min])
-                min = i;
-            if(A[i] > A[max])
-                max = i;
-        }
-        //考虑修正的情况，最大值在最小位置，最小值在最大位置。
-        swap(A[max], A[right]);
-        if(min == right){
-            min = max;
-        }
-        swap(A[min],A[left]);
-        ++left;
-        --right;
-    }
-}
-
-/******************************************************************************************************/
 
 int main(){
     int A[] = { 6, 5, 3, 1, 8, 7, 2, 4 };   // 从小到大定向冒泡排序
