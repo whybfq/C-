@@ -45,7 +45,6 @@ void hano(int n, char x, char y, char z){
         cout<<x<<"->"<<y<<endl;
         hano(n-1,z  ,y, x);
     }
-
 };
 
 int main(){
